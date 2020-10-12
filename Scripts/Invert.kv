@@ -108,4 +108,6 @@ ScreenManager:
             text: "Home"
             size_hint: (0.1, 0.1)
             pos: 80, 540
-            on_release: app.root.current = "Home"
+            on_release:
+                app.root.current = "Home"
+                root.clear_game()
