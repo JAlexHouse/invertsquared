@@ -21,6 +21,7 @@ class PlayScreen(Screen):
     cols = 5
     gridlayout = GridLayout(rows=rows, cols=cols)
     gridgenerated = False
+    button_ids = {}
     
     def on_enter(self):
         if self.gridgenerated:
@@ -34,12 +35,13 @@ class PlayScreen(Screen):
     def generate_grid(self, cols = 5, rows = 5):
         for i in range(rows):
             for j in range(cols):
-                button = Button(id="{},{}".format(i,j), text="{},{}".format(i, j), background_color=(0,0,0,1))
+                button = Button(text="{},{}".format(i, j), background_color=(0,0,0,1))
                 button.bind(on_press = self.move_made)
+                self.button_ids[button] = "{},{}".format(i, j);
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
     
     def move_made(self, instance):
-        row, col = (int(d) for d in instance.id.split(','))
+        row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
 
         self.change_tile_color(index)
