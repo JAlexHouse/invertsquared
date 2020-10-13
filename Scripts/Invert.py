@@ -7,6 +7,13 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.widget import Widget
 
 # creating .py class (inherently calls on .kv class)
+#alphabetical order ish
+class GameOverScreen(Screen):
+    pass
+
+class GameWinScreen(Screen):
+    pass
+
 class HomeScreen(Screen):
     pass
 
@@ -35,7 +42,7 @@ class PlayScreen(Screen):
     def generate_grid(self, cols = 5, rows = 5):
         for i in range(rows):
             for j in range(cols):
-                button = Button(text="{},{}".format(i, j), background_color=(0,0,0,1))
+                button = Button(text="{},{}".format(i, j), background_color=(0,0,1,1))
                 button.bind(on_press = self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j);
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
@@ -69,7 +76,7 @@ class PlayScreen(Screen):
 
     def change_tile_color(self, index):
         if self.gridlayout.children[index].background_color == [255,255,255,1]:
-                self.gridlayout.children[index].background_color = [0,0,0,1]
+                self.gridlayout.children[index].background_color = [0,0,1,1]
         else:
             self.gridlayout.children[index].background_color = [255,255,255,1]
     

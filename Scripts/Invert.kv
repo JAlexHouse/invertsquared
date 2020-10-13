@@ -5,6 +5,53 @@ ScreenManager:
     SettingsScreen:
     PlaySetScreen:
     PlayScreen:
+    GameWinScreen:
+    GameOverScreen:
+
+<GameOverScreen>:
+    name: "GameOver"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        Label:
+            text: "GAME OVER, would you like to try again?"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        Button:
+            text: "Home"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "Home"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        Button:
+            text: "Play Again"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "Play"
+
+<GameWinScreen>:
+    name: "GameWin"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        Label:
+            text: "Congrats! You won!"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        Button:
+            text: "Home"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "Home"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        Button:
+            text: "Play Again"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "Play"
+
 
 <HomeScreen>:
     name: "Home"
@@ -18,22 +65,38 @@ ScreenManager:
         anchor_y: "bottom"
         Button:
             text: "Play"
-            size_hint: (0.1, 0.1)
+            size_hint: (0.33, 0.1)
             on_release: app.root.current = "Play"
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
         Button:
             text: "Settings"
-            size_hint: (0.1, 0.1)
+            size_hint: (0.33, 0.1)
             on_release: app.root.current = "Settings"
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
         Button:
             text: "Quit"
-            size_hint: (0.1, 0.1)
+            size_hint: (0.33, 0.1)
             on_release: quit()
+
+#tests to see if the new screens work
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        Button:
+            text: "Game Win Test"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "GameWin"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        Button:
+            text: "Game Over Test"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "GameOver"
 
 <SettingsScreen>:
     name: "Settings"
