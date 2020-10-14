@@ -2,6 +2,9 @@
 
 This is a python3.x project that is being made for CIS4930: Performant Programming in Python.
 
+PROJECT DESCRIPTION
+-    
+
 AESTHETICS:
 Color scheme and gameplay layout:
 Muted colors, flat design; minimalist
@@ -28,3 +31,22 @@ GAMEPLAY:
 - Classic Mode: image to be replicated in upper right corner; playing with no time limits; STRATEGY-BASED gameplay; star ranking by number of moves maybe??
 - Challenge Mode: image to be replicated in upper right corner; playing with a given amount of time; SPEED-BASED gameplay;
 - Expert Mode: image will be shown before you begin the level, but will not remain on screen; MEMORY-BASED gameplay; time limit??? dunno yet
+
+PACKAGE NAME FOR PIP INSTALLATION
+-   
+
+Kivy
+
+Link to Installation: https://kivy.org/doc/stable/installation/installation-windows.html
+
+
+Executable Command
+-
+
+Link to Repository
+-
+
+https://github.com/JAlexHouse/invertsquared
+
+Link to Application Package
+-
