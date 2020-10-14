@@ -60,43 +60,46 @@ ScreenManager:
         anchor_y: "top"
         Label:
             text: "Welcome to Invert2!"
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "bottom"
+
+    BoxLayout:
+        #size_hint: 0.33,0.5
+        size: 200,100
+        orientation: "vertical"
+        padding: 200
+
+        Button:
+            text: ""
+            opacity:0
+            #padding
+        Button:
+            text: ""
+            opacity:0
+            #padding
         Button:
             text: "Play"
-            size_hint: (0.33, 0.1)
             on_release: app.root.current = "Play"
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "bottom"
         Button:
             text: "Settings"
-            size_hint: (0.33, 0.1)
             on_release: app.root.current = "Settings"
-    AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "bottom"
         Button:
             text: "Quit"
-            size_hint: (0.33, 0.1)
             on_release: quit()
 
 #tests to see if the new screens work
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "top"
-        Button:
-            text: "Game Win Test"
-            size_hint: (0.3, 0.1)
-            on_release: app.root.current = "GameWin"
-    AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "top"
-        Button:
-            text: "Game Over Test"
-            size_hint: (0.3, 0.1)
-            on_release: app.root.current = "GameOver"
+#    AnchorLayout:
+#        anchor_x: "left"
+#        anchor_y: "top"
+#        Button:
+#            text: "Game Win Test"
+#            size_hint: (0.3, 0.1)
+#            on_release: app.root.current = "GameWin"
+#    AnchorLayout:
+#        anchor_x: "right"
+#        anchor_y: "top"
+#        Button:
+#            text: "Game Over Test"
+#            size_hint: (0.3, 0.1)
+#            on_release: app.root.current = "GameOver"#
 
 <SettingsScreen>:
     name: "Settings"
@@ -117,7 +120,7 @@ ScreenManager:
         Button:
             text: "Setting 3"
             size_hint: (0.3, 0.3)
-            padding: [20, 20]
+           # padding: [20, 20]
         Button:
             text: "Back to Home"
             size_hint: (0.3, 0.3)

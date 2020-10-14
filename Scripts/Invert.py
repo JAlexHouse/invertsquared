@@ -15,7 +15,28 @@ class GameWinScreen(Screen):
     pass
 
 class HomeScreen(Screen):
-    pass
+#maybe delete this all
+    def on_enter(self):
+        btn = self.buildBtn()
+        self.add_widget(btn)
+
+        print("i made it sir")
+
+    def buildBtn(self):
+        btn = Button(text="Push Me U Wont",
+                     font_size = "20sp",
+                     background_color=(1,1,1,1),
+                     color=(1,1,1,1),
+                     size=(32,32),
+                     size_hint=(.3,.1),
+#                     pos = (self.width*2.5,self.height*3)
+                             )
+        btn.bind(on_press=self.change())
+        return btn
+
+    def change(self):
+        self.manager.current = "Play"
+
 
 class SettingsScreen(Screen):
     pass
