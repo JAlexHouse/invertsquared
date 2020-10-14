@@ -4,6 +4,10 @@ from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+
+from kivy.core.window import Window
+Window.size = (540, 960)
+
 from kivy.uix.widget import Widget
 
 # creating .py class (inherently calls on .kv class)
@@ -15,34 +19,24 @@ class GameWinScreen(Screen):
     pass
 
 class HomeScreen(Screen):
-#maybe delete this all
-    def on_enter(self):
-        btn = self.buildBtn()
-        self.add_widget(btn)
-
-        print("i made it sir")
-
-    def buildBtn(self):
-        btn = Button(text="Push Me U Wont",
-                     font_size = "20sp",
-                     background_color=(1,1,1,1),
-                     color=(1,1,1,1),
-                     size=(32,32),
-                     size_hint=(.3,.1),
-#                     pos = (self.width*2.5,self.height*3)
-                             )
-        btn.bind(on_press=self.change())
-        return btn
-
-    def change(self):
-        self.manager.current = "Play"
+    pass
 
 
 class SettingsScreen(Screen):
     pass
 
-class PlaySetScreen(Screen):
+
+class ShareScreen(Screen):
     pass
+
+
+class MoreScreen(Screen):
+    pass
+
+
+class PauseScreen(Screen):
+    pass
+
 
 class PlayScreen(Screen):
     rows = 5
@@ -50,7 +44,7 @@ class PlayScreen(Screen):
     gridlayout = GridLayout(rows=rows, cols=cols)
     gridgenerated = False
     button_ids = {}
-    
+
     def on_enter(self):
         if self.gridgenerated:
             return
@@ -67,7 +61,7 @@ class PlayScreen(Screen):
                 button.bind(on_press = self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j);
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
-    
+
     def move_made(self, instance):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
@@ -100,7 +94,7 @@ class PlayScreen(Screen):
                 self.gridlayout.children[index].background_color = [0,0,1,1]
         else:
             self.gridlayout.children[index].background_color = [255,255,255,1]
-    
+
     def clear_game(self):
         for tile in self.gridlayout.children:
             tile.background_color = [0,0,0,1]
@@ -113,6 +107,7 @@ class ScreenManager(ScreenManager):
 class InvertApp(App):
     def build(self):
         return Builder.load_file('Invert.kv')
+
 
 if __name__ == '__main__':
     InvertApp().run()
