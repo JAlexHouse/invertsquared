@@ -225,47 +225,6 @@ ScreenManager:
         anchor_y: "top"
         padding: 90, 220, 0, 0
         Button:
-            background_normal: "../Art/SOUND.png"
-            background_down: "../Art/SOUND_DOWN.png"
-            size: 200, 200
-            size_hint: None, None
-            on_release: pop.dismiss()
-    AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "top"
-        padding: 0, 220,90,0
-        Button:
-            background_normal: "../Art/MUSIC.png"
-            background_down: "../Art/MUSIC_DOWN.png"
-            size: 200, 200
-            size_hint: None, None
-            on_release: pop.dismiss()
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "center"
-        padding: 90, 0,0,100
-        Button:
-            background_normal: "../Art/SECURITY.png"
-            background_down: "../Art/SECURITY_DOWN.png"
-            size: 200, 200
-            size_hint: None, None
-            on_release: pop.dismiss()
-    AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "center"
-        padding: 0,0,90, 100
-        Button:
-            background_normal: "../Art/ADS.png"
-            background_down: "../Art/ADS_DOWN.png"
-            size: 200, 200
-            size_hint: None, None
-            on_release: pop.dismiss()
-
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "bottom"
-        padding: 90,0,0,320
-        Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
             size: 200, 200
@@ -274,46 +233,49 @@ ScreenManager:
             on_release: pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
-        anchor_y: "bottom"
-        padding:  0, 0,90, 320
+        anchor_y: "top"
+        padding: 0, 220,90,0
         Button:
-            background_normal: "../Art/ADS.png"
-            background_down: "../Art/ADS_DOWN.png"
-            background_color: 0,1,0,1
-            text: "RESUME"
+            background_normal: "../Art/SETTINGS.png"
+            background_down: "../Art/SETTINGS_DOWN.png"
             size: 200, 200
+            size_hint: None, None
+            on_release: app.root.current = "Settings"
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0,0,100
+        Button:
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release: app.root.current = "Play"
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 0,0,90, 100
+        Button:
+            background_normal: "../Art/MENU.png"
+            background_down: "../Art/MENU_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            #on_release: app.root.current = ""
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0,0,0, 320
+        Button:
+            background_normal: "../Art/RESUME.png"
+            background_down: "../Art/RESUME_DOWN.png"
+            size: 350, 200
             size_hint: None, None
             on_release: pop.dismiss()
 
-<PauseScreen>:
-    name: "Pause"
-    Label:
-        text: "Settings"
-    BoxLayout:
-        orientation: "horizontal"
-        size: (20, 20)
-        Button:
-            text: "Setting 1"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-        Button:
-            text: "Setting 2"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-        Button:
-            text: "Setting 3"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-        Button:
-            text: "Back to Home"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-            on_release: app.root.current = "Home"
-        Button:
-            text: "Resume Game"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-            on_release: app.root.current = "Play"
+
 
 <PlayScreen>:
     name: "Play"
@@ -327,10 +289,9 @@ ScreenManager:
         anchor_y: "top"
         padding: 44, 12
         Button:
-            background_normal: "../Art/SETTINGS.png"
-            background_down: "../Art/SETTINGS_DOWN.png"
+            background_normal: "../Art/PAUSE.png"
+            background_down: "../Art/PAUSE_DOWN.png"
             pos: 0, 540
-            text: "pAuSE bRo"
             size: 170, 170
             size_hint: None, None
             on_release: root.open_pause()
