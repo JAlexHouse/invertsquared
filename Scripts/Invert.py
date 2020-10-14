@@ -4,8 +4,11 @@ from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.modalview import ModalView
 from kivy.core.window import Window
+
 Window.size = (540, 960)
 
 from kivy.uix.widget import Widget
@@ -37,6 +40,8 @@ class MoreScreen(Screen):
 class PauseScreen(Screen):
     pass
 
+class Pause(ModalView):
+    pass
 
 class PlayScreen(Screen):
     rows = 5
@@ -53,6 +58,11 @@ class PlayScreen(Screen):
         self.gridlayout.pos = (self.width/8, self.height/8)
         self.add_widget(self.gridlayout)
         self.gridgenerated = True
+
+
+
+    def printMess(self, val):
+        print(val)
 
     def generate_grid(self, cols = 5, rows = 5):
         for i in range(rows):
@@ -99,6 +109,10 @@ class PlayScreen(Screen):
         for tile in self.gridlayout.children:
             tile.background_color = [0,0,0,1]
 
+    def open_pause(self):
+        popup = Pause()
+        popup.open()
+
 class ScreenManager(ScreenManager):
     def build(self):
         return
@@ -106,8 +120,8 @@ class ScreenManager(ScreenManager):
 # app class; runs the app
 class InvertApp(App):
     def build(self):
-        return Builder.load_file('Invert.kv')
-
+        pass
+    #the previous call to include file caused a widget error
 
 if __name__ == '__main__':
     InvertApp().run()

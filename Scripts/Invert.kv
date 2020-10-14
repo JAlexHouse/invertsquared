@@ -13,39 +13,39 @@ ScreenManager:
 <HomeScreen>:
     name: "Home"
     Image:
-        source: "../art/HOME.png"
+        source: "../Art/HOMESCR.png"
     FloatLayout:
         size: 1080, 1920
         Button:
             pos_hint: {"x": 0.25, "y": 0.465}
             size: 270, 270
             size_hint: None, None
-            background_normal: "CLASSIC.png"
-            background_down: "CLASSIC_DOWN.png"
+            background_normal: "../Art/CLASSIC.png"
+            background_down: "../Art/CLASSIC_DOWN.png"
             on_release: app.root.current = "Play"
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.35}
             size: 270, 270
             size_hint: None, None
-            background_normal: "CHALLENGE.png"
-            background_down: "CHALLENGE_DOWN.png"
+            background_normal: "../Art/CHALLENGE.png"
+            background_down: "../Art/CHALLENGE_DOWN.png"
             on_release: app.root.current = "Play"
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.235}
             size: 270, 270
             size_hint: None, None
-            background_normal: "EXPERT.png"
-            background_down: "EXPERT_DOWN.png"
+            background_normal: "../Art/EXPERT.png"
+            background_down: "../Art/EXPERT_DOWN.png"
             on_release: app.root.current = "Play"
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
         padding: 44, 12
         Button:
-            background_normal: "SETTINGS.png"
-            background_down: "SETTINGS_DOWN.png"
+            background_normal: "../Art/SETTINGS.png"
+            background_down: "../Art/SETTINGS_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "Settings"
@@ -54,8 +54,8 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 0, 12
         Button:
-            background_normal: "SHARE.png"
-            background_down: "SHARE_DOWN.png"
+            background_normal: "../Art/SHARE.png"
+            background_down: "../Art/SHARE_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "Share"
@@ -64,38 +64,38 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 40, 12
         Button:
-            background_normal: "MORE.png"
-            background_down: "MORE_DOWN.png"
+            background_normal: "../Art/MORE.png"
+            background_down: "../Art/MORE_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "More"
 #tests to see if the new screens work
-#    AnchorLayout:
-#        anchor_x: "left"
-#        anchor_y: "top"
-#        Button:
-#            text: "Game Win Test"
-#            size_hint: (0.3, 0.1)
-#            on_release: app.root.current = "GameWin"
-#    AnchorLayout:
-#        anchor_x: "right"
-#        anchor_y: "top"
-#        Button:
-#            text: "Game Over Test"
-#            size_hint: (0.3, 0.1)
-#            on_release: app.root.current = "GameOver"#
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        Button:
+            text: "Game Win Test"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "GameWin"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        Button:
+            text: "Game Over Test"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "GameOver"#
 
-<ShareScreen>:
-    name: "Share"
+<SettingsScreen>:
+    name: "Settings"
     Image:
-        source: "SHARESCR.png"
+        source: "../Art/SETTINGSSCR.png"
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
         padding: 90, 270
         Button:
-            background_normal: "IG.png"
-            background_down: "IG_DOWN.png"
+            background_normal: "../Art/SOUND.png"
+            background_down: "../Art/SOUND_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
@@ -103,8 +103,8 @@ ScreenManager:
         anchor_y: "top"
         padding: 90, 270
         Button:
-            background_normal: "TWT.png"
-            background_down: "TWT_DOWN.png"
+            background_normal: "../Art/MUSIC.png"
+            background_down: "../Art/MUSIC_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
@@ -112,8 +112,8 @@ ScreenManager:
         anchor_y: "center"
         padding: 90, 0
         Button:
-            background_normal: "FB.png"
-            background_down: "FB_DOWN.png"
+            background_normal: "../Art/SECURITY.png"
+            background_down: "../Art/SECURITY_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
@@ -121,8 +121,8 @@ ScreenManager:
         anchor_y: "center"
         padding: 90, 0
         Button:
-            background_normal: "Link.png"
-            background_down: "LINK_DOWN.png"
+            background_normal: "../Art/ADS.png"
+            background_down: "../Art/ADS_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
@@ -130,32 +130,50 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 0, 270
         Button:
-            background_normal: "HOME.png"
-            background_down: "HOME_DOWN.png"
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "Home"
 
-
-<MoreScreen>:
-    name: "More"
+<ShareScreen>:
+    name: "Share"
     Image:
-        source: "MORESCR.png"
+        source: "../Art/SHARESCR.png"
     AnchorLayout:
-        anchor_x: "center"
+        anchor_x: "left"
         anchor_y: "top"
-        padding: 0, 270
+        padding: 90, 270
         Button:
-            background_normal: "RATE.png"
-            background_down: "RATE_DOWN.png"
+            background_normal: "../Art/IG.png"
+            background_down: "../Art/IG_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "center"
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 90, 270
         Button:
-            background_normal: "CONTACT.png"
-            background_down: "CONTACT_DOWN.png"
+            background_normal: "../Art/TWT.png"
+            background_down: "../Art/TWT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/FB.png"
+            background_down: "../Art/FB_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/Link.png"
+            background_down: "../Art/LINK_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
@@ -163,8 +181,40 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 0, 270
         Button:
-            background_normal: "ABOUT.png"
-            background_down: "ABOUT_DOWN.png"
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+
+<MoreScreen>:
+    name: "More"
+    Image:
+        source: "../Art/MORESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        padding: 0, 270
+        Button:
+            background_normal: "../Art/RATE.png"
+            background_down: "../Art/RATE_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        Button:
+            background_normal: "../Art/CONTACT.png"
+            background_down: "../Art/CONTACT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "../Art/ABOUT.png"
+            background_down: "../Art/ABOUT_DOWN.png"
             size: 200, 200
             size_hint: None, None
     AnchorLayout:
@@ -172,12 +222,83 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 0, 130
         Button:
-            background_normal: "HOME.png"
-            background_down: "HOME_DOWN.png"
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "Home"
 
+<Pause>
+    id:pop
+    name: "Pause"
+   # opacity: 0.8
+   # size_hint: 0.8, 0.8
+    auto_dismiss: False
+    background_color: 1,1,1,0
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 90, 220, 0, 0
+        Button:
+            background_normal: "../Art/SOUND.png"
+            background_down: "../Art/SOUND_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 0, 220,90,0
+        Button:
+            background_normal: "../Art/MUSIC.png"
+            background_down: "../Art/MUSIC_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0,0,100
+        Button:
+            background_normal: "../Art/SECURITY.png"
+            background_down: "../Art/SECURITY_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 0,0,90, 100
+        Button:
+            background_normal: "../Art/ADS.png"
+            background_down: "../Art/ADS_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release: pop.dismiss()
+
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 90,0,0,320
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding:  0, 0,90, 320
+        Button:
+            background_normal: "../Art/ADS.png"
+            background_down: "../Art/ADS_DOWN.png"
+            background_color: 0,1,0,1
+            text: "RESUME"
+            size: 200, 200
+            size_hint: None, None
+            on_release: pop.dismiss()
 
 <PauseScreen>:
     name: "Pause"
@@ -216,14 +337,78 @@ ScreenManager:
         anchor_y: "top"
         Label:
             text: "Time to Play! :D"
-    RelativeLayout:
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 44, 12
         Button:
-            text: "Settings"
-            size_hint: (0.1, 0.1)
+            background_normal: "../Art/SETTINGS.png"
+            background_down: "../Art/SETTINGS_DOWN.png"
             pos: 0, 540
-            on_release: app.root.current = "PlaySet"
+            text: "pAuSE bRo"
+            size: 170, 170
+            size_hint: None, None
+            on_release: root.open_pause()
+
+<GameOverScreen>:
+    name: "GameOver"
+    Image:
+        #need to replace this with game over png
+        source: "../Art/HOMESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        Label:
+            text: "GAME OVER! (will need to add replay button)"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 90, 0
         Button:
-            text: "Home"
-            size_hint: (0.1, 0.1)
-            pos: 80, 540
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
             on_release: app.root.current = "Home"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/CLASSIC.png"
+            background_down: "../Art/CLASSIC_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Play"
+
+<GameWinScreen>:
+    name: "GameWin"
+    Image:
+        #need to replace this with game win png
+        source: "../Art/HOMESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+
+        Label:
+            text: "YOU WON! (will need to update with a replay button)"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/CLASSIC.png"
+            background_down: "../Art/CLASSIC_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Play"
