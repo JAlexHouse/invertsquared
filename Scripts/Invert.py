@@ -2,6 +2,9 @@ from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
+from kivy.core.window import Window
+Window.size = (540, 960)
+
 
 # creating .py class (inherently calls on .kv class)
 class HomeScreen(Screen):
@@ -12,7 +15,15 @@ class SettingsScreen(Screen):
     pass
 
 
-class PlaySetScreen(Screen):
+class ShareScreen(Screen):
+    pass
+
+
+class MoreScreen(Screen):
+    pass
+
+
+class PauseScreen(Screen):
     pass
 
 

@@ -3,66 +3,216 @@ ScreenManager:
     transition: FadeTransition()
     HomeScreen:
     SettingsScreen:
-    PlaySetScreen:
+    ShareScreen:
+    MoreScreen:
+    PauseScreen:
     PlayScreen:
 
 <HomeScreen>:
     name: "Home"
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
-        Label:
-            text: "Welcome to Invert2!"
+    Image:
+        source: "HOMESCR.png"
+    FloatLayout:
+        size: 1080, 1920
+        Button:
+            pos_hint: {"x": 0.25, "y": 0.465}
+            size: 270, 270
+            size_hint: None, None
+            background_normal: "CLASSIC.png"
+            background_down: "CLASSIC_DOWN.png"
+            on_release: app.root.current = "Play"
+    FloatLayout:
+        Button:
+            pos_hint: {"x": 0.25, "y": 0.35}
+            size: 270, 270
+            size_hint: None, None
+            background_normal: "CHALLENGE.png"
+            background_down: "CHALLENGE_DOWN.png"
+            on_release: app.root.current = "Play"
+    FloatLayout:
+        Button:
+            pos_hint: {"x": 0.25, "y": 0.235}
+            size: 270, 270
+            size_hint: None, None
+            background_normal: "EXPERT.png"
+            background_down: "EXPERT_DOWN.png"
+            on_release: app.root.current = "Play"
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
+        padding: 44, 12
         Button:
-            text: "Play"
-            size_hint: (0.1, 0.1)
-            on_release: app.root.current = "Play"
+            background_normal: "SETTINGS.png"
+            background_down: "SETTINGS_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Settings"
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
+        padding: 0, 12
         Button:
-            text: "Settings"
-            size_hint: (0.1, 0.1)
-            on_release: app.root.current = "Settings"
+            background_normal: "SHARE.png"
+            background_down: "SHARE_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Share"
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
+        padding: 40, 12
         Button:
-            text: "Quit"
-            size_hint: (0.1, 0.1)
-            on_release: quit()
+            background_normal: "MORE.png"
+            background_down: "MORE_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "More"
 
 <SettingsScreen>:
     name: "Settings"
-    Label:
-        text: "Settings"
-        pos: 0, 250
-    BoxLayout:
-        orientation: "horizontal"
-        size: (20, 20)
+    Image:
+        source: "SETTINGSSCR.png"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 90, 270
         Button:
-            text: "Setting 1"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
+            background_normal: "SOUND.png"
+            background_down: "SOUND_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 90, 270
         Button:
-            text: "Setting 2"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
+            background_normal: "MUSIC.png"
+            background_down: "MUSIC_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0
         Button:
-            text: "Setting 3"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
+            background_normal: "SECURITY.png"
+            background_down: "SECURITY_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 90, 0
         Button:
-            text: "Back to Home"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
+            background_normal: "ADS.png"
+            background_down: "ADS_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "HOME.png"
+            background_down: "HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
             on_release: app.root.current = "Home"
 
-<PlaySetScreen>:
-    name: "PlaySet"
+<ShareScreen>:
+    name: "Share"
+    Image:
+        source: "SHARESCR.png"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 90, 270
+        Button:
+            background_normal: "IG.png"
+            background_down: "IG_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 90, 270
+        Button:
+            background_normal: "TWT.png"
+            background_down: "TWT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "FB.png"
+            background_down: "FB_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "Link.png"
+            background_down: "LINK_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "HOME.png"
+            background_down: "HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+
+<MoreScreen>:
+    name: "More"
+    Image:
+        source: "MORESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        padding: 0, 270
+        Button:
+            background_normal: "RATE.png"
+            background_down: "RATE_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        Button:
+            background_normal: "CONTACT.png"
+            background_down: "CONTACT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "ABOUT.png"
+            background_down: "ABOUT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 130
+        Button:
+            background_normal: "HOME.png"
+            background_down: "HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+
+<PauseScreen>:
+    name: "Pause"
     Label:
         text: "Settings"
     BoxLayout:
