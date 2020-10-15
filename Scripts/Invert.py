@@ -45,7 +45,7 @@ class PauseScreen(Screen):
 
 class Pause(ModalView):
     pass
-
+    
 class WinScreen(Screen):
     pass
 
@@ -54,11 +54,9 @@ class PlayScreen(Screen):
     cols = 3
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
-    gridgenerated = False
     button_ids = {}
     random= True
     resume=False
-    
     def on_enter(self):
         if not self.resume:
             # generate answer key
@@ -69,15 +67,14 @@ class PlayScreen(Screen):
                 Color(.5, .5, .5, 1)
                 self.rect = Rectangle(size=[.2 * self.width + 2, .2 * self.height + 2], pos=self.answerlayout.pos)
             self.add_widget(self.answerlayout)
+            
+            #generate game board
+            self.generate_grid()
+            self.gridlayout.size_hint = [.5, .5]
+            self.gridlayout.pos = (self.width/4, self.height/4)
+            self.add_widget(self.gridlayout)
+
             self.resume = True
-        if self.gridlayout.children: #check if not first game
-            return
-        #generate game board
-        self.generate_grid()
-        self.gridlayout.size_hint = [.5, .5]
-        self.gridlayout.pos = (self.width/4, self.height/4)
-        self.add_widget(self.gridlayout)
-        self.gridgenerated = True
 
     def generate_grid(self):
         for i in range(self.rows):

@@ -7,6 +7,7 @@ ScreenManager:
     MoreScreen:
     PauseScreen:
     PlayScreen:
+        id: play
     GameWinScreen:
     GameOverScreen:
 
@@ -253,6 +254,8 @@ ScreenManager:
             size_hint: None, None
             on_release: 
                 app.root.current = "Play"
+                app.root.ids.play.reset_board()
+                # this clears only the player's actions, not the answer key
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
