@@ -230,8 +230,10 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 200, 200
             size_hint: None, None
-            on_release: app.root.current = "Home"
-            on_release: pop.dismiss()
+            on_release:
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
+                pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
