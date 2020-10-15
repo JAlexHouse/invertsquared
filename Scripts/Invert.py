@@ -50,8 +50,8 @@ class WinScreen(Screen):
     pass
 
 class PlayScreen(Screen):
-    rows = 2
-    cols = 2
+    rows = 3
+    cols = 3
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     gridgenerated = False
@@ -69,7 +69,8 @@ class PlayScreen(Screen):
                 Color(.5, .5, .5, 1)
                 self.rect = Rectangle(size=[.2 * self.width + 2, .2 * self.height + 2], pos=self.answerlayout.pos)
             self.add_widget(self.answerlayout)
-        if self.gridgenerated: #check if not first game
+            self.resume = True
+        if self.gridlayout.children: #check if not first game
             return
         #generate game board
         self.generate_grid()
