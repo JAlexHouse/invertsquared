@@ -56,6 +56,8 @@ class PlayScreen(Screen):
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     gridgenerated = False
     button_ids = {}
+    random= True
+    resume=False
     
     def on_enter(self):
         if not self.resume:
@@ -142,7 +144,7 @@ class PlayScreen(Screen):
                 if self.gridlayout.children[index].background_color != self.answerlayout.children[index].background_color:
                     return
         print("Yay, won")
-        app.root.current="Win"
+        app.root.current="GameWin"
         self.clear_game()
 
 
