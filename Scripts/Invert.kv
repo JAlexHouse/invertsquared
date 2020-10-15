@@ -68,8 +68,6 @@ ScreenManager:
             background_down: "../Art/MORE_DOWN.png"
             size: 170, 170
             size_hint: None, None
-
-
             on_release: app.root.current = "More"
 
 <SettingsScreen>:
@@ -253,8 +251,11 @@ ScreenManager:
             background_down: "../Art/RESET_DOWN.png"
             size: 200, 200
             size_hint: None, None
-            on_release: app.root.current = "Play"
-            on_release: pop.dismiss()
+            on_release:
+                app.root.current = "Play"
+                app.root.ids.play.reset_board()
+                # this clears only the player's actions, not the answer key
+                pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "center"
