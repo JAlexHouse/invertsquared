@@ -4,19 +4,46 @@ from kivy.properties import ObjectProperty
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.modalview import ModalView
+from kivy.core.window import Window
+
+Window.size = (540, 960)
+
 from kivy.uix.widget import Widget
 from kivy.graphics import Color, Rectangle
 import random
 
 
 # creating .py class (inherently calls on .kv class)
+#alphabetical order ish
+class GameOverScreen(Screen):
+    pass
+
+class GameWinScreen(Screen):
+    pass
+
 class HomeScreen(Screen):
     pass
+
 
 class SettingsScreen(Screen):
     pass
 
-class PlaySetScreen(Screen):
+
+class ShareScreen(Screen):
+    pass
+
+
+class MoreScreen(Screen):
+    pass
+
+
+class PauseScreen(Screen):
+    pass
+
+class Pause(ModalView):
     pass
 
 class WinScreen(Screen):
@@ -29,8 +56,6 @@ class PlayScreen(Screen):
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     gridgenerated = False
     button_ids = {}
-    random= True
-    resume=False
     
     def on_enter(self):
         if not self.resume:
@@ -54,7 +79,7 @@ class PlayScreen(Screen):
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                button = Button(text="{},{}".format(i, j), background_color=(0,0,0,1))
+                button = Button(text="{},{}".format(i, j), background_color=(0,0,1,1))
                 button.bind(on_press = self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j)
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
@@ -66,7 +91,7 @@ class PlayScreen(Screen):
                     button = Button()
                     color = random.randint(0, 1)
                     if color:
-                        button.background_color=(0,0,0,1)
+                        button.background_color=(0,0,1,1)
                     else:
                         button.background_color=(255,255,255,1)
                     button.disabled = True
@@ -74,7 +99,6 @@ class PlayScreen(Screen):
                     button.background_disabled_normal=''
                     self.answerlayout.add_widget(button, len(self.answerlayout.children))
 
-    
     def move_made(self, instance):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
@@ -106,9 +130,10 @@ class PlayScreen(Screen):
 
     def change_tile_color(self, index):
         if self.gridlayout.children[index].background_color == [255,255,255,1]:
-                self.gridlayout.children[index].background_color = [0,0,0,1]
+                self.gridlayout.children[index].background_color = [0,0,1,1]
         else:
             self.gridlayout.children[index].background_color = [255,255,255,1]
+
 
     def goal_reached(self):
         for i in range(self.cols):
@@ -123,12 +148,16 @@ class PlayScreen(Screen):
 
     def reset_board(self):
         for tile in self.gridlayout.children:
-            tile.background_color = [0,0,0,1]
+            tile.background_color = [0,0,1,1]
     
     def clear_game(self):
         self.reset_board()
         self.answerlayout = GridLayout(rows=self.rows, cols=self.cols, spacing=2)  # Reset it
         resume=False
+
+    def open_pause(self):
+        popup = Pause()
+        popup.open()
 
 class ScreenManager(ScreenManager):
     def build(self):
@@ -137,7 +166,8 @@ class ScreenManager(ScreenManager):
 # app class; runs the app
 class InvertApp(App):
     def build(self):
-        return Builder.load_file('Invert.kv')
+        pass
+    #the previous call to include file caused a widget error
 
 if __name__ == '__main__':
     app=InvertApp()
