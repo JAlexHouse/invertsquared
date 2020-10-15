@@ -68,21 +68,7 @@ ScreenManager:
             background_down: "../Art/MORE_DOWN.png"
             size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "More"#tests to see if the new screens work
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "top"
-        Button:
-            text: "Game Win Test"
-            size_hint: (0.3, 0.1)
-            on_release: app.root.current = "GameWin"
-    AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "top"
-        Button:
-            text: "Game Over Test"
-            size_hint: (0.3, 0.1)
-            on_release: app.root.current = "GameOver"
+            on_release: app.root.current = "More"
 
 <SettingsScreen>:
     name: "Settings"
@@ -319,7 +305,7 @@ ScreenManager:
         anchor_x: "center"
         anchor_y: "center"
         Label:
-            text: "GAME OVER! (will need to add replay button)"
+            text: "GAME OVER!"
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
@@ -351,7 +337,7 @@ ScreenManager:
         anchor_y: "center"
 
         Label:
-            text: "YOU WON! (will need to update with a replay button)"
+            text: "YOU WON!"
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"

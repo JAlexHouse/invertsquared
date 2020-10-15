@@ -12,6 +12,9 @@ from kivy.core.window import Window
 Window.size = (540, 960)
 
 from kivy.uix.widget import Widget
+from kivy.graphics import Color, Rectangle
+import random
+
 
 # creating .py class (inherently calls on .kv class)
 #alphabetical order ish
@@ -43,34 +46,60 @@ class PauseScreen(Screen):
 class Pause(ModalView):
     pass
 
+class WinScreen(Screen):
+    pass
+
 class PlayScreen(Screen):
-    rows = 5
-    cols = 5
+    rows = 2
+    cols = 2
     gridlayout = GridLayout(rows=rows, cols=cols)
+    answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     gridgenerated = False
     button_ids = {}
-
+    random= True
+    resume=False
+    
     def on_enter(self):
-        if self.gridgenerated:
+        if not self.resume:
+            # generate answer key
+            self.generate_answer()
+            self.answerlayout.size_hint = [.2, .2]
+            self.answerlayout.pos = (0, 0)  # Not sure where to place this
+            with self.answerlayout.canvas.before:
+                Color(.5, .5, .5, 1)
+                self.rect = Rectangle(size=[.2 * self.width + 2, .2 * self.height + 2], pos=self.answerlayout.pos)
+            self.add_widget(self.answerlayout)
+        if self.gridgenerated: #check if not first game
             return
+        #generate game board
         self.generate_grid()
-        self.gridlayout.size_hint = [.75, .75]
-        self.gridlayout.pos = (self.width/8, self.height/8)
+        self.gridlayout.size_hint = [.5, .5]
+        self.gridlayout.pos = (self.width/4, self.height/4)
         self.add_widget(self.gridlayout)
         self.gridgenerated = True
 
-
-
-    def printMess(self, val):
-        print(val)
-
-    def generate_grid(self, cols = 5, rows = 5):
-        for i in range(rows):
-            for j in range(cols):
+    def generate_grid(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
                 button = Button(text="{},{}".format(i, j), background_color=(0,0,1,1))
                 button.bind(on_press = self.move_made)
-                self.button_ids[button] = "{},{}".format(i, j);
+                self.button_ids[button] = "{},{}".format(i, j)
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
+
+    def generate_answer(self):
+        if random:
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    button = Button()
+                    color = random.randint(0, 1)
+                    if color:
+                        button.background_color=(0,0,1,1)
+                    else:
+                        button.background_color=(255,255,255,1)
+                    button.disabled = True
+                    button.background_disabled_down=''
+                    button.background_disabled_normal=''
+                    self.answerlayout.add_widget(button, len(self.answerlayout.children))
 
     def move_made(self, instance):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
@@ -96,6 +125,8 @@ class PlayScreen(Screen):
             right_index = self.get_index_by_tile_id(col-1, row)
             self.change_tile_color(right_index)
 
+        self.goal_reached()
+
     def get_index_by_tile_id(self, col, row):
         return row * self.cols + col
 
@@ -105,9 +136,26 @@ class PlayScreen(Screen):
         else:
             self.gridlayout.children[index].background_color = [255,255,255,1]
 
-    def clear_game(self):
+
+    def goal_reached(self):
+        for i in range(self.cols):
+            for j in range(self.rows):
+                index=self.get_index_by_tile_id(i, j)
+                if self.gridlayout.children[index].background_color != self.answerlayout.children[index].background_color:
+                    return
+        print("Yay, won")
+        app.root.current="GameWin"
+        self.clear_game()
+
+
+    def reset_board(self):
         for tile in self.gridlayout.children:
-            tile.background_color = [0,0,0,1]
+            tile.background_color = [0,0,1,1]
+    
+    def clear_game(self):
+        self.reset_board()
+        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols, spacing=2)  # Reset it
+        resume=False
 
     def open_pause(self):
         popup = Pause()
@@ -124,4 +172,5 @@ class InvertApp(App):
     #the previous call to include file caused a widget error
 
 if __name__ == '__main__':
-    InvertApp().run()
+    app=InvertApp()
+    app.run()
