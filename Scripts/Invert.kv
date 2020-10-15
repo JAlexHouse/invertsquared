@@ -6,6 +6,7 @@ ScreenManager:
     PlaySetScreen:
     PlayScreen:
     WinScreen:
+    LoseScreen:
 
 <HomeScreen>:
     name: "Home"
@@ -126,6 +127,18 @@ ScreenManager:
                 app.root.current = "Home"
                 root.clear_game()
                 app.root.current = "Play"
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: "Time Left: " + root.time_remaining
+            Label:
+                text: ''
+                size_hint_x: None
+                size: self.texture_size
+                pos_hint: {'right': 1}
+            Label:
+                text: 'Moves Left: ' + str(root.max_moves - root.moves_made)
+
 
 <WinScreen>:
     name: "Win"
@@ -141,3 +154,20 @@ ScreenManager:
             pos: root.width-root.width/8, 0
             on_release:
                 app.root.current = "Home"
+
+<LoseScreen>:
+    name: "Lose"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        Label:
+            text: "Oooops, you lost :(("
+    RelativeLayout:
+        Button:
+            text: "Next"
+            size_hint: (0.1, 0.1)
+            pos: root.width-root.width/8, 0
+            on_release:
+                app.root.current = "Home"
+
+

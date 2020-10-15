@@ -1,12 +1,16 @@
 from kivy.app import App
 from kivy.lang.builder import Builder
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, BoundedNumericProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
+from kivy.clock import Clock
 import random
+import time
 
 
 # creating .py class (inherently calls on .kv class)
@@ -22,9 +26,16 @@ class PlaySetScreen(Screen):
 class WinScreen(Screen):
     pass
 
+class LoseScreen(Screen):
+    pass
+
 class PlayScreen(Screen):
     rows = 2
     cols = 2
+    moves_made = BoundedNumericProperty(0)
+    max_moves = BoundedNumericProperty(15)
+    time_limit_sec = BoundedNumericProperty(30)     #30 sec limit for now
+    time_remaining = StringProperty()
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     gridgenerated = False
@@ -51,6 +62,8 @@ class PlayScreen(Screen):
         self.add_widget(self.gridlayout)
         self.gridgenerated = True
 
+
+
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
@@ -74,11 +87,13 @@ class PlayScreen(Screen):
                     button.background_disabled_normal=''
                     self.answerlayout.add_widget(button, len(self.answerlayout.children))
 
+
+
     
     def move_made(self, instance):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
-
+        self.moves_made += 1
         self.change_tile_color(index)
         print("Pressed button {},{}".format(row, col))
 
@@ -98,9 +113,7 @@ class PlayScreen(Screen):
         if (col > 0):
             right_index = self.get_index_by_tile_id(col-1, row)
             self.change_tile_color(right_index)
-
         self.goal_reached()
-
     def get_index_by_tile_id(self, col, row):
         return row * self.cols + col
 
@@ -115,13 +128,26 @@ class PlayScreen(Screen):
             for j in range(self.rows):
                 index=self.get_index_by_tile_id(i, j)
                 if self.gridlayout.children[index].background_color != self.answerlayout.children[index].background_color:
-                    return
+                    # Check if player reached the max move limit
+                    if self.moves_made == self.max_moves:
+                            print("Oops, you lost")
+                            app.root.current = "Lose"
+                            self.clear_game()
+                    return False
         print("Yay, won")
         app.root.current="Win"
         self.clear_game()
+        return True
 
+    # def countdown(self, t):
+    #     while t > 0:
+    #         mins, secs = divmod(t, 60)
+    #         self.time_remaining = '{:02d}:{:02d}'.format(mins, secs)
+    #         time.sleep(1)
+    #         t -= 1
 
     def reset_board(self):
+        self.moves_made = 0
         for tile in self.gridlayout.children:
             tile.background_color = [0,0,0,1]
     
