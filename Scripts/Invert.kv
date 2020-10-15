@@ -5,6 +5,7 @@ ScreenManager:
     SettingsScreen:
     PlaySetScreen:
     PlayScreen:
+    WinScreen:
 
 <HomeScreen>:
     name: "Home"
@@ -111,3 +112,32 @@ ScreenManager:
             on_release:
                 app.root.current = "Home"
                 root.clear_game()
+        Button:
+            text: "Reset"
+            size_hint: (0.1, 0.1)
+            pos: 160, 540
+            on_release:
+                root.reset_board()
+        Button:
+            text: "Different Key"
+            size_hint: (0.1, 0.1)
+            pos: 240, 540
+            on_release:
+                app.root.current = "Home"
+                root.clear_game()
+                app.root.current = "Play"
+
+<WinScreen>:
+    name: "Win"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        Label:
+            text: "You won! Niceeee"
+    RelativeLayout:
+        Button:
+            text: "Next"
+            size_hint: (0.1, 0.1)
+            pos: root.width-root.width/8, 0
+            on_release:
+                app.root.current = "Home"
