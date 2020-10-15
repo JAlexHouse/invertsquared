@@ -68,7 +68,21 @@ ScreenManager:
             background_down: "../Art/MORE_DOWN.png"
             size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "More"
+            on_release: app.root.current = "More"#tests to see if the new screens work
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        Button:
+            text: "Game Win Test"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "GameWin"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        Button:
+            text: "Game Over Test"
+            size_hint: (0.3, 0.1)
+            on_release: app.root.current = "GameOver"
 
 <SettingsScreen>:
     name: "Settings"
@@ -321,8 +335,8 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 90, 0
         Button:
-            background_normal: "../Art/CLASSIC.png"
-            background_down: "../Art/CLASSIC_DOWN.png"
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "Play"
@@ -353,8 +367,8 @@ ScreenManager:
         anchor_y: "bottom"
         padding: 90, 0
         Button:
-            background_normal: "../Art/CLASSIC.png"
-            background_down: "../Art/CLASSIC_DOWN.png"
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
             size: 170, 170
             size_hint: None, None
             on_release: app.root.current = "Play"
