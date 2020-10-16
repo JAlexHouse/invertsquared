@@ -1,8 +1,9 @@
 from kivy.app import App
 from kivy.lang.builder import Builder
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, BoundedNumericProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
@@ -50,14 +51,20 @@ class WinScreen(Screen):
     pass
 
 class PlayScreen(Screen):
+    game_mode = ""
     rows = 3
     cols = 3
+    moves_made = BoundedNumericProperty(0)
+    max_moves = BoundedNumericProperty(15)
+    time_limit_sec = BoundedNumericProperty(30)     #30 sec limit for now
+    time_remaining = StringProperty()
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     button_ids = {}
     random= True
     resume=False
     def on_enter(self):
+        self.set_mode()
         if not self.resume:
             # generate answer key
             self.generate_answer()
@@ -102,7 +109,7 @@ class PlayScreen(Screen):
     def move_made(self, instance):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
-
+        self.moves_made += 1
         self.change_tile_color(index)
         print("Pressed button {},{}".format(row, col))
 
@@ -140,17 +147,34 @@ class PlayScreen(Screen):
             for j in range(self.rows):
                 index=self.get_index_by_tile_id(i, j)
                 if self.gridlayout.children[index].background_color != self.answerlayout.children[index].background_color:
-                    return
+                    #print(self.game_mode)
+                    # Check if player reached the max move limit (Classic)
+                    if self.game_mode != "Classic":
+                        self.ids.moves.text = 'Moves Left: ' + str(self.max_moves - self.moves_made)
+                        if self.moves_made == self.max_moves:
+                            print("Oops, you lost")
+                            app.root.current = "GameOver"
+                            self.clear_game()
+                            return
+                    return                
         print("Yay, won")
         app.root.current="GameWin"
         self.clear_game()
 
 
     def reset_board(self):
+        #reset moves counter
+        self.moves_made = 0
+        if self.game_mode == "Classic":
+            self.ids.moves.text = ""
+        else:
+            self.ids.moves.text = 'Moves Left: ' + str(self.max_moves - self.moves_made)
+            
         for tile in self.gridlayout.children:
             tile.background_color = [0,0,1,1]
     
     def clear_game(self):
+        self.moves_made = 0
         self.gridlayout.clear_widgets()
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
@@ -160,12 +184,22 @@ class PlayScreen(Screen):
         popup = Pause()
         popup.open()
 
+    def set_mode(self):
+        app = App.get_running_app()
+        self.game_mode = app.DIFFICULTY
+        if self.game_mode == "Classic":
+            self.ids.moves.text = ""
+        else:
+            self.ids.moves.text = 'Moves Left: ' + str(self.max_moves - self.moves_made)
+    
+
 class ScreenManager(ScreenManager):
     def build(self):
         return
 
 # app class; runs the app
 class InvertApp(App):
+    DIFFICULTY =""
     def build(self):
         pass
     #the previous call to include file caused a widget error

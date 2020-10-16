@@ -23,7 +23,10 @@ ScreenManager:
             size_hint: None, None
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
-            on_release: app.root.current = "Play"
+            on_release: 
+                app.root.current = "Play"
+                app.DIFFICULTY = "Classic"
+                
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.35}
@@ -31,7 +34,11 @@ ScreenManager:
             size_hint: None, None
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
-            on_release: app.root.current = "Play"
+            on_release: 
+                app.root.current = "Play"
+                app.DIFFICULTY = "Challenge"
+                
+                
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.235}
@@ -39,7 +46,10 @@ ScreenManager:
             size_hint: None, None
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
-            on_release: app.root.current = "Play"
+            on_release: 
+                app.root.current = "Play"
+                app.DIFFICULTY = "Expert"
+                
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
@@ -301,6 +311,19 @@ ScreenManager:
             size: 170, 170
             size_hint: None, None
             on_release: root.open_pause()
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: ""
+        Label:
+            id: extra_settings
+            text: ''
+            size_hint_x: None
+            size: self.texture_size
+            pos_hint: {'right': 1}
+        Label:
+            id: moves
+            
 
 <GameOverScreen>:
     name: "GameOver"
@@ -333,7 +356,10 @@ ScreenManager:
             background_down: "../Art/CLASSIC_DOWN.png"
             size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.DIFFICULTY = "Classic"
+                
 
 <GameWinScreen>:
     name: "GameWin"
@@ -367,4 +393,7 @@ ScreenManager:
             background_down: "../Art/CLASSIC_DOWN.png"
             size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.DIFFICULTY = "Classic"
+                
