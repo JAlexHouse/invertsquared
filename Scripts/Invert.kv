@@ -7,6 +7,9 @@ ScreenManager:
     MoreScreen:
     PauseScreen:
     PlayScreen:
+        id: play
+    GameWinScreen:
+    GameOverScreen:
 
 <HomeScreen>:
     name: "Home"
@@ -211,51 +214,153 @@ ScreenManager:
             size_hint: None, None
             on_release: app.root.current = "Home"
 
-<PauseScreen>:
+<Pause>
+    id: pop
     name: "Pause"
-    Label:
-        text: "Settings"
-    BoxLayout:
-        orientation: "horizontal"
-        size: (20, 20)
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/PAUSESCR.png"
+
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 60, 70
         Button:
-            text: "Setting 1"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-        Button:
-            text: "Setting 2"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-        Button:
-            text: "Setting 3"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-        Button:
-            text: "Back to Home"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 190, 190
+            size_hint: None, None
             on_release: app.root.current = "Home"
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 60, 70
         Button:
-            text: "Resume Game"
-            size_hint: (0.3, 0.3)
-            padding: [20, 20]
-            on_release: app.root.current = "Play"
+            background_normal: "../Art/SETTINGS.png"
+            background_down: "../Art/SETTINGS_DOWN.png"
+            size: 190, 190
+            size_hint: None, None
+            on_release: app.root.current = "Settings"
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 60, 90
+        Button:
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 190, 190
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+                app.root.ids.play.reset_board()
+                # this clears only the player's actions, not the answer key
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 60, 90
+        Button:
+            background_normal: "../Art/MENU.png"
+            background_down: "../Art/MENU_DOWN.png"
+            size: 190, 190
+            size_hint: None, None
+            #on_release: app.root.current = ""
+            on_release: pop.dismiss()
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, -55
+        Button:
+            background_normal: "../Art/RESUME.png"
+            background_down: "../Art/RESUME_DOWN.png"
+            size: 325, 270
+            size_hint: None, None
+            on_release: pop.dismiss()
 
 <PlayScreen>:
     name: "Play"
+    Image:
+        source: "../Art/PLAYSCR.png"
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "top"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: -10, 23
+        Button:
+            background_normal: "../Art/PAUSE.png"
+            background_down: "../Art/PAUSE_DOWN.png"
+            #pos: 0, 540
+            size: 140, 140
+            size_hint: None, None
+            on_release: root.open_pause()
+
+<GameOverScreen>:
+    name: "GameOver"
+    Image:
+        #need to replace this with game over png
+        source: "../Art/HOMESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
         Label:
-            text: "Time to Play! :D"
-    RelativeLayout:
+            text: "GAME OVER! (will need to add replay button)"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 90, 0
         Button:
-            text: "Settings"
-            size_hint: (0.1, 0.1)
-            pos: 0, 540
-            on_release: app.root.current = "PlaySet"
-        Button:
-            text: "Home"
-            size_hint: (0.1, 0.1)
-            pos: 80, 540
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
             on_release: app.root.current = "Home"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/CLASSIC.png"
+            background_down: "../Art/CLASSIC_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Play"
+
+<GameWinScreen>:
+    name: "GameWin"
+    Image:
+        #need to replace this with game win png
+        source: "../Art/HOMESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+
+        Label:
+            text: "YOU WON! (will need to update with a replay button)"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/CLASSIC.png"
+            background_down: "../Art/CLASSIC_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Play"
