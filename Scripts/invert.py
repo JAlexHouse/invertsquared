@@ -163,6 +163,13 @@ class PlayScreen(Screen):
 
 
     def reset_board(self):
+        #reset moves counter
+        self.moves_made = 0
+        if self.game_mode == "Classic":
+            self.ids.moves.text = ""
+        else:
+            self.ids.moves.text = 'Moves Left: ' + str(self.max_moves - self.moves_made)
+            
         for tile in self.gridlayout.children:
             tile.background_color = [0,0,1,1]
     
