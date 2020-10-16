@@ -151,9 +151,10 @@ class PlayScreen(Screen):
             tile.background_color = [0,0,1,1]
     
     def clear_game(self):
-        self.reset_board()
-        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols, spacing=2)  # Reset it
-        resume=False
+        self.gridlayout.clear_widgets()
+        self.answerlayout.clear_widgets()
+        self.clear_widgets([self.gridlayout, self.answerlayout])
+        self.resume=False
 
     def open_pause(self):
         popup = Pause()
