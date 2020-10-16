@@ -51,6 +51,7 @@ class WinScreen(Screen):
     pass
 
 class PlayScreen(Screen):
+    game_mode = ""
     rows = 3
     cols = 3
     moves_made = BoundedNumericProperty(0)
@@ -63,6 +64,7 @@ class PlayScreen(Screen):
     random= True
     resume=False
     def on_enter(self):
+        self.set_mode()
         if not self.resume:
             # generate answer key
             self.generate_answer()
@@ -145,12 +147,16 @@ class PlayScreen(Screen):
             for j in range(self.rows):
                 index=self.get_index_by_tile_id(i, j)
                 if self.gridlayout.children[index].background_color != self.answerlayout.children[index].background_color:
-                    # Check if player reached the max move limit
-                    if self.moves_made == self.max_moves:
+                    #print(self.game_mode)
+                    # Check if player reached the max move limit (Classic)
+                    if self.game_mode != "Classic":
+                        self.ids.moves.text = 'Moves Left: ' + str(self.max_moves - self.moves_made)
+                        if self.moves_made == self.max_moves:
                             print("Oops, you lost")
                             app.root.current = "GameOver"
                             self.clear_game()
-                    return
+                            return
+                    return                
         print("Yay, won")
         app.root.current="GameWin"
         self.clear_game()
@@ -171,12 +177,22 @@ class PlayScreen(Screen):
         popup = Pause()
         popup.open()
 
+    def set_mode(self):
+        app = App.get_running_app()
+        self.game_mode = app.DIFFICULTY
+        if self.game_mode == "Classic":
+            self.ids.moves.text = ""
+        else:
+            self.ids.moves.text = 'Moves Left: ' + str(self.max_moves - self.moves_made)
+    
+
 class ScreenManager(ScreenManager):
     def build(self):
         return
 
 # app class; runs the app
 class InvertApp(App):
+    DIFFICULTY =""
     def build(self):
         pass
     #the previous call to include file caused a widget error
