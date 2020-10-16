@@ -231,7 +231,9 @@ ScreenManager:
             size: 200, 200
             size_hint: None, None
             on_release: app.root.current = "Home"
-            on_release: pop.dismiss()
+            on_release: 
+                app.root.ids.play.clear_game()
+                pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
@@ -330,7 +332,9 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.ids.play.clear_game()
+                app.root.current = "Home"
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
@@ -362,7 +366,9 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.ids.play.clear_game()
+                app.root.current = "Home"
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
