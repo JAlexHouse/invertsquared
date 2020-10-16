@@ -26,27 +26,26 @@ SCREENS:
 GAMEPLAY:
 - 10/20 levels each mode (maybe 20 for Classic/Challenge, 10 for Expert?); the more the merrier though !!! (if time permits!)
 - Hints allowed on all except Expert Mode
-     - How do we wanna do hints? ie. highlight the next best move; something else;;; idunno
 3 playing modes: Classic, Challenge, Expert --
-- Classic Mode: image to be replicated in upper right corner; playing with no time limits; STRATEGY-BASED gameplay; star ranking by number of moves maybe??
+- Classic Mode: image to be replicated in upper right corner; playing with no time limits; STRATEGY-BASED gameplay; star ranking by number of moves
 - Challenge Mode: image to be replicated in upper right corner; playing with a given amount of time; SPEED-BASED gameplay;
 - Expert Mode: image will be shown before you begin the level, but will not remain on screen; MEMORY-BASED gameplay; time limit??? dunno yet
 
-PACKAGE NAME FOR PIP INSTALLATION
--   
 
-Kivy
+**Run the following commands in the project directory:**
 
-Link to Installation: https://kivy.org/doc/stable/installation/installation-windows.html
+For Windows use:
+`pip install -r windows.txt`
 
+Otherwise (such as Ubuntu 20.04), use:
+`pip install -r requirements.txt`
 
 Executable Command
 -
+
+`python3 Scripts\invert.py`
 
 Link to Repository
 -
 
 https://github.com/JAlexHouse/invertsquared
-
-Link to Application Package
--
