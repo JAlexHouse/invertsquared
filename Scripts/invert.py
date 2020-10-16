@@ -81,6 +81,7 @@ class PlayScreen(Screen):
 
 
     def generate_grid(self):
+        self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
                 button = Button(text="{},{}".format(i, j), background_color=(0,0,1,1))
@@ -158,7 +159,10 @@ class PlayScreen(Screen):
     
     def clear_game(self):
         self.reset_board()
+        self.remove_widget(self.answerlayout)
         self.resume=False
+        self.remove_widget(self.gridlayout)
+        self.gridgenerated=False
 
     def open_pause(self):
         popup = Pause()
