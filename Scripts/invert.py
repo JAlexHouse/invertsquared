@@ -50,13 +50,15 @@ class WinScreen(Screen):
     pass
 
 class PlayScreen(Screen):
-    rows = 3
-    cols = 3
+    rows = 2
+    cols = 2
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols, spacing = 2)
     button_ids = {}
     random= True
     resume=False
+    gridgenerated=False
+
     def on_enter(self):
         if not self.resume:
             # generate answer key
@@ -67,14 +69,16 @@ class PlayScreen(Screen):
                 Color(.5, .5, .5, 1)
                 self.rect = Rectangle(size=[.2 * self.width + 2, .2 * self.height + 2], pos=self.answerlayout.pos)
             self.add_widget(self.answerlayout)
-            
+            self.resume = True
+        if not self.gridgenerated:
             #generate game board
             self.generate_grid()
             self.gridlayout.size_hint = [.5, .5]
             self.gridlayout.pos = (self.width/4, self.height/4)
             self.add_widget(self.gridlayout)
+            self.gridgenerated=True
 
-            self.resume = True
+
 
     def generate_grid(self):
         for i in range(self.rows):
@@ -85,6 +89,7 @@ class PlayScreen(Screen):
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
 
     def generate_answer(self):
+        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols, spacing=2)  # Reset it
         if random:
             for i in range(self.rows):
                 for j in range(self.cols):
@@ -139,6 +144,7 @@ class PlayScreen(Screen):
         for i in range(self.cols):
             for j in range(self.rows):
                 index=self.get_index_by_tile_id(i, j)
+                print(index)
                 if self.gridlayout.children[index].background_color != self.answerlayout.children[index].background_color:
                     return
         print("Yay, won")
@@ -152,8 +158,7 @@ class PlayScreen(Screen):
     
     def clear_game(self):
         self.reset_board()
-        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols, spacing=2)  # Reset it
-        resume=False
+        self.resume=False
 
     def open_pause(self):
         popup = Pause()
