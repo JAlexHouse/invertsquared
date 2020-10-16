@@ -34,20 +34,16 @@ GAMEPLAY:
 
 **Run the following commands in the project directory:**
 
-`pip install --user -r requirements.txt`
+For Windows use:
+`pip install -r windows.txt`
 
-`python -m pip install --upgrade pip wheel setuptools`
-
-`python -m pip install docutils pygments pypiwin32 kivy.deps.sdl2 kivy.deps.glew --extra-index-url https://kivy.org/downloads/packages/simple`
-
-`pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/`
-
-`python -m PyInstaller InvertSquared.spec`
+Otherwise (such as Ubuntu 20.04), use:
+`pip install -r requirements.txt`
 
 Executable Command
 -
 
-`dist\InvertSquared\InvertSquared.exe`
+`python3 Scripts\invert.py`
 
 Link to Repository
 -
