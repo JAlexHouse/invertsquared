@@ -1,6 +1,6 @@
 # invertsquared
 
-This is a python3.x project that is being made for CIS4930: Performant Programming in Python.
+This is a python3.8 project that is being made for CIS4930: Performant Programming in Python.
 
 PROJECT DESCRIPTION
 -    
@@ -47,3 +47,10 @@ Link to Repository
 -
 
 https://github.com/JAlexHouse/invertsquared
+
+AUTHORS:
+Nicole Liang
+James Boultinghouse
+Melinda Chhu
+Nancy Chen
+Christopher In
