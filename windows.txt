@@ -1,0 +1,8 @@
+Cython
+docutils
+pygments
+kivy.deps.sdl2==0.1.*
+kivy.deps.glew==0.1.*
+Kivy==2.0.0rc3
+Kivy-examples
+Kivy-Garden
