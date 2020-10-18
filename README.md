@@ -1,20 +1,19 @@
 # invertsquared
 
-This is a python3.x project that is being made for CIS4930: Performant Programming in Python.
+This is a python3.8 project that is being made for CIS4930: Performant Programming in Python.
 
 PROJECT DESCRIPTION
 -    
+An up and coming puzzle game that is simple and concept but difficult to solve! Try to replicate the image that is shown to you by touching the tiles on the grid; however there is a twist. When a tile is touched, the surrounding tiles (minus the ones in the diagonal directions) are also flipped! Try to figure out the best set of moves to solve the puzzle.
 
 AESTHETICS:
 Color scheme and gameplay layout:
 Muted colors, flat design; minimalist
 
-![alt text](https://user-images.githubusercontent.com/55326415/94352158-8c2aa500-002f-11eb-957b-bd67b099dbf2.png)
+![Art Inspiration (Not Invert Squared)_](https://user-images.githubusercontent.com/55326415/94352158-8c2aa500-002f-11eb-957b-bd67b099dbf2.png)
 
-EXCEPT ...!
 - Image to be replicated in top right corner; rounded edges for softer, embedded look
-- Game tiles will be 5x5... I Think; rounded edges
-- Logo/game name in top left corner; pause/settings button beneath it
+- Game grid will be variants of an N x N grid of tiles, such as 3x3, 5x5, etc.
 
 SCREENS:
 - Home screen: logo in the center (letters are colored, bg is grey); beneath logo: settings/menu, play, share icons;
@@ -24,12 +23,11 @@ SCREENS:
 - Level selection screen: 1. choose between Classic, Challenge, Expert (horizontal bars, rounded edges in the center of screen); 2. Select level (level mode will be at top centered; levels will be sorted by difficult ie. lvl 1 is easiest, 20 is hardest; levels display will show the image to replicate); back button in upper left corner;
 
 GAMEPLAY:
-- 10/20 levels each mode (maybe 20 for Classic/Challenge, 10 for Expert?); the more the merrier though !!! (if time permits!)
-- Hints allowed on all except Expert Mode
-3 playing modes: Classic, Challenge, Expert --
-- Classic Mode: image to be replicated in upper right corner; playing with no time limits; STRATEGY-BASED gameplay; star ranking by number of moves
-- Challenge Mode: image to be replicated in upper right corner; playing with a given amount of time; SPEED-BASED gameplay;
-- Expert Mode: image will be shown before you begin the level, but will not remain on screen; MEMORY-BASED gameplay; time limit??? dunno yet
+- 10/20 levels each mode (maybe 20 for Classic/Challenge, 10 for Expert)
+  - 3 Difficulty Modes: Classic, Challenge, Expert
+- Classic Mode: image to be replicated in upper right corner; playing with no time limits or move limits; STRATEGY-BASED gameplay
+- Challenge Mode: image to be replicated in upper right corner; playing within a given amount of moves; STRATEGY-BASED gameplay
+- Expert Mode: image will be shown before you begin the level, but will not remain on screen; MEMORY-BASED gameplay; NO HINTS ALLOWED
 
 
 **Run the following commands in the project directory:**
@@ -49,3 +47,16 @@ Link to Repository
 -
 
 https://github.com/JAlexHouse/invertsquared
+
+AUTHORS:
+
+Nicole Liang
+
+James Boultinghouse
+
+Melinda Chhu
+
+Nancy Chen
+
+Christopher In
+
