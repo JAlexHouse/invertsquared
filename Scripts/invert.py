@@ -10,10 +10,11 @@ from kivy.uix.label import Label
 from kivy.uix.modalview import ModalView
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
+from kivy.core.audio import SoundLoader
 import random
 
 Window.size = (540, 960)
-
+button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 # creating .py class (inherently calls on .kv class)
 # alphabetical order ish
 class GameLose(ModalView):
@@ -25,12 +26,12 @@ class GameWin(ModalView):
 
 
 class HomeScreen(Screen):
-    pass
-
+    def btn_press(self):
+        button_press_sound.play()
 
 class SettingsScreen(Screen):
-    pass
-
+    def btn_press(self):
+        button_press_sound.play()
 
 class ShareScreen(Screen):
     pass
@@ -81,9 +82,6 @@ class PlayScreen(Screen):
             self.gridlayout.size_hint = [0.75, 0.43]  # height, width
             self.gridlayout.spacing = (-100)
             self.gridlayout.pos = (0.13*self.width, 0.25*self.height)  # x, y
-            # with self.gridlayout.canvas.before:
-                # Color(0.37, 0.19, 0.32, 1)
-                # self.rect = Rectangle(size=[0.8*self.width, 0.8*self.width], pos=(0.12*self.width, 0.24*self.height))
             self.add_widget(self.gridlayout)
 
             self.resume = True
@@ -91,7 +89,7 @@ class PlayScreen(Screen):
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                button = Button(text="{},{}".format(i, j), background_normal="Art/TILE.png", background_down="Art/TILE_DOWN.png")
+                button = Button(background_normal="Art/TILE.png", background_down="Art/TILE_DOWN.png")
                 button.bind(on_release=self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j)
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))

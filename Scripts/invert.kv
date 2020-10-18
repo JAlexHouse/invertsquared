@@ -10,6 +10,7 @@ ScreenManager:
 
 <HomeScreen>:
     name: "Home"
+    id: home
     Image:
         source: "../Art/HOMESCR.png"
     FloatLayout:
@@ -20,6 +21,7 @@ ScreenManager:
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
             on_release:
+                home.btn_press()
                 app.root.current = "Play"
                 app.DIFFICULTY = "Classic"
     FloatLayout:
@@ -30,6 +32,7 @@ ScreenManager:
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
             on_release:
+                home.btn_press()
                 app.root.current = "Play"
                 app.DIFFICULTY = "Challenge"
     FloatLayout:
@@ -40,6 +43,7 @@ ScreenManager:
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
             on_release:
+                home.btn_press()
                 app.root.current = "Play"
                 app.DIFFICULTY = "Expert"
     AnchorLayout:
@@ -51,7 +55,9 @@ ScreenManager:
             background_down: "../Art/SETTINGS_DOWN.png"
             size: 150, 150
             size_hint: None, None
-            on_release: app.root.current = "Settings"
+            on_release: 
+                home.btn_press()
+                app.root.current = "Settings"
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -61,7 +67,9 @@ ScreenManager:
             background_down: "../Art/SHARE_DOWN.png"
             size: 150, 150
             size_hint: None, None
-            on_release: app.root.current = "Share"
+            on_release: 
+                home.btn_press()
+                app.root.current = "Share"
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
@@ -71,7 +79,9 @@ ScreenManager:
             background_down: "../Art/MORE_DOWN.png"
             size: 150, 150
             size_hint: None, None
-            on_release: app.root.current = "More"
+            on_release: 
+                home.btn_press()
+                app.root.current = "More"
 
 <SettingsScreen>:
     name: "Settings"
@@ -350,8 +360,8 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.current = "Play"
-                app.root.ids.play.reset_board()
-                # this clears only the player's actions, not the answer key
+                app.root.ids.play.clear_game()
+                app.root.ids.play.on_enter()
                 pop.dismiss()
 
 <GameWin>:
@@ -387,6 +397,6 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.current = "Play"
-                app.root.ids.play.reset_board()
-                # this clears only the player's actions, not the answer key
+                app.root.ids.play.clear_game()
+                app.root.ids.play.on_enter()
                 pop.dismiss()
