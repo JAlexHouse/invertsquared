@@ -281,6 +281,8 @@ ScreenManager:
 
 <PlayScreen>:
     name: "Play"
+    Image:
+        source: "../Art/PLAYSCR.png"
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "top"
@@ -289,12 +291,12 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 44, 12
+        padding: -10, 23
         Button:
             background_normal: "../Art/PAUSE.png"
             background_down: "../Art/PAUSE_DOWN.png"
             pos: 0, 540
-            size: 170, 170
+            size: 140, 140
             size_hint: None, None
             on_release: root.open_pause()
 
