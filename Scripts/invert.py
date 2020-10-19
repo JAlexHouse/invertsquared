@@ -128,7 +128,7 @@ class PlayScreen(Screen):
                         button.background_down = "../Art/TILE_DOWN.png"
                     self.answerlayout.add_widget(button, len(self.answerlayout.children))
             # if all answer tiles are grey, then redo the answer generation process
-            if all([button.background_normal == "Art/TILE.png" for button in self.answerlayout.children]):
+            if all([button.background_normal == "../Art/TILE.png" for button in self.answerlayout.children]):
                 self.answerlayout.clear_widgets()
                 self.generate_answer()
 
