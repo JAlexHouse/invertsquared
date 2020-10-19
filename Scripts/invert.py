@@ -12,13 +12,14 @@ from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
 import random
-
+import os
 
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
 is_music_enabled = True
 background_music = SoundLoader.load('../Audio/BACKGROUND.wav')
+dirname = os.path.dirname(__file__)
 
 # creating .py class (inherently calls on .kv class)
 # alphabetical order ish
@@ -85,12 +86,13 @@ class PlayScreen(Screen):
     random = False
     resume = False
     game_tile_sound = None
-    level = open('../Levels/1.txt')
+    filename = os.path.join(dirname, '../Levels/1.txt')
+    level = open(filename)
 
     def on_enter(self):
         self.set_mode()
         if not self.random:
-            self.level = open('../Levels/1.txt')
+            self.level = open(self.filename)
             self.rows = int(self.level.read(1))
             self.cols = int(self.level.read(1))
         if not self.resume:
