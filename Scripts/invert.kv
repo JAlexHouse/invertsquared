@@ -86,6 +86,7 @@ ScreenManager:
 
 <SettingsScreen>:
     name: "Settings"
+    id: settings
     Image:
         source: "../Art/SETTINGSSCR.png"
     AnchorLayout:
@@ -97,6 +98,8 @@ ScreenManager:
             background_down: "../Art/SOUND_DOWN.png"
             size: 200, 200
             size_hint: None, None
+            on_release: 
+                settings.enable_or_disable_audio()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
@@ -106,6 +109,8 @@ ScreenManager:
             background_down: "../Art/MUSIC_DOWN.png"
             size: 200, 200
             size_hint: None, None
+            on_release:
+                settings.enable_or_disable_music()
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "center"
@@ -248,6 +253,7 @@ ScreenManager:
             size: 170, 170
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 app.root.ids.play.clear_game()
                 pop.dismiss()
@@ -261,6 +267,7 @@ ScreenManager:
             size: 170, 170
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Settings"
                 pop.dismiss()
     AnchorLayout:
@@ -273,6 +280,7 @@ ScreenManager:
             size: 170, 170
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Play"
                 app.root.ids.play.reset_board()
                 # this clears only the player's actions, not the answer key
@@ -287,7 +295,9 @@ ScreenManager:
             size: 170, 170
             size_hint: None, None
             #on_release: app.root.current = ""
-            on_release: pop.dismiss()
+            on_release: 
+                app.root.ids.home.btn_press_audio()
+                pop.dismiss()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -297,7 +307,9 @@ ScreenManager:
             background_down: "../Art/RESUME_DOWN.png"
             size: 295, 265
             size_hint: None, None
-            on_release: pop.dismiss()
+            on_release: 
+                app.root.ids.home.btn_press_audio()
+                pop.dismiss()
 
 <PlayScreen>:
     name: "Play"
@@ -314,7 +326,9 @@ ScreenManager:
             #pos: 0, 540
             size: 140, 140
             size_hint: None, None
-            on_release: root.open_pause()
+            on_release: 
+                app.root.ids.home.btn_press_audio()
+                root.open_pause()
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -356,6 +370,7 @@ ScreenManager:
             size: 230, 230
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 pop.dismiss()
     AnchorLayout:
@@ -368,6 +383,7 @@ ScreenManager:
             size: 230, 230
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()
@@ -393,6 +409,7 @@ ScreenManager:
             size: 230, 230
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 pop.dismiss()
     AnchorLayout:
@@ -405,6 +422,7 @@ ScreenManager:
             size: 230, 230
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()

@@ -17,10 +17,14 @@ Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
 is_music_enabled = True
+background_music = SoundLoader.load('../Audio/BACKGROUND.wav')
+
 # creating .py class (inherently calls on .kv class)
 # alphabetical order ish
 class GameLose(ModalView):
-    pass
+    def on_open(self):
+        game_lose_sound = SoundLoader.load('../Audio/GAME_LOSE.wav')
+        game_lose_sound.play() 
 
 
 class GameWin(ModalView):
@@ -35,7 +39,16 @@ class HomeScreen(Screen):
             button_press_sound.play()
 
 class SettingsScreen(Screen):
-    pass
+    def enable_or_disable_audio(self):
+        global is_sound_enabled
+        is_sound_enabled = not is_sound_enabled
+
+    def enable_or_disable_music(self):
+        if background_music.state == "stop":
+            background_music.play()
+        else:
+            background_music.stop()
+
 
 class ShareScreen(Screen):
     pass
@@ -70,6 +83,7 @@ class PlayScreen(Screen):
     button_ids = {}
     random = True
     resume = False
+    game_tile_sound = None
 
     def on_enter(self):
         self.set_mode()
@@ -89,6 +103,8 @@ class PlayScreen(Screen):
             self.add_widget(self.gridlayout)
 
             self.resume = True
+        self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
+        
 
     def generate_grid(self):
         for i in range(self.rows):
@@ -117,6 +133,8 @@ class PlayScreen(Screen):
                 self.generate_answer()
 
     def move_made(self, instance):
+        self.game_tile_sound.play()
+
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
         self.moves_made += 1
@@ -216,9 +234,8 @@ class ScreenManager(ScreenManager):
 # app class; runs the app
 class InvertApp(App):
     def build(self):
-        pass
-    # the previous call to include file caused a widget error
-
+        background_music.loop = True
+        background_music.play()
 
 if __name__ == '__main__':
     app = InvertApp()
