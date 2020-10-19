@@ -16,11 +16,13 @@ ScreenManager:
         source: "../Art/HOMESCR.png"
     FloatLayout:
         Button:
-            pos_hint: {"x": 0.25, "y": 0.465}
-            size: 250, 250
-            size_hint: None, None
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
+            pos_hint: {"x": 0.25, "y": 0.465}
+            size: 250, 100
+            size_hint: None, None
+            size_hint_y: None
+            height: self.width * 0.4
             on_release:
                 home.btn_press_audio()
                 app.root.current = "Play"
@@ -28,7 +30,7 @@ ScreenManager:
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.353}
-            size: 250, 250
+            size: 250, 100
             size_hint: None, None
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
@@ -39,7 +41,7 @@ ScreenManager:
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.235}
-            size: 250, 250
+            size: 250, 100
             size_hint: None, None
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
@@ -56,7 +58,7 @@ ScreenManager:
             background_down: "../Art/SETTINGS_DOWN.png"
             size: 150, 150
             size_hint: None, None
-            on_release: 
+            on_release:
                 home.btn_press_audio()
                 app.root.current = "Settings"
     AnchorLayout:
@@ -68,7 +70,7 @@ ScreenManager:
             background_down: "../Art/SHARE_DOWN.png"
             size: 150, 150
             size_hint: None, None
-            on_release: 
+            on_release:
                 home.btn_press_audio()
                 app.root.current = "Share"
     AnchorLayout:
@@ -80,7 +82,7 @@ ScreenManager:
             background_down: "../Art/MORE_DOWN.png"
             size: 150, 150
             size_hint: None, None
-            on_release: 
+            on_release:
                 home.btn_press_audio()
                 app.root.current = "More"
 
@@ -98,7 +100,7 @@ ScreenManager:
             background_down: "../Art/SOUND_DOWN.png"
             size: 200, 200
             size_hint: None, None
-            on_release: 
+            on_release:
                 settings.enable_or_disable_audio()
     AnchorLayout:
         anchor_x: "right"
@@ -295,7 +297,7 @@ ScreenManager:
             size: 170, 170
             size_hint: None, None
             #on_release: app.root.current = ""
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 pop.dismiss()
     AnchorLayout:
@@ -307,7 +309,7 @@ ScreenManager:
             background_down: "../Art/RESUME_DOWN.png"
             size: 295, 265
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 pop.dismiss()
 
@@ -326,7 +328,7 @@ ScreenManager:
             #pos: 0, 540
             size: 140, 140
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_pause()
     BoxLayout:
@@ -334,9 +336,9 @@ ScreenManager:
         Label:
             text: ""
         Label:
-            id: Instructions
-            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture in the top-right to win, good luck!"
-            halign: "center"
+            text: ""
+        Label:
+            text: ""
         Label:
             text: ""
         Label:
@@ -346,9 +348,13 @@ ScreenManager:
             size: self.texture_size
             pos_hint: {'right': 1}
         Label:
+            id: Instructions
+            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture at the top to win, good luck!"
+            halign: "center"
+        Label:
             id: moves
             valign: "bottom"
-        
+
 
 <GameLose>:
     id: pop
