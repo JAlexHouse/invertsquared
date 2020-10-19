@@ -84,13 +84,14 @@ class PlayScreen(Screen):
     random = False
     resume = False
     game_tile_sound = None
+    level = open('../Levels/1.txt')
 
     def on_enter(self):
         self.set_mode()
-        if not random:
-            level = open('../Levels/1.txt')
-            self.rows = int(level.read(1))
-            self.cols = int(level.read(1))
+        if not self.random:
+            self.level = open('../Levels/1.txt')
+            self.rows = int(self.level.read(1))
+            self.cols = int(self.level.read(1))
         if not self.resume:
             # generate answer key
             self.generate_answer()
@@ -122,7 +123,7 @@ class PlayScreen(Screen):
         for i in range(self.rows):
             for j in range(self.cols):
                 button = Button()
-                if random:
+                if self.random:
                     color = random.randint(0, 1)
                 else:
                     color = int(self.level.read(1))
@@ -212,7 +213,7 @@ class PlayScreen(Screen):
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
-        if not random:
+        if not self.random:
             self.level.close()
 
     def open_pause(self):
