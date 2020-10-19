@@ -60,3 +60,12 @@ Nancy Chen
 
 Christopher In
 
+## Audio Assets Used
+
+https://freesound.org/people/GameAudio/sounds/220212/ 
+
+https://freesound.org/people/MattLeschuck/sounds/511484/
+
+https://freesound.org/people/Leszek_Szary/sounds/173958/ 
+
+https://freesound.org/people/OrangeMcMuffin/sounds/422538/  
