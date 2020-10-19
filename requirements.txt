@@ -4,3 +4,4 @@ pygments
 Kivy==2.0.0rc3
 Kivy-examples
 Kivy-Garden
+ffpyplayer
