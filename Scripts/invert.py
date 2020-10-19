@@ -15,6 +15,8 @@ import random
 
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
+is_sound_enabled = True
+is_music_enabled = True
 # creating .py class (inherently calls on .kv class)
 # alphabetical order ish
 class GameLose(ModalView):
@@ -22,16 +24,18 @@ class GameLose(ModalView):
 
 
 class GameWin(ModalView):
-    pass
+    def on_open(self):
+        game_win_sound = SoundLoader.load('../Audio/GAME_WIN.wav')
+        game_win_sound.play()
 
 
 class HomeScreen(Screen):
-    def btn_press(self):
-        button_press_sound.play()
+    def btn_press_audio(self):
+        if is_sound_enabled:
+            button_press_sound.play()
 
 class SettingsScreen(Screen):
-    def btn_press(self):
-        button_press_sound.play()
+    pass
 
 class ShareScreen(Screen):
     pass
@@ -107,6 +111,10 @@ class PlayScreen(Screen):
                         button.background_normal = "Art/TILE_DOWN.png"
                         button.background_down = "Art/TILE_DOWN.png"
                     self.answerlayout.add_widget(button, len(self.answerlayout.children))
+            # if all answer tiles are grey, then redo the answer generation process
+            if all([button.background_normal == "Art/TILE.png" for button in self.answerlayout.children]):
+                self.answerlayout.clear_widgets()
+                self.generate_answer()
 
     def move_made(self, instance):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
@@ -149,8 +157,7 @@ class PlayScreen(Screen):
         for i in range(self.cols):
             for j in range(self.rows):
                 index = self.get_index_by_tile_id(i, j)
-                if self.gridlayout.children[index].background_normal != self.answerlayout.children[
-                        index].background_normal:
+                if self.gridlayout.children[index].background_normal != self.answerlayout.children[index].background_normal:
                     if self.game_mode != "Classic":
                         self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
                         if self.moves_made == self.max_moves:

@@ -2,6 +2,7 @@
 ScreenManager:
     transition: NoTransition()
     HomeScreen:
+        id: home
     SettingsScreen:
     ShareScreen:
     MoreScreen:
@@ -21,7 +22,7 @@ ScreenManager:
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
             on_release:
-                home.btn_press()
+                home.btn_press_audio()
                 app.root.current = "Play"
                 app.DIFFICULTY = "Classic"
     FloatLayout:
@@ -32,7 +33,7 @@ ScreenManager:
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
             on_release:
-                home.btn_press()
+                home.btn_press_audio()
                 app.root.current = "Play"
                 app.DIFFICULTY = "Challenge"
     FloatLayout:
@@ -43,7 +44,7 @@ ScreenManager:
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
             on_release:
-                home.btn_press()
+                home.btn_press_audio()
                 app.root.current = "Play"
                 app.DIFFICULTY = "Expert"
     AnchorLayout:
@@ -56,7 +57,7 @@ ScreenManager:
             size: 150, 150
             size_hint: None, None
             on_release: 
-                home.btn_press()
+                home.btn_press_audio()
                 app.root.current = "Settings"
     AnchorLayout:
         anchor_x: "center"
@@ -68,7 +69,7 @@ ScreenManager:
             size: 150, 150
             size_hint: None, None
             on_release: 
-                home.btn_press()
+                home.btn_press_audio()
                 app.root.current = "Share"
     AnchorLayout:
         anchor_x: "right"
@@ -80,7 +81,7 @@ ScreenManager:
             size: 150, 150
             size_hint: None, None
             on_release: 
-                home.btn_press()
+                home.btn_press_audio()
                 app.root.current = "More"
 
 <SettingsScreen>:
