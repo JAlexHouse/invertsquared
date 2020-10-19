@@ -16,11 +16,13 @@ ScreenManager:
         source: "../Art/HOMESCR.png"
     FloatLayout:
         Button:
-            pos_hint: {"x": 0.25, "y": 0.465}
-            size: 250, 250
-            size_hint: None, None
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
+            pos_hint: {"x": 0.25, "y": 0.465}
+            size: 250, 100
+            size_hint: None, None
+            size_hint_y: None
+            height: self.width * 0.4
             on_release:
                 home.btn_press_audio()
                 app.root.current = "Play"
@@ -28,7 +30,7 @@ ScreenManager:
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.353}
-            size: 250, 250
+            size: 250, 100
             size_hint: None, None
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
@@ -39,7 +41,7 @@ ScreenManager:
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.235}
-            size: 250, 250
+            size: 250, 100
             size_hint: None, None
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
