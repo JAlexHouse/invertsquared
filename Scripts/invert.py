@@ -13,6 +13,7 @@ from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
 import random
 
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
