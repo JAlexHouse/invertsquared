@@ -13,6 +13,7 @@ from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
 import random
 
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -96,7 +97,7 @@ class PlayScreen(Screen):
             # generate answer key
             self.generate_answer()
             self.answerlayout.size_hint = [0.3, 0.17]
-            self.answerlayout.pos = (0.35*self.width, 0.7*self.height)  # Not sure where to place this
+            self.answerlayout.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
             self.add_widget(self.answerlayout)
 
             # generate game board
