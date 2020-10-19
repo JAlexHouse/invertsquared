@@ -1,45 +1,47 @@
-#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
 ScreenManager:
-    transition: FadeTransition()
+    transition: NoTransition()
     HomeScreen:
     SettingsScreen:
     ShareScreen:
     MoreScreen:
-    PauseScreen:
     PlayScreen:
         id: play
-    GameWinScreen:
-    GameOverScreen:
 
 <HomeScreen>:
     name: "Home"
     Image:
         source: "../Art/HOMESCR.png"
     FloatLayout:
-        size: 1080, 1920
         Button:
             pos_hint: {"x": 0.25, "y": 0.465}
-            size: 270, 270
+            size: 250, 250
             size_hint: None, None
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.DIFFICULTY = "Classic"
     FloatLayout:
         Button:
-            pos_hint: {"x": 0.25, "y": 0.35}
-            size: 270, 270
+            pos_hint: {"x": 0.25, "y": 0.353}
+            size: 250, 250
             size_hint: None, None
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.DIFFICULTY = "Challenge"
     FloatLayout:
         Button:
             pos_hint: {"x": 0.25, "y": 0.235}
-            size: 270, 270
+            size: 250, 250
             size_hint: None, None
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.DIFFICULTY = "Expert"
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
@@ -47,7 +49,7 @@ ScreenManager:
         Button:
             background_normal: "../Art/SETTINGS.png"
             background_down: "../Art/SETTINGS_DOWN.png"
-            size: 170, 170
+            size: 150, 150
             size_hint: None, None
             on_release: app.root.current = "Settings"
     AnchorLayout:
@@ -57,7 +59,7 @@ ScreenManager:
         Button:
             background_normal: "../Art/SHARE.png"
             background_down: "../Art/SHARE_DOWN.png"
-            size: 170, 170
+            size: 150, 150
             size_hint: None, None
             on_release: app.root.current = "Share"
     AnchorLayout:
@@ -67,7 +69,7 @@ ScreenManager:
         Button:
             background_normal: "../Art/MORE.png"
             background_down: "../Art/MORE_DOWN.png"
-            size: 170, 170
+            size: 150, 150
             size_hint: None, None
             on_release: app.root.current = "More"
 
@@ -215,150 +217,176 @@ ScreenManager:
             on_release: app.root.current = "Home"
 
 <Pause>
-    id:pop
+    id: pop
     name: "Pause"
-   # opacity: 0.8
-   # size_hint: 0.8, 0.8
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
     auto_dismiss: False
-    background_color: 1,1,1,0
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/PAUSESCR.png"
+
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 90, 220, 0, 0
+        padding: 70, 70
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 200, 200
+            size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "Home"
-            on_release: pop.dismiss()
+            on_release:
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
+                pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
-        padding: 0, 220,90,0
+        padding: 70, 70
         Button:
             background_normal: "../Art/SETTINGS.png"
             background_down: "../Art/SETTINGS_DOWN.png"
-            size: 200, 200
+            size: 170, 170
             size_hint: None, None
-            on_release: app.root.current = "Settings"
-            on_release: pop.dismiss()
+            on_release:
+                app.root.current = "Settings"
+                pop.dismiss()
     AnchorLayout:
         anchor_x: "left"
-        anchor_y: "center"
-        padding: 90, 0,0,100
+        anchor_y: "bottom"
+        padding: 70, 110
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 200, 200
+            size: 170, 170
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.current = "Play"
                 app.root.ids.play.reset_board()
                 # this clears only the player's actions, not the answer key
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "right"
-        anchor_y: "center"
-        padding: 0,0,90, 100
+        anchor_y: "bottom"
+        padding: 70, 110
         Button:
             background_normal: "../Art/MENU.png"
             background_down: "../Art/MENU_DOWN.png"
-            size: 200, 200
+            size: 170, 170
             size_hint: None, None
             #on_release: app.root.current = ""
             on_release: pop.dismiss()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0,0,0, 320
+        padding: 0, -50
         Button:
             background_normal: "../Art/RESUME.png"
             background_down: "../Art/RESUME_DOWN.png"
-            size: 350, 200
+            size: 295, 265
             size_hint: None, None
             on_release: pop.dismiss()
 
-
-
 <PlayScreen>:
     name: "Play"
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
-        Label:
-            text: "Time to Play! :D"
+    Image:
+        source: "../Art/PLAYSCR.png"
+
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 44, 12
+        padding: -10, 23
         Button:
             background_normal: "../Art/PAUSE.png"
             background_down: "../Art/PAUSE_DOWN.png"
-            pos: 0, 540
-            size: 170, 170
+            #pos: 0, 540
+            size: 140, 140
             size_hint: None, None
             on_release: root.open_pause()
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: ""
+        Label:
+            id: extra_settings
+            text: ''
+            size_hint_x: None
+            size: self.texture_size
+            pos_hint: {'right': 1}
+        Label:
+            id: moves
 
-<GameOverScreen>:
-    name: "GameOver"
+<GameLose>:
+    id: pop
+    name: "GameLose"
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
     Image:
-        #need to replace this with game over png
-        source: "../Art/HOMESCR.png"
+        source: "../Art/LOSE.png"
     AnchorLayout:
         anchor_x: "center"
-        anchor_y: "center"
-        Label:
-            text: "GAME OVER! (will need to add replay button)"
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "bottom"
-        padding: 90, 0
+        anchor_y: "top"
+        padding: 0, 90
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 170, 170
+            size: 230, 230
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release:
+                app.root.current = "Home"
+                pop.dismiss()
     AnchorLayout:
-        anchor_x: "right"
+        anchor_x: "center"
         anchor_y: "bottom"
-        padding: 90, 0
+        padding: 0, -15
         Button:
-            background_normal: "../Art/CLASSIC.png"
-            background_down: "../Art/CLASSIC_DOWN.png"
-            size: 170, 170
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 230, 230
             size_hint: None, None
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.root.ids.play.reset_board()
+                # this clears only the player's actions, not the answer key
+                pop.dismiss()
 
-<GameWinScreen>:
+<GameWin>:
+    id: pop
     name: "GameWin"
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
     Image:
-        #need to replace this with game win png
-        source: "../Art/HOMESCR.png"
+        source: "../Art/WIN.png"
     AnchorLayout:
         anchor_x: "center"
-        anchor_y: "center"
-
-        Label:
-            text: "YOU WON! (will need to update with a replay button)"
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "bottom"
-        padding: 90, 0
+        anchor_y: "top"
+        padding: 0, 90
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 170, 170
+            size: 230, 230
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release:
+                app.root.current = "Home"
+                pop.dismiss()
     AnchorLayout:
-        anchor_x: "right"
+        anchor_x: "center"
         anchor_y: "bottom"
-        padding: 90, 0
+        padding: 0, -15
         Button:
-            background_normal: "../Art/CLASSIC.png"
-            background_down: "../Art/CLASSIC_DOWN.png"
-            size: 170, 170
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 230, 230
             size_hint: None, None
-            on_release: app.root.current = "Play"
+            on_release:
+                app.root.current = "Play"
+                app.root.ids.play.reset_board()
+                # this clears only the player's actions, not the answer key
+                pop.dismiss()
