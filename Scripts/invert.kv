@@ -1,0 +1,429 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+ScreenManager:
+    transition: NoTransition()
+    HomeScreen:
+        id: home
+    SettingsScreen:
+    ShareScreen:
+    MoreScreen:
+    PlayScreen:
+        id: play
+
+<HomeScreen>:
+    name: "Home"
+    id: home
+    Image:
+        source: "../Art/HOMESCR.png"
+    FloatLayout:
+        Button:
+            pos_hint: {"x": 0.25, "y": 0.465}
+            size: 250, 250
+            size_hint: None, None
+            background_normal: "../Art/CLASSIC.png"
+            background_down: "../Art/CLASSIC_DOWN.png"
+            on_release:
+                home.btn_press_audio()
+                app.root.current = "Play"
+                app.DIFFICULTY = "Classic"
+    FloatLayout:
+        Button:
+            pos_hint: {"x": 0.25, "y": 0.353}
+            size: 250, 250
+            size_hint: None, None
+            background_normal: "../Art/CHALLENGE.png"
+            background_down: "../Art/CHALLENGE_DOWN.png"
+            on_release:
+                home.btn_press_audio()
+                app.root.current = "Play"
+                app.DIFFICULTY = "Challenge"
+    FloatLayout:
+        Button:
+            pos_hint: {"x": 0.25, "y": 0.235}
+            size: 250, 250
+            size_hint: None, None
+            background_normal: "../Art/EXPERT.png"
+            background_down: "../Art/EXPERT_DOWN.png"
+            on_release:
+                home.btn_press_audio()
+                app.root.current = "Play"
+                app.DIFFICULTY = "Expert"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 44, 12
+        Button:
+            background_normal: "../Art/SETTINGS.png"
+            background_down: "../Art/SETTINGS_DOWN.png"
+            size: 150, 150
+            size_hint: None, None
+            on_release:
+                home.btn_press_audio()
+                app.root.current = "Settings"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 12
+        Button:
+            background_normal: "../Art/SHARE.png"
+            background_down: "../Art/SHARE_DOWN.png"
+            size: 150, 150
+            size_hint: None, None
+            on_release:
+                home.btn_press_audio()
+                app.root.current = "Share"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 40, 12
+        Button:
+            background_normal: "../Art/MORE.png"
+            background_down: "../Art/MORE_DOWN.png"
+            size: 150, 150
+            size_hint: None, None
+            on_release:
+                home.btn_press_audio()
+                app.root.current = "More"
+
+<SettingsScreen>:
+    name: "Settings"
+    id: settings
+    Image:
+        source: "../Art/SETTINGSSCR.png"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 90, 270
+        Button:
+            background_normal: "../Art/SOUND.png"
+            background_down: "../Art/SOUND_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release:
+                settings.enable_or_disable_audio()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 90, 270
+        Button:
+            background_normal: "../Art/MUSIC.png"
+            background_down: "../Art/MUSIC_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+            on_release:
+                settings.enable_or_disable_music()
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/SECURITY.png"
+            background_down: "../Art/SECURITY_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/ADS.png"
+            background_down: "../Art/ADS_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+
+<ShareScreen>:
+    name: "Share"
+    Image:
+        source: "../Art/SHARESCR.png"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 90, 270
+        Button:
+            background_normal: "../Art/IG.png"
+            background_down: "../Art/IG_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 90, 270
+        Button:
+            background_normal: "../Art/TWT.png"
+            background_down: "../Art/TWT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/FB.png"
+            background_down: "../Art/FB_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "center"
+        padding: 90, 0
+        Button:
+            background_normal: "../Art/Link.png"
+            background_down: "../Art/LINK_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+
+<MoreScreen>:
+    name: "More"
+    Image:
+        source: "../Art/MORESCR.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        padding: 0, 270
+        Button:
+            background_normal: "../Art/RATE.png"
+            background_down: "../Art/RATE_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        Button:
+            background_normal: "../Art/CONTACT.png"
+            background_down: "../Art/CONTACT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 270
+        Button:
+            background_normal: "../Art/ABOUT.png"
+            background_down: "../Art/ABOUT_DOWN.png"
+            size: 200, 200
+            size_hint: None, None
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 130
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release: app.root.current = "Home"
+
+<Pause>
+    id: pop
+    name: "Pause"
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/PAUSESCR.png"
+
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 70, 70
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 70, 70
+        Button:
+            background_normal: "../Art/SETTINGS.png"
+            background_down: "../Art/SETTINGS_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Settings"
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 70, 110
+        Button:
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Play"
+                app.root.ids.play.reset_board()
+                # this clears only the player's actions, not the answer key
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 70, 110
+        Button:
+            background_normal: "../Art/MENU.png"
+            background_down: "../Art/MENU_DOWN.png"
+            size: 170, 170
+            size_hint: None, None
+            #on_release: app.root.current = ""
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, -50
+        Button:
+            background_normal: "../Art/RESUME.png"
+            background_down: "../Art/RESUME_DOWN.png"
+            size: 295, 265
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                pop.dismiss()
+
+<PlayScreen>:
+    name: "Play"
+    Image:
+        source: "../Art/PLAYSCR.png"
+
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: -10, 23
+        Button:
+            background_normal: "../Art/PAUSE.png"
+            background_down: "../Art/PAUSE_DOWN.png"
+            #pos: 0, 540
+            size: 140, 140
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_pause()
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: ""
+        Label:
+            id: Instructions
+            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture in the top-right to win, good luck!"
+            halign: "center"
+        Label:
+            text: ""
+        Label:
+            id: extra_settings
+            text: ''
+            size_hint_x: None
+            size: self.texture_size
+            pos_hint: {'right': 1}
+        Label:
+            id: moves
+            valign: "bottom"
+
+
+<GameLose>:
+    id: pop
+    name: "GameLose"
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/LOSE.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        padding: 0, 90
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 230, 230
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Home"
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, -15
+        Button:
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 230, 230
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Play"
+                app.root.ids.play.clear_game()
+                app.root.ids.play.on_enter()
+                pop.dismiss()
+
+<GameWin>:
+    id: pop
+    name: "GameWin"
+   # opacity: 0
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/WIN.png"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "top"
+        padding: 0, 90
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 230, 230
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Home"
+                pop.dismiss()
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, -15
+        Button:
+            background_normal: "../Art/RESET.png"
+            background_down: "../Art/RESET_DOWN.png"
+            size: 230, 230
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Play"
+                app.root.ids.play.clear_game()
+                app.root.ids.play.on_enter()
+                pop.dismiss()
