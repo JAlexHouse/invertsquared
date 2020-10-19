@@ -81,12 +81,16 @@ class PlayScreen(Screen):
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols)
     button_ids = {}
-    random = True
+    random = False
     resume = False
     game_tile_sound = None
 
     def on_enter(self):
         self.set_mode()
+        if not random:
+            level = open('../Levels/1.txt')
+            self.rows = int(level.read(1))
+            self.cols = int(level.read(1))
         if not self.resume:
             # generate answer key
             self.generate_answer()
@@ -109,28 +113,31 @@ class PlayScreen(Screen):
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                button = Button(background_normal="Art/TILE.png", background_down="Art/TILE_DOWN.png")
+                button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
                 button.bind(on_release=self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j)
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
 
     def generate_answer(self):
-        if random:
-            for i in range(self.rows):
-                for j in range(self.cols):
-                    button = Button()
+        for i in range(self.rows):
+            for j in range(self.cols):
+                button = Button()
+                if random:
                     color = random.randint(0, 1)
-                    if color:
-                        button.background_normal = "Art/TILE.png"
-                        button.background_down = "Art/TILE.png"
-                    else:
-                        button.background_normal = "Art/TILE_DOWN.png"
-                        button.background_down = "Art/TILE_DOWN.png"
-                    self.answerlayout.add_widget(button, len(self.answerlayout.children))
-            # if all answer tiles are grey, then redo the answer generation process
-            if all([button.background_normal == "Art/TILE.png" for button in self.answerlayout.children]):
-                self.answerlayout.clear_widgets()
-                self.generate_answer()
+                else:
+                    color = int(self.level.read(1))
+                    print(color)
+                if color:
+                    button.background_normal = "../Art/TILE.png"
+                    button.background_down = "../Art/TILE.png"
+                else:
+                    button.background_normal = "../Art/TILE_DOWN.png"
+                    button.background_down = "../Art/TILE_DOWN.png"
+                self.answerlayout.add_widget(button, len(self.answerlayout.children))
+        # if all answer tiles are grey, then redo the answer generation process
+        if all([button.background_normal == "../Art/TILE.png" for button in self.answerlayout.children]):
+            self.answerlayout.clear_widgets()
+            self.generate_answer()
 
     def move_made(self, instance):
         self.game_tile_sound.play()
@@ -164,12 +171,12 @@ class PlayScreen(Screen):
         return row * self.cols + col
 
     def change_tile_color(self, index):
-        if self.gridlayout.children[index].background_normal == "Art/TILE.png":
-            self.gridlayout.children[index].background_normal = "Art/TILE_DOWN.png"
-            self.gridlayout.children[index].background_down = "Art/TILE_DOWN.png"
+        if self.gridlayout.children[index].background_normal == "../Art/TILE.png":
+            self.gridlayout.children[index].background_normal = "../Art/TILE_DOWN.png"
+            self.gridlayout.children[index].background_down = "../Art/TILE_DOWN.png"
         else:
-            self.gridlayout.children[index].background_normal = "Art/TILE.png"
-            self.gridlayout.children[index].background_down = "Art/TILE.png"
+            self.gridlayout.children[index].background_normal = "../Art/TILE.png"
+            self.gridlayout.children[index].background_down = "../Art/TILE.png"
 
     def goal_reached(self):
         for i in range(self.cols):
@@ -196,8 +203,8 @@ class PlayScreen(Screen):
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
         for tile in self.gridlayout.children:
-            tile.background_normal = "Art/TILE.png"
-            tile.background_down = "Art/TILE_DOWN.png"
+            tile.background_normal = "../Art/TILE.png"
+            tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
         self.moves_made = 0
@@ -205,6 +212,8 @@ class PlayScreen(Screen):
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
+        if not random:
+            self.level.close()
 
     def open_pause(self):
         popup = Pause()
