@@ -232,8 +232,10 @@ class PlayScreen(Screen):
         app = App.get_running_app()
         self.game_mode = app.DIFFICULTY
         if self.game_mode == "Classic":
+            self.random = False
             self.ids.moves.text = ""
         else:
+            self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
 
