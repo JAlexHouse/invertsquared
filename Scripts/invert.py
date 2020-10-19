@@ -91,7 +91,7 @@ class PlayScreen(Screen):
             # generate answer key
             self.generate_answer()
             self.answerlayout.size_hint = [0.3, 0.17]
-            self.answerlayout.pos = (0.74*self.width, 0.82*self.height)  # Not sure where to place this
+            self.answerlayout.pos = (0.35*self.width, 0.7*self.height)  # Not sure where to place this
             self.add_widget(self.answerlayout)
 
             # generate game board

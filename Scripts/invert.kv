@@ -336,9 +336,9 @@ ScreenManager:
         Label:
             text: ""
         Label:
-            id: Instructions
-            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture in the top-right to win, good luck!"
-            halign: "center"
+            text: ""
+        Label:
+            text: ""
         Label:
             text: ""
         Label:
@@ -347,6 +347,10 @@ ScreenManager:
             size_hint_x: None
             size: self.texture_size
             pos_hint: {'right': 1}
+        Label:
+            id: Instructions
+            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture at the top to win, good luck!"
+            halign: "center"
         Label:
             id: moves
             valign: "bottom"
