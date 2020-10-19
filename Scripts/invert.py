@@ -24,7 +24,7 @@ background_music = SoundLoader.load('../Audio/BACKGROUND.wav')
 class GameLose(ModalView):
     def on_open(self):
         game_lose_sound = SoundLoader.load('../Audio/GAME_LOSE.wav')
-        game_lose_sound.play()
+        game_lose_sound.play() 
 
 
 class GameWin(ModalView):
@@ -104,12 +104,12 @@ class PlayScreen(Screen):
 
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
-
+        
 
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                button = Button(text="{},{}".format(i, j), background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+                button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
                 button.bind(on_release=self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j)
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
@@ -196,8 +196,8 @@ class PlayScreen(Screen):
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
         for tile in self.gridlayout.children:
-            tile.background_normal = "Art/TILE.png"
-            tile.background_down = "Art/TILE_DOWN.png"
+            tile.background_normal = "../Art/TILE.png"
+            tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
         self.moves_made = 0
