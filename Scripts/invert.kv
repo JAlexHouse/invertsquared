@@ -320,6 +320,12 @@ ScreenManager:
         Label:
             text: ""
         Label:
+            id: Instructions
+            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture in the top-right to win, good luck!"
+            halign: "center"
+        Label:
+            text: ""
+        Label:
             id: extra_settings
             text: ''
             size_hint_x: None
@@ -327,6 +333,8 @@ ScreenManager:
             pos_hint: {'right': 1}
         Label:
             id: moves
+            valign: "bottom"
+        
 
 <GameLose>:
     id: pop
