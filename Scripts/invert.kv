@@ -16,8 +16,8 @@ ScreenManager:
         source: "../Art/HOMESCR.png"
     FloatLayout:
         Button:
-            pos_hint: {"x": 0.25, "y": 0.465}
-            size: 250, 250
+            pos_hint: {"x": 0.27, "y": 0.52}
+            size: 247, 111
             size_hint: None, None
             background_normal: "../Art/CLASSIC.png"
             background_down: "../Art/CLASSIC_DOWN.png"
@@ -27,8 +27,8 @@ ScreenManager:
                 app.DIFFICULTY = "Classic"
     FloatLayout:
         Button:
-            pos_hint: {"x": 0.25, "y": 0.353}
-            size: 250, 250
+            pos_hint: {"x": 0.27, "y": 0.4}
+            size: 247, 111
             size_hint: None, None
             background_normal: "../Art/CHALLENGE.png"
             background_down: "../Art/CHALLENGE_DOWN.png"
@@ -38,8 +38,8 @@ ScreenManager:
                 app.DIFFICULTY = "Challenge"
     FloatLayout:
         Button:
-            pos_hint: {"x": 0.25, "y": 0.235}
-            size: 250, 250
+            pos_hint: {"x": 0.27, "y": 0.28}
+            size: 247, 111
             size_hint: None, None
             background_normal: "../Art/EXPERT.png"
             background_down: "../Art/EXPERT_DOWN.png"
@@ -54,9 +54,9 @@ ScreenManager:
         Button:
             background_normal: "../Art/SETTINGS.png"
             background_down: "../Art/SETTINGS_DOWN.png"
-            size: 150, 150
+            size: 130, 87.3
             size_hint: None, None
-            on_release: 
+            on_release:
                 home.btn_press_audio()
                 app.root.current = "Settings"
     AnchorLayout:
@@ -66,9 +66,9 @@ ScreenManager:
         Button:
             background_normal: "../Art/SHARE.png"
             background_down: "../Art/SHARE_DOWN.png"
-            size: 150, 150
+            size: 130, 87.3
             size_hint: None, None
-            on_release: 
+            on_release:
                 home.btn_press_audio()
                 app.root.current = "Share"
     AnchorLayout:
@@ -78,9 +78,9 @@ ScreenManager:
         Button:
             background_normal: "../Art/MORE.png"
             background_down: "../Art/MORE_DOWN.png"
-            size: 150, 150
+            size: 130, 87.3
             size_hint: None, None
-            on_release: 
+            on_release:
                 home.btn_press_audio()
                 app.root.current = "More"
 
@@ -92,22 +92,22 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 90, 270
+        padding: 90, 290
         Button:
             background_normal: "../Art/SOUND.png"
             background_down: "../Art/SOUND_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
-            on_release: 
+            on_release:
                 settings.enable_or_disable_audio()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
-        padding: 90, 270
+        padding: 90, 290
         Button:
             background_normal: "../Art/MUSIC.png"
             background_down: "../Art/MUSIC_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
             on_release:
                 settings.enable_or_disable_music()
@@ -118,7 +118,7 @@ ScreenManager:
         Button:
             background_normal: "../Art/SECURITY.png"
             background_down: "../Art/SECURITY_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "right"
@@ -127,16 +127,16 @@ ScreenManager:
         Button:
             background_normal: "../Art/ADS.png"
             background_down: "../Art/ADS_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, 270
+        padding: 0, 300
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 170, 170
+            size: 150, 100.7
             size_hint: None, None
             on_release: app.root.current = "Home"
 
@@ -147,20 +147,20 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 90, 270
+        padding: 90, 290
         Button:
             background_normal: "../Art/IG.png"
             background_down: "../Art/IG_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
-        padding: 90, 270
+        padding: 90, 290
         Button:
             background_normal: "../Art/TWT.png"
             background_down: "../Art/TWT_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "left"
@@ -169,7 +169,7 @@ ScreenManager:
         Button:
             background_normal: "../Art/FB.png"
             background_down: "../Art/FB_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "right"
@@ -178,16 +178,16 @@ ScreenManager:
         Button:
             background_normal: "../Art/Link.png"
             background_down: "../Art/LINK_DOWN.png"
-            size: 200, 200
+            size: 175.2, 117.6
             size_hint: None, None
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, 270
+        padding: 0, 300
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 170, 170
+            size: 150, 100.7
             size_hint: None, None
             on_release: app.root.current = "Home"
 
@@ -198,11 +198,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "top"
-        padding: 0, 270
+        padding: 0, 290
         Button:
             background_normal: "../Art/RATE.png"
             background_down: "../Art/RATE_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "center"
@@ -210,25 +210,25 @@ ScreenManager:
         Button:
             background_normal: "../Art/CONTACT.png"
             background_down: "../Art/CONTACT_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, 270
+        padding: 0, 290
         Button:
             background_normal: "../Art/ABOUT.png"
             background_down: "../Art/ABOUT_DOWN.png"
-            size: 200, 200
+            size: 175, 117.5
             size_hint: None, None
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, 130
+        padding: 0, 180
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 170, 170
+            size: 140, 94
             size_hint: None, None
             on_release: app.root.current = "Home"
 
@@ -246,11 +246,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 70, 70
+        padding: 70, 108
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 170, 170
+            size: 150, 100.7
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -260,11 +260,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
-        padding: 70, 70
+        padding: 70, 108
         Button:
             background_normal: "../Art/SETTINGS.png"
             background_down: "../Art/SETTINGS_DOWN.png"
-            size: 170, 170
+            size: 150, 100.7
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -273,11 +273,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
-        padding: 70, 110
+        padding: 70, 133
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 170, 170
+            size: 150, 100.7
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -288,26 +288,26 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
-        padding: 70, 110
+        padding: 70, 133
         Button:
             background_normal: "../Art/MENU.png"
             background_down: "../Art/MENU_DOWN.png"
-            size: 170, 170
+            size: 150, 100.7
             size_hint: None, None
             #on_release: app.root.current = ""
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, -50
+        padding: 0, 15
         Button:
             background_normal: "../Art/RESUME.png"
             background_down: "../Art/RESUME_DOWN.png"
-            size: 295, 265
+            size: 247, 111
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 pop.dismiss()
 
@@ -319,14 +319,14 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: -10, 23
+        padding: 10, 60
         Button:
             background_normal: "../Art/PAUSE.png"
             background_down: "../Art/PAUSE_DOWN.png"
             #pos: 0, 540
-            size: 140, 140
+            size: 100, 67.1
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_pause()
     BoxLayout:
@@ -334,9 +334,9 @@ ScreenManager:
         Label:
             text: ""
         Label:
-            id: Instructions
-            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture in the top-right to win, good luck!"
-            halign: "center"
+            text: ""
+        Label:
+            text: ""
         Label:
             text: ""
         Label:
@@ -346,14 +346,19 @@ ScreenManager:
             size: self.texture_size
             pos_hint: {'right': 1}
         Label:
+            id: Instructions
+            text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture at the top to win, good luck!"
+            font_name: "../Art/Montserrat-Light.otf"
+            halign: "center"
+        Label:
             id: moves
+            font_name: "../Art/Montserrat-Light.otf"
             valign: "bottom"
-        
+
 
 <GameLose>:
     id: pop
     name: "GameLose"
-   # opacity: 0
     size: 450, 450
     size_hint: None, None
     auto_dismiss: False
@@ -363,11 +368,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "top"
-        padding: 0, 90
+        padding: 0, 115
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 230, 230
+            size: 219, 147
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -376,11 +381,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, -15
+        padding: 0, 25
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 230, 230
+            size: 219, 147
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -392,7 +397,6 @@ ScreenManager:
 <GameWin>:
     id: pop
     name: "GameWin"
-   # opacity: 0
     size: 450, 450
     size_hint: None, None
     auto_dismiss: False
@@ -402,11 +406,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "top"
-        padding: 0, 90
+        padding: 0, 115
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 230, 230
+            size: 219, 147
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -415,11 +419,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
-        padding: 0, -15
+        padding: 0, 25
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 230, 230
+            size: 219, 147
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
