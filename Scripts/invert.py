@@ -198,7 +198,7 @@ class PlayScreen(Screen):
     def reset_board(self):
         self.moves_made = 0
         if self.game_mode == "Classic":
-            self.ids.moves.text = ""
+            self.ids.moves.text = "Moves Made: " + str(self.moves_made)
         else:
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
