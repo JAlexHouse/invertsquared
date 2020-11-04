@@ -13,7 +13,8 @@ from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
 import random
 import os
-
+import time
+from threading import Thread, Timer
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -78,7 +79,7 @@ class PlayScreen(Screen):
     cols = 3
     moves_made = BoundedNumericProperty(0)
     max_moves = BoundedNumericProperty(15)
-    time_limit_sec = BoundedNumericProperty(30)
+    time_limit_sec = 15
     time_remaining = StringProperty()
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols)
@@ -88,9 +89,10 @@ class PlayScreen(Screen):
     game_tile_sound = None
     filename = os.path.join(dirname, '../Levels/1.txt')
     level = open(filename)
-
+    timer = 0
     def on_enter(self):
         self.set_mode()
+        self.timer = Timer(self.time_limit_sec, self.open_lost)
         if not self.random:
             self.level = open(self.filename)
             self.rows = int(self.level.read(1))
@@ -110,6 +112,13 @@ class PlayScreen(Screen):
 
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
+        if self.game_mode == "Expert":
+            self.timer.start()
+        # start_time = time.time()
+        # elapsed_time = time.time() - start_time
+        # while elapsed_time < self.time_limit_sec:
+        #     elapsed_time = time.time() - start_time
+        #     print(self.time_limit_sec - int(elapsed_time))
         
 
     def generate_grid(self):
@@ -224,10 +233,12 @@ class PlayScreen(Screen):
     def open_won(self):
         popup = GameWin()
         popup.open()
+        self.clear_game()
 
     def open_lost(self):
         popup = GameLose()
         popup.open()
+        self.clear_game()
 
     def set_mode(self):
         app = App.get_running_app()
