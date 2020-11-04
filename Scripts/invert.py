@@ -14,6 +14,7 @@ from kivy.core.audio import SoundLoader
 import random
 import os
 
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -74,27 +75,26 @@ class WinScreen(Screen):
 
 class PlayScreen(Screen):
     game_mode = ""
+    current_level = {}
     rows = 3
     cols = 3
     moves_made = BoundedNumericProperty(0)
     max_moves = BoundedNumericProperty(15)
     time_limit_sec = BoundedNumericProperty(30)
     time_remaining = StringProperty()
-    gridlayout = GridLayout(rows=rows, cols=cols)
-    answerlayout = GridLayout(rows=rows, cols=cols)
+    gridlayout = None
+    answerlayout = None
     button_ids = {}
     random = False
     resume = False
     game_tile_sound = None
-    filename = os.path.join(dirname, '../Levels/1.txt')
-    level = open(filename)
+    filename = None
+    level = None
 
     def on_enter(self):
         self.set_mode()
-        if not self.random:
-            self.level = open(self.filename)
-            self.rows = int(self.level.read(1))
-            self.cols = int(self.level.read(1))
+        self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
+        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
         if not self.resume:
             # generate answer key
             self.generate_answer()
@@ -107,6 +107,7 @@ class PlayScreen(Screen):
             self.gridlayout.size_hint = [0.75, 0.43]  # height, width
             self.gridlayout.pos = (0.13*self.width, 0.25*self.height)  # x, y
             self.add_widget(self.gridlayout)
+            self.user_key = "0" * self.rows * self.cols
 
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
@@ -121,25 +122,35 @@ class PlayScreen(Screen):
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
 
     def generate_answer(self):
-        for i in range(self.rows):
-            for j in range(self.cols):
+        if not self.random:
+            for color in self.level[2:]:
                 button = Button()
-                if self.random:
-                    color = random.randint(0, 1)
-                else:
-                    color = int(self.level.read(1))
-                    print(color)
-                if color:
+                if int(color):
                     button.background_normal = "../Art/TILE_DOWN.png"
                     button.background_down = "../Art/TILE_DOWN.png"
                 else:
                     button.background_normal = "../Art/TILE.png"
                     button.background_down = "../Art/TILE.png"
                 self.answerlayout.add_widget(button, len(self.answerlayout.children))
-        # if all answer tiles are grey, then redo the answer generation process
-        if all([button.background_normal == "../Art/TILE.png" for button in self.answerlayout.children]):
-            self.answerlayout.clear_widgets()
-            self.generate_answer()
+            return
+
+        else:
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    button = Button()
+                    color = random.randint(0, 1)
+
+                    if color:
+                        button.background_normal = "../Art/TILE_DOWN.png"
+                        button.background_down = "../Art/TILE_DOWN.png"
+                    else:
+                        button.background_normal = "../Art/TILE.png"
+                        button.background_down = "../Art/TILE.png"
+                    self.answerlayout.add_widget(button, len(self.answerlayout.children))
+            # if all answer tiles are grey, then redo the answer generation process
+            if all([button.background_normal == "../Art/TILE.png" for button in self.answerlayout.children]):
+                self.answerlayout.clear_widgets()
+                self.generate_answer()
 
     def move_made(self, instance):
         self.game_tile_sound.play()
@@ -148,6 +159,7 @@ class PlayScreen(Screen):
         index = self.get_index_by_tile_id(col, row)
         self.moves_made += 1
         self.change_tile_color(index)
+        self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
         print("Pressed button {},{}".format(row, col))
 
         # check if NOT top row
@@ -214,14 +226,15 @@ class PlayScreen(Screen):
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
-        if not self.random:
-            self.level.close()
+        # if not self.random:
+        #     self.level.close()
 
     def open_pause(self):
         popup = Pause()
         popup.open()
 
     def open_won(self):
+        self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.open()
 
@@ -232,9 +245,31 @@ class PlayScreen(Screen):
     def set_mode(self):
         app = App.get_running_app()
         self.game_mode = app.DIFFICULTY
+
+        # Initialize what level we are on for each difficulty level
+        if self.game_mode not in self.current_level:
+            self.current_level[self.game_mode] = 1
+
         if self.game_mode == "Classic":
-            self.random = False
-            self.ids.moves.text = ""
+            self.filename = os.path.join(dirname, '../Levels/Classic.txt')
+
+            with open(self.filename) as f:
+                for _ in range(self.current_level[self.game_mode] - 1):
+                    next(f)
+                # level data in the format col|row|tilecolor(col*row amount of tiles)
+                level_info = f.readline().rstrip('\n').split(' ')
+                self.level = level_info[0]
+                self.answer_key = level_info[1] if len(level_info) > 1 else None
+            
+            # reached end of file: will read random levels now
+            if self.level == '':
+                self.random = True
+                self.ids.moves.text = ""
+            else:
+                self.rows = int(self.level[0])
+                self.cols = int(self.level[1])
+                self.random = False
+                self.ids.moves.text = ""
         else:
             self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
