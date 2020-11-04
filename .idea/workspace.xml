@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="455b5604-cc71-4783-b9a2-f59efbd209b5" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="7e37ecf0-7b44-48cd-9ad0-57e7dec57db3" />
+  <component name="ProjectId" id="1itSzKylFoSxVxxqm3qQxcUsbyH" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="invert" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Python\Python385\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Scripts/invert.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="455b5604-cc71-4783-b9a2-f59efbd209b5" name="Default Changelist" comment="" />
+      <created>1602725658228</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602725658228</updated>
+      <workItem from="1602725659676" duration="123000" />
+      <workItem from="1602726319578" duration="32000" />
+      <workItem from="1602726378517" duration="280000" />
+      <workItem from="1602768829228" duration="18210000" />
+      <workItem from="1603072845213" duration="19000" />
+      <workItem from="1603159101637" duration="770000" />
+      <workItem from="1603159974008" duration="208000" />
+      <workItem from="1603209641776" duration="180000" />
+      <workItem from="1603211942096" duration="115000" />
+      <workItem from="1603835661416" duration="728000" />
+      <workItem from="1603935661233" duration="621000" />
+      <workItem from="1604109570391" duration="603000" />
+      <workItem from="1604155952069" duration="53000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="4574" y="355" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603159409930">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state x="4574" y="355" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1603159409930" />
+    <state x="4304" y="484" width="1346" height="630" key="DiffContextDialog" timestamp="1602800710859">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state x="4304" y="484" width="1346" height="630" key="DiffContextDialog/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1602800710859" />
+    <state x="4900" y="455" key="FileChooserDialogImpl" timestamp="1603835701306">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state x="4900" y="455" key="FileChooserDialogImpl/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1603835701306" />
+    <state width="1476" height="176" key="GridCell.Tab.0.bottom" timestamp="1604156004977">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1476" height="176" key="GridCell.Tab.0.bottom/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1604156004977" />
+    <state width="1476" height="176" key="GridCell.Tab.0.center" timestamp="1604156004977">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1476" height="176" key="GridCell.Tab.0.center/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1604156004977" />
+    <state width="1476" height="176" key="GridCell.Tab.0.left" timestamp="1604156004976">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1476" height="176" key="GridCell.Tab.0.left/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1604156004976" />
+    <state width="1476" height="176" key="GridCell.Tab.0.right" timestamp="1604156004977">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1476" height="176" key="GridCell.Tab.0.right/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1604156004977" />
+    <state x="4712" y="433" key="Vcs.Push.Dialog.v2" timestamp="1602800583336">
+      <screen x="3840" y="0" width="2560" height="1400" />
+    </state>
+    <state x="4712" y="433" key="Vcs.Push.Dialog.v2/0.0.1536.824/3840.0.2560.1400@3840.0.2560.1400" timestamp="1602800583336" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/invertsquared$invert.coverage" NAME="invert Coverage Results" MODIFIED="1604155959206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/invertsquared$Invert.coverage" NAME="invert Coverage Results" MODIFIED="1603159715235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+</project>
