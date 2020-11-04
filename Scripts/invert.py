@@ -71,6 +71,8 @@ class SettingsScreen(Screen):
 class ShareScreen(Screen):
     pass
 
+class LevelScreen(Screen):
+    pass
 
 class MoreScreen(Screen):
     pass

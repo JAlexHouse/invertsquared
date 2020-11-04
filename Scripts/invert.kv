@@ -8,6 +8,7 @@ ScreenManager:
     MoreScreen:
     PlayScreen:
         id: play
+    LevelScreen:
 
 <HomeScreen>:
     name: "Home"
@@ -294,9 +295,10 @@ ScreenManager:
             background_down: "../Art/MENU_DOWN.png"
             size: 150, 100.7
             size_hint: None, None
-            #on_release: app.root.current = ""
+            #on_release: app.root.current = "Level"
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.current = "Level"
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "center"
@@ -443,3 +445,102 @@ ScreenManager:
     Image:
         source: "../Art/PAUSESCR.png"
     #need to add a new background for this
+
+
+
+<LevelScreen>:
+    name: "Level"
+    id: level
+    # need to add graphics for levels screen
+    Image:
+        source: "../Art/HOMESCR.png"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "1"
+            pos_hint: {"x": 0.1, "y": 0.7}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "2"
+            pos_hint: {"x": 0.4, "y": 0.7}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "3"
+            pos_hint: {"x": 0.7, "y": 0.7}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE_DOWN.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "4"
+            pos_hint: {"x": 0.1, "y": 0.5}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE_DOWN.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "5"
+            pos_hint: {"x": 0.4, "y": 0.5}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE_DOWN.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "6"
+            pos_hint: {"x": 0.7, "y": 0.5}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "7"
+            pos_hint: {"x": 0.1, "y": 0.3}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "8"
+            pos_hint: {"x": 0.4, "y": 0.3}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "9"
+            pos_hint: {"x": 0.7, "y": 0.3}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.root.current = "Play"
