@@ -200,6 +200,8 @@ class PlayScreen(Screen):
                     print("Oops, you lost!")
                     self.open_lost()
                     self.clear_game()
+            else:
+                self.ids.moves.text = "Moves Made: " + str(self.moves_made)
 
     def reset_board(self):
         self.moves_made = 0
@@ -245,7 +247,7 @@ class PlayScreen(Screen):
 
         if self.game_mode == "Classic":
             self.filename = os.path.join(dirname, '../Levels/Classic.txt')
-            self.ids.moves.text = ""
+            self.ids.moves.text = "Moves Made: " + str(self.moves_made)
 
             with open(self.filename) as f:
                 for _ in range(self.current_level[self.game_mode] - 1):
