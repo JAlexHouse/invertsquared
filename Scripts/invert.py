@@ -122,35 +122,30 @@ class PlayScreen(Screen):
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
 
     def generate_answer(self):
-        if not self.random:
-            for color in self.level[2:]:
-                button = Button()
-                if int(color):
-                    button.background_normal = "../Art/TILE_DOWN.png"
-                    button.background_down = "../Art/TILE_DOWN.png"
-                else:
-                    button.background_normal = "../Art/TILE.png"
-                    button.background_down = "../Art/TILE.png"
-                self.answerlayout.add_widget(button, len(self.answerlayout.children))
-            return
+        for _ in range(self.rows*self.cols):
+            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+            self.answerlayout.add_widget(button, len(self.answerlayout.children))
+        
+        # if random, generate new answer_key
+        if self.random:
+            # while loop to make sure at least one tile is pressed
+            while True:
+                self.answer_key = ""
+                for _ in range(self.rows*self.cols):
+                    self.answer_key = self.answer_key + str(random.randint(0, 1))
+                if "1" in self.answer_key:
+                    break
 
-        else:
-            for i in range(self.rows):
-                for j in range(self.cols):
-                    button = Button()
-                    color = random.randint(0, 1)
+        for index in range(len(self.answerlayout.children)):
+            if self.answer_key[index] == "1":
+                row, col = self.get_row_col_by_index(index)
+                self.change_surrounding_tiles(index, row, col, is_answer_grid=True)
+        
+    def get_index_by_tile_id(self, col, row):
+        return row * self.cols + col
 
-                    if color:
-                        button.background_normal = "../Art/TILE_DOWN.png"
-                        button.background_down = "../Art/TILE_DOWN.png"
-                    else:
-                        button.background_normal = "../Art/TILE.png"
-                        button.background_down = "../Art/TILE.png"
-                    self.answerlayout.add_widget(button, len(self.answerlayout.children))
-            # if all answer tiles are grey, then redo the answer generation process
-            if all([button.background_normal == "../Art/TILE.png" for button in self.answerlayout.children]):
-                self.answerlayout.clear_widgets()
-                self.generate_answer()
+    def get_row_col_by_index(self, index):
+        return (index // self.cols, index % self.cols)
 
     def move_made(self, instance):
         self.game_tile_sound.play()
@@ -158,59 +153,57 @@ class PlayScreen(Screen):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
         self.moves_made += 1
-        self.change_tile_color(index)
         self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
         print("Pressed button {},{}".format(row, col))
 
+        self.change_surrounding_tiles(index, row, col)
+        
+        self.goal_reached()
+
+    def change_surrounding_tiles(self, index, row, col, is_answer_grid=False):
+        self.change_tile_color(index, is_answer_grid)
         # check if NOT top row
         if (row < self.rows - 1):
             top_index = self.get_index_by_tile_id(col, row + 1)
-            self.change_tile_color(top_index)
+            self.change_tile_color(top_index, is_answer_grid)
         # check if NOT bottom row
         if (row > 0):
             bottom_index = self.get_index_by_tile_id(col, row - 1)
-            self.change_tile_color(bottom_index)
+            self.change_tile_color(bottom_index, is_answer_grid)
         # check if NOT left column
         if (col < self.cols - 1):
             left_index = self.get_index_by_tile_id(col + 1, row)
-            self.change_tile_color(left_index)
+            self.change_tile_color(left_index, is_answer_grid)
         # check if NOT right column
         if (col > 0):
             right_index = self.get_index_by_tile_id(col - 1, row)
-            self.change_tile_color(right_index)
+            self.change_tile_color(right_index, is_answer_grid)
 
-        self.goal_reached()
-
-    def get_index_by_tile_id(self, col, row):
-        return row * self.cols + col
-
-    def change_tile_color(self, index):
-        if self.gridlayout.children[index].background_normal == "../Art/TILE.png":
-            self.gridlayout.children[index].background_normal = "../Art/TILE_DOWN.png"
-            self.gridlayout.children[index].background_down = "../Art/TILE_DOWN.png"
+    def change_tile_color(self, index, is_answer_grid=False):
+        grid = self.gridlayout if not is_answer_grid else self.answerlayout
+        if grid.children[index].background_normal == "../Art/TILE.png":
+            grid.children[index].background_normal = "../Art/TILE_DOWN.png"
+            grid.children[index].background_down = "../Art/TILE_DOWN.png"
         else:
-            self.gridlayout.children[index].background_normal = "../Art/TILE.png"
-            self.gridlayout.children[index].background_down = "../Art/TILE.png"
+            grid.children[index].background_normal = "../Art/TILE.png"
+            grid.children[index].background_down = "../Art/TILE.png"
 
     def goal_reached(self):
-        for i in range(self.cols):
-            for j in range(self.rows):
-                index = self.get_index_by_tile_id(i, j)
-                if self.gridlayout.children[index].background_normal != self.answerlayout.children[index].background_normal:
-                    if self.game_mode != "Classic":
-                        self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
-                        if self.moves_made == self.max_moves:
-                            print("Oops, you lost!")
-                            self.open_lost()
-                            self.clear_game()
-                            return
-                    return
-        print("Yay, you won!")
-        self.open_won()
-        self.clear_game()
+        if self.user_key == self.answer_key:
+            print("Yay, you won!")
+            self.open_won()
+            self.clear_game()
+        else:
+            if self.game_mode != "Classic":
+                self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
+                if self.moves_made == self.max_moves:
+                    print("Oops, you lost!")
+                    self.open_lost()
+                    self.clear_game()
 
     def reset_board(self):
         self.moves_made = 0
+        self.user_key = "0" * self.rows * self.cols
         if self.game_mode == "Classic":
             self.ids.moves.text = ""
         else:
@@ -252,23 +245,19 @@ class PlayScreen(Screen):
 
         if self.game_mode == "Classic":
             self.filename = os.path.join(dirname, '../Levels/Classic.txt')
+            self.ids.moves.text = ""
 
             with open(self.filename) as f:
                 for _ in range(self.current_level[self.game_mode] - 1):
                     next(f)
                 # level data in the format col|row|tilecolor(col*row amount of tiles)
                 level_info = f.readline().rstrip('\n').split(' ')
-                self.level, self.answer_key, *self.star_requirement = level_info
-            
+                rows, cols, self.answer_key, *self.star_requirement = level_info
+                self.rows = int(rows)
+                self.cols = int(cols)
+        
             # reached end of file: will read random levels now
-            if self.level == '':
-                self.random = True
-                self.ids.moves.text = ""
-            else:
-                self.rows = int(self.level[0])
-                self.cols = int(self.level[1])
-                self.random = False
-                self.ids.moves.text = ""
+            self.random = level_info == ''
         else:
             self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
