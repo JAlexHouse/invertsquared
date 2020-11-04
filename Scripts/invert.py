@@ -14,6 +14,8 @@ from kivy.core.audio import SoundLoader
 import random
 import os
 
+from threading import Thread, Timer
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -26,13 +28,27 @@ dirname = os.path.dirname(__file__)
 class GameLose(ModalView):
     def on_open(self):
         game_lose_sound = SoundLoader.load('../Audio/GAME_LOSE.wav')
-        game_lose_sound.play() 
+        game_lose_sound.play()
 
 
 class GameWin(ModalView):
     def on_open(self):
         game_win_sound = SoundLoader.load('../Audio/GAME_WIN.wav')
         game_win_sound.play()
+
+
+class ExpertAnswer(ModalView):
+    def init(self, board):
+        self.board = board
+
+    def on_open(self):
+        self.board.size_hint = [0.4, 0.4]
+        self.board.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
+        self.add_widget(self.board)
+
+    def clean(self):
+        self.remove_widget(self.board)
+        self.dismiss()
 
 
 class HomeScreen(Screen):
@@ -98,9 +114,10 @@ class PlayScreen(Screen):
         if not self.resume:
             # generate answer key
             self.generate_answer()
-            self.answerlayout.size_hint = [0.3, 0.17]
-            self.answerlayout.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
-            self.add_widget(self.answerlayout)
+            if self.game_mode != "Expert":
+                self.answerlayout.size_hint = [0.3, 0.17]
+                self.answerlayout.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
+                self.add_widget(self.answerlayout)
 
             # generate game board
             self.generate_grid()
@@ -109,6 +126,8 @@ class PlayScreen(Screen):
             self.add_widget(self.gridlayout)
 
             self.resume = True
+        if self.game_mode == "Expert":
+            self.open_answer()
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
         
 
@@ -228,6 +247,17 @@ class PlayScreen(Screen):
     def open_lost(self):
         popup = GameLose()
         popup.open()
+
+    # shows the answer for 5 seconds
+    # need to change the color of the background or the tiles
+    def open_answer(self):
+        popup = ExpertAnswer()
+        popup.init(self.answerlayout)
+        popup.open()
+
+        timer = Timer(5.0, popup.clean)
+        timer.start()
+
 
     def set_mode(self):
         app = App.get_running_app()
