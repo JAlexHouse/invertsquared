@@ -258,8 +258,7 @@ class PlayScreen(Screen):
                     next(f)
                 # level data in the format col|row|tilecolor(col*row amount of tiles)
                 level_info = f.readline().rstrip('\n').split(' ')
-                self.level = level_info[0]
-                self.answer_key = level_info[1] if len(level_info) > 1 else None
+                self.level, self.answer_key, *self.star_requirement = level_info
             
             # reached end of file: will read random levels now
             if self.level == '':
