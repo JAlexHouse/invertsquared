@@ -26,6 +26,8 @@ GAMEPLAY:
 - 10/20 levels each mode (maybe 20 for Classic/Challenge, 10 for Expert)
   - 3 Difficulty Modes: Classic, Challenge, Expert
 - Classic Mode: image to be replicated in upper right corner; playing with no time limits or move limits; STRATEGY-BASED gameplay
+  - NOTE: for the design prototype, Classic Mode will be a preset, non-random demo level to showcase the game
+  - The answer for the demo level is click the following tiles: top-middle, middle-middle, bottom-right, and bottom-middle
 - Challenge Mode: image to be replicated in upper right corner; playing within a given amount of moves; STRATEGY-BASED gameplay
 - Expert Mode: image will be shown before you begin the level, but will not remain on screen; MEMORY-BASED gameplay; NO HINTS ALLOWED
 
