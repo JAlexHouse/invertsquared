@@ -217,8 +217,8 @@ class PlayScreen(Screen):
         else:
             self.level_stars = 1
         if self.game_mode == 'Classic':
-            if self.stars[self.current_level[self.game_mode]] < self.level_stars:
-                self.stars[self.current_level[self.game_mode]] = self.level_stars
+            if self.stars[self.current_level[self.game_mode]-1] < self.level_stars:
+                self.stars[self.current_level[self.game_mode]-1] = self.level_stars
             print("Number of stars:", sum(self.stars))
 
     def reset_board(self):
