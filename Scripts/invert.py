@@ -93,9 +93,10 @@ class PlayScreen(Screen):
 
     def on_enter(self):
         self.set_mode()
-        self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
-        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
+        
         if not self.resume:
+            self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
+            self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
             # generate answer key
             self.generate_answer()
             self.answerlayout.size_hint = [0.3, 0.17]
@@ -154,10 +155,9 @@ class PlayScreen(Screen):
         index = self.get_index_by_tile_id(col, row)
         self.moves_made += 1
         self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
-        print("Pressed button {},{}".format(row, col))
+        print("Pressed button row: {}, col: {}".format(row, col))
 
         self.change_surrounding_tiles(index, row, col)
-        
         self.goal_reached()
 
     def change_surrounding_tiles(self, index, row, col, is_answer_grid=False):
@@ -219,8 +219,6 @@ class PlayScreen(Screen):
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
-        # if not self.random:
-        #     self.level.close()
 
     def open_pause(self):
         popup = Pause()
@@ -250,15 +248,32 @@ class PlayScreen(Screen):
             with open(self.filename) as f:
                 for _ in range(self.current_level[self.game_mode] - 1):
                     next(f)
-                # level data in the format col|row|tilecolor(col*row amount of tiles)
+                # level data in the format col row answerkey
                 level_info = f.readline().rstrip('\n').split(' ')
-                rows, cols, self.answer_key, *self.star_requirement = level_info
+                rows, cols, self.answer_key = level_info
                 self.rows = int(rows)
                 self.cols = int(cols)
         
             # reached end of file: will read random levels now
             self.random = level_info == ''
+        elif self.game_mode == "Challenge" or self.game_mode == "Expert":
+            self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
+            self.ids.moves.text = ""
+
+            with open(self.filename) as f:
+                for _ in range(self.current_level[self.game_mode] - 1):
+                    next(f)
+                # level data in the format col row answerkey timelimit
+                level_info = f.readline().rstrip('\n').split(' ')
+                rows, cols, self.answer_key, time_limit = level_info
+                self.rows = int(rows)
+                self.cols = int(cols)
+                self.time_limit = float(time_limit)
+
+            # reached end of file: will read random levels now
+            self.random = level_info == ''
         else:
+            # FIXME: add behavior for other difficulty settings
             self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
