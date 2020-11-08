@@ -11,10 +11,12 @@ from kivy.uix.modalview import ModalView
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
+from kivy.clock import Clock
 import random
 import os
 import time
-from threading import Thread, Timer
+from functools import partial
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -79,8 +81,8 @@ class PlayScreen(Screen):
     cols = 3
     moves_made = BoundedNumericProperty(0)
     max_moves = BoundedNumericProperty(15)
-    time_limit_sec = 15
-    time_remaining = StringProperty()
+    time_remaining = BoundedNumericProperty(15)
+    timer = 0
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols)
     button_ids = {}
@@ -89,10 +91,8 @@ class PlayScreen(Screen):
     game_tile_sound = None
     filename = os.path.join(dirname, '../Levels/1.txt')
     level = open(filename)
-    timer = 0
     def on_enter(self):
         self.set_mode()
-        self.timer = Timer(self.time_limit_sec, self.open_lost)
         if not self.random:
             self.level = open(self.filename)
             self.rows = int(self.level.read(1))
@@ -112,13 +112,11 @@ class PlayScreen(Screen):
 
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
+        
         if self.game_mode == "Expert":
-            self.timer.start()
-        # start_time = time.time()
-        # elapsed_time = time.time() - start_time
-        # while elapsed_time < self.time_limit_sec:
-        #     elapsed_time = time.time() - start_time
-        #     print(self.time_limit_sec - int(elapsed_time))
+            self.start_timer()
+        
+
         
 
     def generate_grid(self):
@@ -199,12 +197,10 @@ class PlayScreen(Screen):
                         if self.moves_made == self.max_moves:
                             print("Oops, you lost!")
                             self.open_lost()
-                            self.clear_game()
                             return
                     return
         print("Yay, you won!")
         self.open_won()
-        self.clear_game()
 
     def reset_board(self):
         self.moves_made = 0
@@ -218,7 +214,9 @@ class PlayScreen(Screen):
             tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
+        self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
+        self.time_remaining = 15
         self.gridlayout.clear_widgets()
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
@@ -227,6 +225,8 @@ class PlayScreen(Screen):
             self.level.close()
 
     def open_pause(self):
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         popup = Pause()
         popup.open()
 
@@ -249,6 +249,17 @@ class PlayScreen(Screen):
         else:
             self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
+    def start_timer(self):
+        if self.game_mode == "Expert":
+            self.ids.extra_settings.text = str(self.time_remaining)
+            self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+    #update the timer every sec        
+    def timer_tick(self, *largs):
+        self.time_remaining -= 1
+        self.ids.extra_settings.text = str(self.time_remaining)
+        if self.time_remaining <= 0:
+            self.timer.cancel()
+            self.open_lost()
 
 
 class ScreenManager(ScreenManager):
