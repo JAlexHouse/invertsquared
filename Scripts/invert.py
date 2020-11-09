@@ -81,7 +81,8 @@ class PlayScreen(Screen):
     cols = 3
     moves_made = BoundedNumericProperty(0)
     max_moves = BoundedNumericProperty(15)
-    time_remaining = BoundedNumericProperty(15)
+    time_limit = BoundedNumericProperty(15)
+    time_elapsed = BoundedNumericProperty(0)
     timer = 0
     gridlayout = GridLayout(rows=rows, cols=cols)
     answerlayout = GridLayout(rows=rows, cols=cols)
@@ -204,6 +205,7 @@ class PlayScreen(Screen):
 
     def reset_board(self):
         self.moves_made = 0
+        self.time_elapsed = 0
         if self.game_mode == "Classic":
             self.ids.moves.text = ""
         else:
@@ -212,11 +214,12 @@ class PlayScreen(Screen):
         for tile in self.gridlayout.children:
             tile.background_normal = "../Art/TILE.png"
             tile.background_down = "../Art/TILE_DOWN.png"
+        self.start_timer()
 
     def clear_game(self):
         self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
-        self.time_remaining = 15
+        self.time_elapsed = 0
         self.gridlayout.clear_widgets()
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
@@ -231,11 +234,13 @@ class PlayScreen(Screen):
         popup.open()
 
     def open_won(self):
+        self.timer.cancel()
         popup = GameWin()
         popup.open()
         self.clear_game()
 
     def open_lost(self):
+        self.timer.cancel()
         popup = GameLose()
         popup.open()
         self.clear_game()
@@ -251,13 +256,13 @@ class PlayScreen(Screen):
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
     def start_timer(self):
         if self.game_mode == "Expert":
-            self.ids.extra_settings.text = str(self.time_remaining)
+            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
             self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
     #update the timer every sec        
     def timer_tick(self, *largs):
-        self.time_remaining -= 1
-        self.ids.extra_settings.text = str(self.time_remaining)
-        if self.time_remaining <= 0:
+        self.time_elapsed += 1
+        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+        if self.time_limit - self.time_elapsed <= 0:
             self.timer.cancel()
             self.open_lost()
 
