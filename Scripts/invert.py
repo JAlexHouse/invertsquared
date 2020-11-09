@@ -31,9 +31,31 @@ class GameLose(ModalView):
 
 
 class GameWin(ModalView):
+
     def on_open(self):
         game_win_sound = SoundLoader.load('../Audio/GAME_WIN.wav')
         game_win_sound.play()
+
+        star_layout = BoxLayout(orientation="horizontal")
+        star_layout.size_hint = [1, 0.25]
+        #Replace Tile image with Gray star img, and Tile_Down with yellow star img
+        for _ in range(3):
+            button = Button(background_normal="../Art/TILE.png")
+            star_layout.add_widget(button, len(star_layout.children))
+        star_layout.pos = (50, 50)
+        if self.level_stars == 1:
+            star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
+        elif self.level_stars == 2:
+            star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[1].background_normal = "../Art/TILE_DOWN.png"
+        elif self.level_stars == 3:
+            star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[1].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[0].background_normal = "../Art/TILE_DOWN.png"
+        self.add_widget(star_layout)
+
+    def set_stars(self, stars):
+        self.level_stars = stars
 
 
 class HomeScreen(Screen):
@@ -249,6 +271,7 @@ class PlayScreen(Screen):
     def open_won(self):
         self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
+        popup.set_stars(self.level_stars)
         popup.open()
 
     def open_lost(self):
