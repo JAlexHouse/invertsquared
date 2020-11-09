@@ -40,18 +40,24 @@ class GameWin(ModalView):
         star_layout.size_hint = [1, 0.25]
         #Replace Tile image with Gray star img, and Tile_Down with yellow star img
         for _ in range(3):
-            button = Button(background_normal="../Art/TILE.png")
+            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE.png")
             star_layout.add_widget(button, len(star_layout.children))
         star_layout.pos = (50, 50)
         if self.level_stars == 1:
             star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[2].background_down = "../Art/TILE_DOWN.png"
         elif self.level_stars == 2:
             star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[2].background_down = "../Art/TILE_DOWN.png"
             star_layout.children[1].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[1].background_down = "../Art/TILE_DOWN.png"
         elif self.level_stars == 3:
             star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[2].background_down = "../Art/TILE_DOWN.png"
             star_layout.children[1].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[1].background_down = "../Art/TILE_DOWN.png"
             star_layout.children[0].background_normal = "../Art/TILE_DOWN.png"
+            star_layout.children[0].background_down = "../Art/TILE_DOWN.png"
         self.add_widget(star_layout)
 
     def set_stars(self, stars):
@@ -148,7 +154,7 @@ class PlayScreen(Screen):
 
     def generate_answer(self):
         for _ in range(self.rows*self.cols):
-            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE.png")
             self.answerlayout.add_widget(button, len(self.answerlayout.children))
         
         # if random, generate new answer_key
