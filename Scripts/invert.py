@@ -24,12 +24,14 @@ is_music_enabled = True
 background_music = SoundLoader.load('../Audio/BACKGROUND.wav')
 dirname = os.path.dirname(__file__)
 
+
 # creating .py class (inherently calls on .kv class)
 # alphabetical order ish
 class GameLose(ModalView):
     def on_open(self):
         game_lose_sound = SoundLoader.load('../Audio/GAME_LOSE.wav')
         game_lose_sound.play()
+
 
 class GameWin(ModalView):
     star1 = Image(source='../Art/NOSTAR.png')
@@ -79,6 +81,7 @@ class HomeScreen(Screen):
     def btn_press_audio(self):
         if is_sound_enabled:
             button_press_sound.play()
+
 
 class SettingsScreen(Screen):
     def enable_or_disable_audio(self):
@@ -155,7 +158,12 @@ class PlayScreen(Screen):
             answer_button = Button(text="View Answer", size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
             answer_button.bind(on_release=self.open_answer)
             self.add_widget(answer_button)
-            
+
+        #trying ot implement hints
+        hint_button = Button(text="Hint", size=(100, 67.1), size_hint=(None, None), pos=(420, 760))
+        hint_button.bind(on_release=self.open_answer)
+        self.add_widget(hint_button)
+
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
 
     def generate_grid(self):
@@ -305,11 +313,13 @@ class ScreenManager(ScreenManager):
     def build(self):
         return
 
+
 # app class; runs the app
 class InvertApp(App):
     def build(self):
         background_music.loop = True
         background_music.play()
+
 
 if __name__ == '__main__':
     app = InvertApp()
