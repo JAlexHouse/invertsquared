@@ -61,16 +61,6 @@ class GameWin(ModalView):
         self.stars.add_widget(self.star3)
 
 
-class Hint(ModalView):
-    def on_open(self):
-        self.button = Button(text="HINT NOT DONE", size_hint=(0.5, 0.2))
-        self.button.bind(on_release=self.clean)
-        self.add_widget(self.button)
-
-    def clean(self, instance=0):
-        self.remove_widget(self.button)
-        self.dismiss()
-
 class ExpertAnswer(ModalView):
     def init(self, board, time):
         self.board = board
@@ -173,7 +163,7 @@ class PlayScreen(Screen):
 
         #trying ot implement hints
         hint_button = Button(text="Hint", size=(100, 67.1), size_hint=(None, None), pos=(420, 760))
-        hint_button.bind(on_release=self.open_hint)
+        hint_button.bind(on_release=self.get_hint)
         self.add_widget(hint_button)
 
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
@@ -312,9 +302,8 @@ class PlayScreen(Screen):
             timer = Timer(5.0, self.answer.clean)
             timer.start()
 
-    def open_hint(self, instance):
-        hint = Hint()
-        hint.open()
+    def get_hint(self, instance=0):
+        pass
 
     def set_mode(self):
         app = App.get_running_app()
@@ -334,16 +323,20 @@ class PlayScreen(Screen):
             self.ids.moves.text = ""
 
             with open(self.filename) as f:
-                for _ in range(self.current_level[self.game_mode] - 1):
-                    next(f)
-                # level data in the format col row answerkey
-                level_info = f.readline().rstrip('\n').split(' ')
-                rows, cols, self.answer_key = level_info
-                self.rows = int(rows)
-                self.cols = int(cols)
-
-            # reached end of file: will read random levels now
-            self.random = level_info == ''
+                try:
+                    for _ in range(self.current_level[self.game_mode] - 1):
+                        next(f)
+                    # level data in the format col row answerkey
+                    level_info = f.readline().rstrip('\n').split(' ')
+                    print("here")
+                    print(level_info)
+                    rows, cols, self.answer_key = level_info
+                    self.rows = int(rows)
+                    self.cols = int(cols)
+                    self.random = False
+                except Exception:
+                    # reached end of file: will read random levels now
+                    self.random = True
         elif self.game_mode == "Challenge" or self.game_mode == "Expert":
             self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
             self.ids.moves.text = ""
