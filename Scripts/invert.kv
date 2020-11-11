@@ -407,26 +407,26 @@ ScreenManager:
     Image:
         source: "../Art/WIN.png"
     AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
-        padding: 0, 115
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 60, 25
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 219, 147
+            size: 150, 100.65
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 pop.dismiss()
     AnchorLayout:
-        anchor_x: "center"
+        anchor_x: "right"
         anchor_y: "bottom"
-        padding: 0, 25
+        padding: 50, 25
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 219, 147
+            size: 150, 100.65
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -477,6 +477,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 1
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -487,6 +488,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 2
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -497,6 +499,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 3
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -507,6 +510,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 4
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -517,6 +521,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 5
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -527,6 +532,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 6
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -537,6 +543,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 7
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -547,6 +554,7 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 8
                 app.root.current = "Play"
     FloatLayout:
         Button:
@@ -557,4 +565,5 @@ ScreenManager:
             size: 130, 130
             size_hint: None, None
             on_release:
+                app.STARTLEVEL = 9
                 app.root.current = "Play"
