@@ -13,8 +13,9 @@ from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
 import random
 import os
+from kivy.uix.image import Image
 
-from threading import Thread, Timer
+from threading import Timer
 
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
@@ -30,23 +31,46 @@ class GameLose(ModalView):
         game_lose_sound = SoundLoader.load('../Audio/GAME_LOSE.wav')
         game_lose_sound.play()
 
-
 class GameWin(ModalView):
+    star1 = Image(source='../Art/NOSTAR.png')
+    star2 = Image(source='../Art/NOSTAR.png')
+    star3 = Image(source='../Art/NOSTAR.png')
+
     def on_open(self):
         game_win_sound = SoundLoader.load('../Audio/GAME_WIN.wav')
         game_win_sound.play()
 
+#        self.stars.pos_hint =   # x, y
+        self.add_widget(self.stars)
+
+    def stars(self, score):
+        if score > 0:
+            self.star1 = Image(source='../Art/GOLDSTAR.png')
+        if score > 1:
+            self.star2 = Image(source='../Art/GOLDSTAR.png')
+        if score > 2:
+            self.star3 = Image(source='../Art/GOLDSTAR.png')
+
+        self.stars = BoxLayout(size_hint=(0.75, 0.43), height=20, pos_hint={'top': 1, 'center_x': 0.5})
+        self.stars.add_widget(self.star1)
+        self.stars.add_widget(self.star2)
+        self.stars.add_widget(self.star3)
+
 
 class ExpertAnswer(ModalView):
-    def init(self, board):
+    def init(self, board, time):
         self.board = board
+        if time:
+            self.exit_btn = False
+        else:
+            self.exit_btn = True
 
     def on_open(self):
         self.board.size_hint = [0.4, 0.4]
         self.board.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
         self.add_widget(self.board)
 
-    def clean(self):
+    def clean(self, instance=0):
         self.remove_widget(self.board)
         self.dismiss()
 
@@ -71,8 +95,10 @@ class SettingsScreen(Screen):
 class ShareScreen(Screen):
     pass
 
+
 class LevelScreen(Screen):
     pass
+
 
 class MoreScreen(Screen):
     pass
@@ -83,10 +109,6 @@ class PauseScreen(Screen):
 
 
 class Pause(ModalView):
-    pass
-
-
-class WinScreen(Screen):
     pass
 
 
@@ -129,9 +151,12 @@ class PlayScreen(Screen):
 
             self.resume = True
         if self.game_mode == "Expert":
-            self.open_answer()
+            self.open_answer("init")
+            answer_button = Button(text="View Answer", size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
+            answer_button.bind(on_release=self.open_answer)
+            self.add_widget(answer_button)
+            
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
-        
 
     def generate_grid(self):
         for i in range(self.rows):
@@ -244,6 +269,7 @@ class PlayScreen(Screen):
 
     def open_won(self):
         popup = GameWin()
+        popup.stars(2)
         popup.open()
 
     def open_lost(self):
@@ -252,14 +278,17 @@ class PlayScreen(Screen):
 
     # shows the answer for 5 seconds
     # need to change the color of the background or the tiles
-    def open_answer(self):
-        popup = ExpertAnswer()
-        popup.init(self.answerlayout)
-        popup.open()
+    def open_answer(self, instance):
+        self.answer = ExpertAnswer()
+        if instance == "init":
+            self.answer.init(self.answerlayout, True)
+        else:
+            self.answer.init(self.answerlayout, False)
+        self.answer.open()
 
-        timer = Timer(5.0, popup.clean)
-        timer.start()
-
+        if instance == "init":
+            timer = Timer(5.0, self.answer.clean)
+            timer.start()
 
     def set_mode(self):
         app = App.get_running_app()

@@ -24,7 +24,7 @@ ScreenManager:
             background_down: "../Art/CLASSIC_DOWN.png"
             on_release:
                 home.btn_press_audio()
-                app.root.current = "Play"
+                app.root.current = "Level"
                 app.DIFFICULTY = "Classic"
     FloatLayout:
         Button:
@@ -35,7 +35,7 @@ ScreenManager:
             background_down: "../Art/CHALLENGE_DOWN.png"
             on_release:
                 home.btn_press_audio()
-                app.root.current = "Play"
+                app.root.current = "Level"
                 app.DIFFICULTY = "Challenge"
     FloatLayout:
         Button:
@@ -46,7 +46,7 @@ ScreenManager:
             background_down: "../Art/EXPERT_DOWN.png"
             on_release:
                 home.btn_press_audio()
-                app.root.current = "Play"
+                app.root.current = "Level"
                 app.DIFFICULTY = "Expert"
     AnchorLayout:
         anchor_x: "left"
@@ -331,6 +331,7 @@ ScreenManager:
             on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_pause()
+
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -436,7 +437,7 @@ ScreenManager:
 
 
 <ExpertAnswer>
-    id: pop
+    id: expertanswer
     name: "ExpertAnswer"
     size: 450, 450
     size_hint: None, None
@@ -445,15 +446,28 @@ ScreenManager:
     Image:
         source: "../Art/PAUSESCR.png"
     #need to add a new background for this
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 20, 25
+        Button:
+            #pos: 0, 540
+            size: 50, 50
+            size_hint: None, None
+            background_color: 0,0,0,0
+            text: "X"
+            on_release:
+                expertanswer.clean()
 
 
 
+# could do dark tiles for levels not yet reached (or some color coding)
 <LevelScreen>:
     name: "Level"
     id: level
     # need to add graphics for levels screen
     Image:
-        source: "../Art/HOMESCR.png"
+        source: "../Art/CHALLENGELVLSCR.png"
     FloatLayout:
         Button:
             background_normal: "../Art/TILE.png"
