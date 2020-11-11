@@ -60,6 +60,11 @@ class GameWin(ModalView):
         self.stars.add_widget(self.star2)
         self.stars.add_widget(self.star3)
 
+    def clean(self):
+        self.stars.clear_widgets()
+        self.remove_widget(self.stars)
+        self.dismiss()
+
 
 class ExpertAnswer(ModalView):
     def init(self, board, time):
@@ -303,7 +308,28 @@ class PlayScreen(Screen):
             timer.start()
 
     def get_hint(self, instance=0):
-        pass
+        #compare the user and answer key and the first place with a difference changes color for 2 seconds
+        for i in range(self.rows*self.cols):
+            if self.user_key[i] != self.answer_key[i]:
+                self.hintloc = i
+                break
+
+        self.gridlayout.children[self.hintloc].background_normal = "yellow"
+        timer = Timer(2.0, self.reverse_hint)
+        timer.start()
+
+    def reverse_hint(self):
+        print("bruh")
+        print(self.hintloc)
+#        if self.user_key[self.hintloc] == 1:
+#            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
+#        else:
+#            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
+
+
+
+#        self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
+
 
     def set_mode(self):
         app = App.get_running_app()
@@ -328,8 +354,6 @@ class PlayScreen(Screen):
                         next(f)
                     # level data in the format col row answerkey
                     level_info = f.readline().rstrip('\n').split(' ')
-                    print("here")
-                    print(level_info)
                     rows, cols, self.answer_key = level_info
                     self.rows = int(rows)
                     self.cols = int(cols)
@@ -342,17 +366,18 @@ class PlayScreen(Screen):
             self.ids.moves.text = ""
 
             with open(self.filename) as f:
-                for _ in range(self.current_level[self.game_mode] - 1):
-                    next(f)
-                # level data in the format col row answerkey timelimit
-                level_info = f.readline().rstrip('\n').split(' ')
-                rows, cols, self.answer_key, time_limit = level_info
-                self.rows = int(rows)
-                self.cols = int(cols)
-                self.time_limit = float(time_limit)
-
-            # reached end of file: will read random levels now
-            self.random = level_info == ''
+                try:
+                    for _ in range(self.current_level[self.game_mode] - 1):
+                        next(f)
+                    # level data in the format col row answerkey timelimit
+                    level_info = f.readline().rstrip('\n').split(' ')
+                    rows, cols, self.answer_key, time_limit = level_info
+                    self.rows = int(rows)
+                    self.cols = int(cols)
+                    self.time_limit = float(time_limit)
+                except Exception:
+                    # reached end of file: will read random levels now
+                    self.random = level_info == ''
         else:
             # FIXME: add behavior for other difficulty settings
             self.random = True

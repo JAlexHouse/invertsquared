@@ -398,7 +398,7 @@ ScreenManager:
                 pop.dismiss()
 
 <GameWin>:
-    id: pop
+    id: gamewin
     name: "GameWin"
     size: 450, 450
     size_hint: None, None
@@ -418,7 +418,7 @@ ScreenManager:
             on_release:
                 app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
-                pop.dismiss()
+                gamewin.clean()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "bottom"
@@ -433,7 +433,7 @@ ScreenManager:
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()
-                pop.dismiss()
+                gamewin.clean()
 
 
 <ExpertAnswer>
