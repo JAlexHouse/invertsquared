@@ -85,7 +85,7 @@ class PlayScreen(Screen):
     max_moves = BoundedNumericProperty(15)
     time_limit = BoundedNumericProperty(15)
     time_elapsed = BoundedNumericProperty(0)
-    timer = 0
+    timer = None
     gridlayout = None
     answerlayout = None
     button_ids = {}
