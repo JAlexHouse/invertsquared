@@ -254,17 +254,14 @@ class PlayScreen(Screen):
         # Initialize what level we are on for each difficulty level
         if self.game_mode not in self.current_level:
             self.current_level[self.game_mode] = 1
-
+        self.ids.moves.text = "" 
         if self.game_mode == "Classic":
-            self.filename = os.path.join(dirname, '../Levels/Classic.txt')
-            self.ids.moves.text = ""    
+            self.filename = os.path.join(dirname, '../Levels/Classic.txt')      
         elif self.game_mode == "Challenge":
             self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
-            self.ids.moves.text = ""
         elif self.game_mode == "Expert":
-            self.start_timer()
             self.filename = os.path.join(dirname, '../Levels/Expert.txt')
-            self.ids.moves.text = ""
+            self.start_timer()
         else:
             self.random = True
 
@@ -275,6 +272,7 @@ class PlayScreen(Screen):
                     level_info = line
             # level data in the format col row answerkey
             level_info = level_info.rstrip('\n').split(' ')
+            # if no more pre-determined level data, then set to randomized level generation
             self.random = level_info == ['']
             if self.random:
                 # if randomized, set defaults (including time limit)
