@@ -11,8 +11,11 @@ from kivy.uix.modalview import ModalView
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
+from kivy.clock import Clock
 import random
 import os
+import time
+from functools import partial
 
 
 Window.size = (540, 960)
@@ -80,14 +83,15 @@ class PlayScreen(Screen):
     cols = 3
     moves_made = BoundedNumericProperty(0)
     max_moves = BoundedNumericProperty(15)
-    time_limit_sec = BoundedNumericProperty(30)
-    time_remaining = StringProperty()
+    time_limit = BoundedNumericProperty(15)
+    time_elapsed = BoundedNumericProperty(0)
+    timer = 0
     gridlayout = None
     answerlayout = None
     button_ids = {}
     random = False
     resume = False
-    game_tile_sound = None
+    game_tile_sound = Non
     filename = None
     level = None
 
@@ -112,6 +116,11 @@ class PlayScreen(Screen):
 
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
+        
+        if self.game_mode == "Expert":
+            self.start_timer()
+        
+
         
 
     def generate_grid(self):
@@ -212,26 +221,35 @@ class PlayScreen(Screen):
         for tile in self.gridlayout.children:
             tile.background_normal = "../Art/TILE.png"
             tile.background_down = "../Art/TILE_DOWN.png"
+        self.start_timer()
 
     def clear_game(self):
+        self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
+        self.time_elapsed = 0
         self.gridlayout.clear_widgets()
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
 
     def open_pause(self):
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         popup = Pause()
         popup.open()
 
     def open_won(self):
+        self.timer.cancel()
         self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.open()
+        self.clear_game()
 
     def open_lost(self):
+        self.timer.cancel()
         popup = GameLose()
         popup.open()
+        self.clear_game()
 
     def set_mode(self):
         app = App.get_running_app()
@@ -276,6 +294,17 @@ class PlayScreen(Screen):
             # FIXME: add behavior for other difficulty settings
             self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
+    def start_timer(self):
+        if self.game_mode == "Expert":
+            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+            self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+    #update the timer every sec        
+    def timer_tick(self, *largs):
+        self.time_elapsed += 1
+        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+        if self.time_limit - self.time_elapsed <= 0:
+            self.timer.cancel()
+            self.open_lost()
 
 
 class ScreenManager(ScreenManager):

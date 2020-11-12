@@ -309,10 +309,12 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.ids.play.start_timer()
                 pop.dismiss()
 
 <PlayScreen>:
     name: "Play"
+    id: play
     Image:
         source: "../Art/PLAYSCR.png"
 
