@@ -91,7 +91,7 @@ class PlayScreen(Screen):
     button_ids = {}
     random = False
     resume = False
-    game_tile_sound = Non
+    game_tile_sound = None
     filename = None
     level = None
 
