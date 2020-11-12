@@ -17,6 +17,7 @@ import os
 import time
 from functools import partial
 
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -77,6 +78,7 @@ class WinScreen(Screen):
 
 class PlayScreen(Screen):
     game_mode = ""
+    current_level = {}
     rows = 3
     cols = 3
     moves_made = BoundedNumericProperty(0)
@@ -84,21 +86,21 @@ class PlayScreen(Screen):
     time_limit = BoundedNumericProperty(15)
     time_elapsed = BoundedNumericProperty(0)
     timer = 0
-    gridlayout = GridLayout(rows=rows, cols=cols)
-    answerlayout = GridLayout(rows=rows, cols=cols)
+    gridlayout = None
+    answerlayout = None
     button_ids = {}
     random = False
     resume = False
-    game_tile_sound = None
-    filename = os.path.join(dirname, '../Levels/1.txt')
-    level = open(filename)
+    game_tile_sound = Non
+    filename = None
+    level = None
+
     def on_enter(self):
         self.set_mode()
-        if not self.random:
-            self.level = open(self.filename)
-            self.rows = int(self.level.read(1))
-            self.cols = int(self.level.read(1))
+        
         if not self.resume:
+            self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
+            self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
             # generate answer key
             self.generate_answer()
             self.answerlayout.size_hint = [0.3, 0.17]
@@ -110,6 +112,7 @@ class PlayScreen(Screen):
             self.gridlayout.size_hint = [0.75, 0.43]  # height, width
             self.gridlayout.pos = (0.13*self.width, 0.25*self.height)  # x, y
             self.add_widget(self.gridlayout)
+            self.user_key = "0" * self.rows * self.cols
 
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
@@ -129,25 +132,30 @@ class PlayScreen(Screen):
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
 
     def generate_answer(self):
-        for i in range(self.rows):
-            for j in range(self.cols):
-                button = Button()
-                if self.random:
-                    color = random.randint(0, 1)
-                else:
-                    color = int(self.level.read(1))
-                    print(color)
-                if color:
-                    button.background_normal = "../Art/TILE_DOWN.png"
-                    button.background_down = "../Art/TILE_DOWN.png"
-                else:
-                    button.background_normal = "../Art/TILE.png"
-                    button.background_down = "../Art/TILE.png"
-                self.answerlayout.add_widget(button, len(self.answerlayout.children))
-        # if all answer tiles are grey, then redo the answer generation process
-        if all([button.background_normal == "../Art/TILE.png" for button in self.answerlayout.children]):
-            self.answerlayout.clear_widgets()
-            self.generate_answer()
+        for _ in range(self.rows*self.cols):
+            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+            self.answerlayout.add_widget(button, len(self.answerlayout.children))
+        
+        # if random, generate new answer_key
+        if self.random:
+            # while loop to make sure at least one tile is pressed
+            while True:
+                self.answer_key = ""
+                for _ in range(self.rows*self.cols):
+                    self.answer_key = self.answer_key + str(random.randint(0, 1))
+                if "1" in self.answer_key:
+                    break
+
+        for index in range(len(self.answerlayout.children)):
+            if self.answer_key[index] == "1":
+                row, col = self.get_row_col_by_index(index)
+                self.change_surrounding_tiles(index, row, col, is_answer_grid=True)
+        
+    def get_index_by_tile_id(self, col, row):
+        return row * self.cols + col
+
+    def get_row_col_by_index(self, index):
+        return (index // self.cols, index % self.cols)
 
     def move_made(self, instance):
         self.game_tile_sound.play()
@@ -155,57 +163,56 @@ class PlayScreen(Screen):
         row, col = (int(d) for d in self.button_ids[instance].split(','))
         index = self.get_index_by_tile_id(col, row)
         self.moves_made += 1
-        self.change_tile_color(index)
-        print("Pressed button {},{}".format(row, col))
+        self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
+        print("Pressed button row: {}, col: {}".format(row, col))
 
+        self.change_surrounding_tiles(index, row, col)
+        self.goal_reached()
+
+    def change_surrounding_tiles(self, index, row, col, is_answer_grid=False):
+        self.change_tile_color(index, is_answer_grid)
         # check if NOT top row
         if (row < self.rows - 1):
             top_index = self.get_index_by_tile_id(col, row + 1)
-            self.change_tile_color(top_index)
+            self.change_tile_color(top_index, is_answer_grid)
         # check if NOT bottom row
         if (row > 0):
             bottom_index = self.get_index_by_tile_id(col, row - 1)
-            self.change_tile_color(bottom_index)
+            self.change_tile_color(bottom_index, is_answer_grid)
         # check if NOT left column
         if (col < self.cols - 1):
             left_index = self.get_index_by_tile_id(col + 1, row)
-            self.change_tile_color(left_index)
+            self.change_tile_color(left_index, is_answer_grid)
         # check if NOT right column
         if (col > 0):
             right_index = self.get_index_by_tile_id(col - 1, row)
-            self.change_tile_color(right_index)
+            self.change_tile_color(right_index, is_answer_grid)
 
-        self.goal_reached()
-
-    def get_index_by_tile_id(self, col, row):
-        return row * self.cols + col
-
-    def change_tile_color(self, index):
-        if self.gridlayout.children[index].background_normal == "../Art/TILE.png":
-            self.gridlayout.children[index].background_normal = "../Art/TILE_DOWN.png"
-            self.gridlayout.children[index].background_down = "../Art/TILE_DOWN.png"
+    def change_tile_color(self, index, is_answer_grid=False):
+        grid = self.gridlayout if not is_answer_grid else self.answerlayout
+        if grid.children[index].background_normal == "../Art/TILE.png":
+            grid.children[index].background_normal = "../Art/TILE_DOWN.png"
+            grid.children[index].background_down = "../Art/TILE_DOWN.png"
         else:
-            self.gridlayout.children[index].background_normal = "../Art/TILE.png"
-            self.gridlayout.children[index].background_down = "../Art/TILE.png"
+            grid.children[index].background_normal = "../Art/TILE.png"
+            grid.children[index].background_down = "../Art/TILE.png"
 
     def goal_reached(self):
-        for i in range(self.cols):
-            for j in range(self.rows):
-                index = self.get_index_by_tile_id(i, j)
-                if self.gridlayout.children[index].background_normal != self.answerlayout.children[index].background_normal:
-                    if self.game_mode != "Classic":
-                        self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
-                        if self.moves_made == self.max_moves:
-                            print("Oops, you lost!")
-                            self.open_lost()
-                            return
-                    return
-        print("Yay, you won!")
-        self.open_won()
+        if self.user_key == self.answer_key:
+            print("Yay, you won!")
+            self.open_won()
+            self.clear_game()
+        else:
+            if self.game_mode != "Classic":
+                self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
+                if self.moves_made == self.max_moves:
+                    print("Oops, you lost!")
+                    self.open_lost()
+                    self.clear_game()
 
     def reset_board(self):
         self.moves_made = 0
-        self.time_elapsed = 0
+        self.user_key = "0" * self.rows * self.cols
         if self.game_mode == "Classic":
             self.ids.moves.text = ""
         else:
@@ -224,8 +231,6 @@ class PlayScreen(Screen):
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
-        if not self.random:
-            self.level.close()
 
     def open_pause(self):
         if self.game_mode == "Expert":
@@ -235,6 +240,7 @@ class PlayScreen(Screen):
 
     def open_won(self):
         self.timer.cancel()
+        self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.open()
         self.clear_game()
@@ -248,10 +254,44 @@ class PlayScreen(Screen):
     def set_mode(self):
         app = App.get_running_app()
         self.game_mode = app.DIFFICULTY
+
+        # Initialize what level we are on for each difficulty level
+        if self.game_mode not in self.current_level:
+            self.current_level[self.game_mode] = 1
+
         if self.game_mode == "Classic":
-            self.random = False
+            self.filename = os.path.join(dirname, '../Levels/Classic.txt')
             self.ids.moves.text = ""
+
+            with open(self.filename) as f:
+                for _ in range(self.current_level[self.game_mode] - 1):
+                    next(f)
+                # level data in the format col row answerkey
+                level_info = f.readline().rstrip('\n').split(' ')
+                rows, cols, self.answer_key = level_info
+                self.rows = int(rows)
+                self.cols = int(cols)
+        
+            # reached end of file: will read random levels now
+            self.random = level_info == ''
+        elif self.game_mode == "Challenge" or self.game_mode == "Expert":
+            self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
+            self.ids.moves.text = ""
+
+            with open(self.filename) as f:
+                for _ in range(self.current_level[self.game_mode] - 1):
+                    next(f)
+                # level data in the format col row answerkey timelimit
+                level_info = f.readline().rstrip('\n').split(' ')
+                rows, cols, self.answer_key, time_limit = level_info
+                self.rows = int(rows)
+                self.cols = int(cols)
+                self.time_limit = float(time_limit)
+
+            # reached end of file: will read random levels now
+            self.random = level_info == ''
         else:
+            # FIXME: add behavior for other difficulty settings
             self.random = True
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
     def start_timer(self):
