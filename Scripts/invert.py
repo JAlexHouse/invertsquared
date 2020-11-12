@@ -11,8 +11,11 @@ from kivy.uix.modalview import ModalView
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.core.audio import SoundLoader
+from kivy.clock import Clock
 import random
 import os
+import time
+from functools import partial
 
 
 Window.size = (540, 960)
@@ -108,15 +111,16 @@ class PlayScreen(Screen):
     cols = 3
     moves_made = BoundedNumericProperty(0)
     max_moves = BoundedNumericProperty(15)
-    time_limit_sec = BoundedNumericProperty(30)
-    time_remaining = StringProperty()
+    time_limit = BoundedNumericProperty(15)
+    time_elapsed = BoundedNumericProperty(0)
+    timer = None
     gridlayout = None
     answerlayout = None
     button_ids = {}
     random = False
     resume = False
     game_tile_sound = None
-    filename = None
+    filename = ''
     level = None
     level_stars = 0
     stars = [0] * 20
@@ -124,9 +128,10 @@ class PlayScreen(Screen):
 
     def on_enter(self):
         self.set_mode()
-        self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
-        self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
+        
         if not self.resume:
+            self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
+            self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
             # generate answer key
             self.generate_answer()
             self.answerlayout.size_hint = [0.3, 0.17]
@@ -143,7 +148,6 @@ class PlayScreen(Screen):
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
         
-
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
@@ -186,10 +190,9 @@ class PlayScreen(Screen):
         index = self.get_index_by_tile_id(col, row)
         self.moves_made += 1
         self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
-        print("Pressed button {},{}".format(row, col))
+        print("Pressed button row: {}, col: {}".format(row, col))
 
         self.change_surrounding_tiles(index, row, col)
-        
         self.goal_reached()
 
     def change_surrounding_tiles(self, index, row, col, is_answer_grid=False):
@@ -260,29 +263,38 @@ class PlayScreen(Screen):
         for tile in self.gridlayout.children:
             tile.background_normal = "../Art/TILE.png"
             tile.background_down = "../Art/TILE_DOWN.png"
+        self.start_timer()
 
     def clear_game(self):
+        self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
+        self.time_elapsed = 0
         self.gridlayout.clear_widgets()
         self.answerlayout.clear_widgets()
         self.clear_widgets([self.gridlayout, self.answerlayout])
         self.resume = False
-        # if not self.random:
-        #     self.level.close()
 
     def open_pause(self):
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         popup = Pause()
         popup.open()
 
     def open_won(self):
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.set_stars(self.level_stars)
         popup.open()
+        self.clear_game()
 
     def open_lost(self):
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         popup = GameLose()
         popup.open()
+        self.clear_game()
 
     def set_mode(self):
         app = App.get_running_app()
@@ -291,25 +303,50 @@ class PlayScreen(Screen):
         # Initialize what level we are on for each difficulty level
         if self.game_mode not in self.current_level:
             self.current_level[self.game_mode] = 1
-
+        self.ids.moves.text = "" 
         if self.game_mode == "Classic":
-            self.filename = os.path.join(dirname, '../Levels/Classic.txt')
-            self.ids.moves.text = "Moves Made: " + str(self.moves_made)
-
-            with open(self.filename) as f:
-                for _ in range(self.current_level[self.game_mode] - 1):
-                    next(f)
-                # level data in the format col|row|tilecolor(col*row amount of tiles)
-                level_info = f.readline().rstrip('\n').split(' ')
-                rows, cols, self.answer_key = level_info
-                self.rows = int(rows)
-                self.cols = int(cols)
-        
-            # reached end of file: will read random levels now
-            self.random = level_info == ''
+            self.filename = os.path.join(dirname, '../Levels/Classic.txt')      
+        elif self.game_mode == "Challenge":
+            self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
+        elif self.game_mode == "Expert":
+            self.filename = os.path.join(dirname, '../Levels/Expert.txt')
+            self.start_timer()
         else:
             self.random = True
-            self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
+
+        with open(self.filename) as f:
+            level_info = ""
+            for i, line in enumerate(f):
+                if i + 1 == self.current_level[self.game_mode]:
+                    level_info = line
+            # level data in the format col row answerkey
+            level_info = level_info.rstrip('\n').split(' ')
+            # if no more pre-determined level data, then set to randomized level generation
+            self.random = level_info == ['']
+            if self.random:
+                # if randomized, set defaults (including time limit)
+                rows, cols, time_limit = 3, 3, 15
+                return
+            elif self.game_mode == 'Expert':
+                # if expert, set time limit too
+                rows, cols, self.answer_key, time_limit = level_info
+                self.time_limit = float(time_limit)
+            else:
+                rows, cols, self.answer_key = level_info
+            self.rows = int(rows)
+            self.cols = int(cols)
+
+    def start_timer(self):
+        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+        self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+
+    #update the timer every sec        
+    def timer_tick(self, *largs):
+        self.time_elapsed += 1
+        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+        if self.time_limit - self.time_elapsed <= 0:
+            self.timer.cancel()
+            self.open_lost()
 
 
 class ScreenManager(ScreenManager):
