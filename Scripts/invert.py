@@ -92,7 +92,7 @@ class PlayScreen(Screen):
     random = False
     resume = False
     game_tile_sound = None
-    filename = None
+    filename = ''
     level = None
 
     def on_enter(self):
@@ -117,12 +117,6 @@ class PlayScreen(Screen):
             self.resume = True
         self.game_tile_sound = SoundLoader.load('../Audio/GAME_TILE_PRESS.wav')
         
-        if self.game_mode == "Expert":
-            self.start_timer()
-        
-
-        
-
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
@@ -239,14 +233,16 @@ class PlayScreen(Screen):
         popup.open()
 
     def open_won(self):
-        self.timer.cancel()
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.open()
         self.clear_game()
 
     def open_lost(self):
-        self.timer.cancel()
+        if self.game_mode == "Expert":
+            self.timer.cancel()
         popup = GameLose()
         popup.open()
         self.clear_game()
@@ -261,43 +257,42 @@ class PlayScreen(Screen):
 
         if self.game_mode == "Classic":
             self.filename = os.path.join(dirname, '../Levels/Classic.txt')
-            self.ids.moves.text = ""
-
-            with open(self.filename) as f:
-                for _ in range(self.current_level[self.game_mode] - 1):
-                    next(f)
-                # level data in the format col row answerkey
-                level_info = f.readline().rstrip('\n').split(' ')
-                rows, cols, self.answer_key = level_info
-                self.rows = int(rows)
-                self.cols = int(cols)
-        
-            # reached end of file: will read random levels now
-            self.random = level_info == ''
-        elif self.game_mode == "Challenge" or self.game_mode == "Expert":
+            self.ids.moves.text = ""    
+        elif self.game_mode == "Challenge":
             self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
             self.ids.moves.text = ""
-
-            with open(self.filename) as f:
-                for _ in range(self.current_level[self.game_mode] - 1):
-                    next(f)
-                # level data in the format col row answerkey timelimit
-                level_info = f.readline().rstrip('\n').split(' ')
-                rows, cols, self.answer_key, time_limit = level_info
-                self.rows = int(rows)
-                self.cols = int(cols)
-                self.time_limit = float(time_limit)
-
-            # reached end of file: will read random levels now
-            self.random = level_info == ''
+        elif self.game_mode == "Expert":
+            self.start_timer()
+            self.filename = os.path.join(dirname, '../Levels/Expert.txt')
+            self.ids.moves.text = ""
         else:
-            # FIXME: add behavior for other difficulty settings
             self.random = True
-            self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
+
+        with open(self.filename) as f:
+            level_info = ""
+            for i, line in enumerate(f):
+                if i + 1 == self.current_level[self.game_mode]:
+                    level_info = line
+            # level data in the format col row answerkey
+            level_info = level_info.rstrip('\n').split(' ')
+            self.random = level_info == ['']
+            if self.random:
+                # if randomized, set defaults (including time limit)
+                rows, cols, time_limit = 3, 3, 15
+                return
+            elif self.game_mode == 'Expert':
+                # if expert, set time limit too
+                rows, cols, self.answer_key, time_limit = level_info
+                self.time_limit = float(time_limit)
+            else:
+                rows, cols, self.answer_key = level_info
+            self.rows = int(rows)
+            self.cols = int(cols)
+
     def start_timer(self):
-        if self.game_mode == "Expert":
-            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
-            self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+        self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+
     #update the timer every sec        
     def timer_tick(self, *largs):
         self.time_elapsed += 1
