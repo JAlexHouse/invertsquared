@@ -138,7 +138,10 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 150, 100.7
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
+                
 
 <ShareScreen>:
     name: "Share"
@@ -189,7 +192,9 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 150, 100.7
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
 
 <MoreScreen>:
     name: "More"
@@ -230,7 +235,9 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 140, 94
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
 
 <Pause>
     id: pop
@@ -378,6 +385,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.ids.play.clear_game()
                 app.root.current = "Home"
                 pop.dismiss()
     AnchorLayout:
@@ -416,6 +424,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.ids.play.clear_game()
                 app.root.current = "Home"
                 pop.dismiss()
     AnchorLayout:
