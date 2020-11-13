@@ -240,7 +240,7 @@ class PlayScreen(Screen):
 
     def change_tile_color(self, index, is_answer_grid=False):
         grid = self.gridlayout if not is_answer_grid else self.answerlayout
-        if grid.children[index].background_normal == "../Art/TILE.png":
+        if grid.children[index].background_normal == "../Art/TILE.png" or grid.children[index].background_normal == "tile":
             grid.children[index].background_normal = "../Art/TILE_DOWN.png"
             grid.children[index].background_down = "../Art/TILE_DOWN.png"
         else:
@@ -314,7 +314,11 @@ class PlayScreen(Screen):
                 self.hintloc = i
                 break
 
-        self.gridlayout.children[self.hintloc].background_normal = "yellow"
+        if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE.png":
+            self.gridlayout.children[self.hintloc].background_normal = "tile"
+        else:
+            self.gridlayout.children[self.hintloc].background_normal = "tiledown"
+
         timer = Timer(2.0, self.reverse_hint)
         timer.start()
 
