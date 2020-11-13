@@ -41,27 +41,27 @@ class GameWin(ModalView):
         game_win_sound.play()
 
         star_layout = BoxLayout(orientation="horizontal")
-        star_layout.size_hint = [1, 0.25]
+        star_layout.size_hint = [1, 0.33]
         #Replace Tile image with Gray star img, and Tile_Down with yellow star img
         for _ in range(3):
-            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE.png")
+            button = Button(background_normal="../Art/NOSTAR.png", background_down="../Art/NOSTAR.png")
             star_layout.add_widget(button, len(star_layout.children))
         star_layout.pos = (50, 50)
         if self.level_stars == 1:
-            star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
-            star_layout.children[2].background_down = "../Art/TILE_DOWN.png"
+            star_layout.children[2].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[2].background_down = "../Art/GOLDSTAR.png"
         elif self.level_stars == 2:
-            star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
-            star_layout.children[2].background_down = "../Art/TILE_DOWN.png"
-            star_layout.children[1].background_normal = "../Art/TILE_DOWN.png"
-            star_layout.children[1].background_down = "../Art/TILE_DOWN.png"
+            star_layout.children[2].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[2].background_down = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_down = "../Art/GOLDSTAR.png"
         elif self.level_stars == 3:
-            star_layout.children[2].background_normal = "../Art/TILE_DOWN.png"
-            star_layout.children[2].background_down = "../Art/TILE_DOWN.png"
-            star_layout.children[1].background_normal = "../Art/TILE_DOWN.png"
-            star_layout.children[1].background_down = "../Art/TILE_DOWN.png"
-            star_layout.children[0].background_normal = "../Art/TILE_DOWN.png"
-            star_layout.children[0].background_down = "../Art/TILE_DOWN.png"
+            star_layout.children[2].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[2].background_down = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_down = "../Art/GOLDSTAR.png"
+            star_layout.children[0].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[0].background_down = "../Art/GOLDSTAR.png"
         self.add_widget(star_layout)
 
     def set_stars(self, stars):
