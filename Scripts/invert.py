@@ -18,6 +18,7 @@ import time
 from functools import partial
 
 
+
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
 is_sound_enabled = True
@@ -254,6 +255,7 @@ class PlayScreen(Screen):
 
     def reset_board(self):
         self.moves_made = 0
+        self.time_elapsed = 0
         self.user_key = "0" * self.rows * self.cols
         if self.game_mode == "Classic":
             self.ids.moves.text = "Moves Made: " + str(self.moves_made)
@@ -310,7 +312,6 @@ class PlayScreen(Screen):
             self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
         elif self.game_mode == "Expert":
             self.filename = os.path.join(dirname, '../Levels/Expert.txt')
-            self.start_timer()
         else:
             self.random = True
 
@@ -330,15 +331,20 @@ class PlayScreen(Screen):
             elif self.game_mode == 'Expert':
                 # if expert, set time limit too
                 rows, cols, self.answer_key, time_limit = level_info
-                self.time_limit = float(time_limit)
+                self.time_limit = int(time_limit)
+
+                #start timer after any last changes from reading level text files
+                self.start_timer()
             else:
                 rows, cols, self.answer_key = level_info
             self.rows = int(rows)
             self.cols = int(cols)
+        
 
     def start_timer(self):
-        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
-        self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+        if self.game_mode == 'Expert':  #MUST have this if statement here
+            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+            self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
 
     #update the timer every sec        
     def timer_tick(self, *largs):
