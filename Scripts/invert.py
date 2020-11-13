@@ -34,36 +34,9 @@ class GameLose(ModalView):
 
 
 class GameWin(ModalView):
-    star1 = Image(source='../Art/NOSTAR.png')
-    star2 = Image(source='../Art/NOSTAR.png')
-    star3 = Image(source='../Art/NOSTAR.png')
-
     def on_open(self):
         game_win_sound = SoundLoader.load('../Audio/GAME_WIN.wav')
         game_win_sound.play()
-
-#        self.stars.pos_hint =   # x, y
-        self.add_widget(self.stars)
-
-    def stars(self, score):
-        if score > 0:
-            self.star1 = Image(source='../Art/GOLDSTAR.png')
-        if score > 1:
-            self.star2 = Image(source='../Art/GOLDSTAR.png')
-        if score > 2:
-            self.star3 = Image(source='../Art/GOLDSTAR.png')
-
-        self.stars = GridLayout(rows=1, cols=3)
-        self.stars.size_hint = [0.75, 0.43]
-        self.stars.pos = (0.6*self.width, 0.8*self.height)
-        self.stars.add_widget(self.star1)
-        self.stars.add_widget(self.star2)
-        self.stars.add_widget(self.star3)
-
-    def clean(self):
-        self.stars.clear_widgets()
-        self.remove_widget(self.stars)
-        self.dismiss()
 
 
 class ExpertAnswer(ModalView):
@@ -286,7 +259,6 @@ class PlayScreen(Screen):
     def open_won(self):
         self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
-        popup.stars(2)
         popup.open()
 
     def open_lost(self):
@@ -323,17 +295,10 @@ class PlayScreen(Screen):
         timer.start()
 
     def reverse_hint(self):
-        print("bruh")
-        print(self.hintloc)
-#        if self.user_key[self.hintloc] == 1:
-#            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
-#        else:
-#            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
-
-
-
-#        self.user_key = self.user_key[:index] + ("1" if self.user_key[index] == "0" else "0") + self.user_key[index+1:]
-
+        if self.gridlayout.children[self.hintloc].background_normal == "tiledown":
+            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
+        elif self.gridlayout.children[self.hintloc].background_normal == "tile":
+            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
 
     def set_mode(self):
         app = App.get_running_app()
@@ -341,7 +306,6 @@ class PlayScreen(Screen):
 
         if app.STARTLEVEL:
             self.current_level[self.game_mode] = app.STARTLEVEL
-
 
         # Initialize what level we are on for each difficulty level
         if self.game_mode not in self.current_level:
@@ -381,7 +345,8 @@ class PlayScreen(Screen):
                     self.time_limit = float(time_limit)
                 except Exception:
                     # reached end of file: will read random levels now
-                    self.random = level_info == ''
+                    level_info = ''
+                    self.random = True
         else:
             # FIXME: add behavior for other difficulty settings
             self.random = True
