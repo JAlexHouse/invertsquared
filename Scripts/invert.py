@@ -244,16 +244,16 @@ class PlayScreen(Screen):
         else:
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
-        if self.game_mode == "Expert":
-            self.remove_widget(self.answer_button)
-        else:
-            self.remove_widget(self.hint_button)
-
         for tile in self.gridlayout.children:
             tile.background_normal = "../Art/TILE.png"
             tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
+        if self.game_mode == "Expert":
+            self.remove_widget(self.answer_button)
+        else:
+            self.remove_widget(self.hint_button)
+
         self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
         self.time_elapsed = 0
