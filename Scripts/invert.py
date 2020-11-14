@@ -139,11 +139,11 @@ class PlayScreen(Screen):
             self.resume = True
         if self.game_mode == "Expert":
             self.open_answer("init")
-            self.answer_button = Button(text="View Answer", size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
+            self.answer_button = Button(background_normal="../Art/SHOWANS.png", background_down='../Art/SHOWANS_DOWN.png', size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
             self.answer_button.bind(on_release=self.open_answer)
             self.add_widget(self.answer_button)
         else:
-            self.hint_button = Button(text="Hint", size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
+            self.hint_button = Button(background_normal="../Art/HINT.png", background_down='../Art/HINT_DOWN.png', size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
             self.hint_button.bind(on_release=self.get_hint)
             self.add_widget(self.hint_button)
 
@@ -305,17 +305,17 @@ class PlayScreen(Screen):
                 break
 
         if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE.png":
-            self.gridlayout.children[self.hintloc].background_normal = "tile"
+            self.gridlayout.children[self.hintloc].background_normal = "../ART/TILE_HINT.png"
         else:
-            self.gridlayout.children[self.hintloc].background_normal = "tiledown"
+            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN_HINT.png"
 
         timer = Timer(2.0, self.reverse_hint)
         timer.start()
 
     def reverse_hint(self):
-        if self.gridlayout.children[self.hintloc].background_normal == "tiledown":
+        if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE_DOWN_HINT.png":
             self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
-        elif self.gridlayout.children[self.hintloc].background_normal == "tile":
+        elif self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE_HINT.png":
             self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
 
     def set_mode(self):
