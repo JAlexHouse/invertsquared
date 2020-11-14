@@ -118,7 +118,7 @@ class PlayScreen(Screen):
 
     def on_enter(self):
         self.set_mode()
-
+        self.set_level()
         if not self.resume:
             self.gridlayout = GridLayout(rows=self.rows, cols=self.cols)
             self.answerlayout = GridLayout(rows=self.rows, cols=self.cols)
@@ -152,7 +152,7 @@ class PlayScreen(Screen):
     def generate_grid(self):
         for i in range(self.rows):
             for j in range(self.cols):
-                button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+                button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE.png")
                 button.bind(on_release=self.move_made)
                 self.button_ids[button] = "{},{}".format(i, j)
                 self.gridlayout.add_widget(button, len(self.gridlayout.children))
@@ -216,7 +216,12 @@ class PlayScreen(Screen):
 
     def change_tile_color(self, index, is_answer_grid=False):
         grid = self.gridlayout if not is_answer_grid else self.answerlayout
-        if grid.children[index].background_normal == "../Art/TILE.png" or grid.children[index].background_normal == "tile":
+        if grid.children[index].background_normal == "../Art/TILE_HINT.png":
+            if grid.children[index].background_down == "../Art/TILE_DOWN.png":
+                grid.children[index].background_normal = "../Art/TILE.png"
+            else:
+                grid.children[index].background_normal = "../Art/TILE_DOWN.png"
+        elif grid.children[index].background_normal == "../Art/TILE.png" or grid.children[index].background_normal == "tile":
             grid.children[index].background_normal = "../Art/TILE_DOWN.png"
             grid.children[index].background_down = "../Art/TILE_DOWN.png"
         else:
@@ -271,7 +276,7 @@ class PlayScreen(Screen):
     def open_won(self):
         if self.game_mode == "Expert":
             self.timer.cancel()
-        self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
+        # self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.open()
         self.clear_game()
@@ -304,18 +309,14 @@ class PlayScreen(Screen):
                 self.hintloc = i
                 break
 
-        if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE.png":
-            self.gridlayout.children[self.hintloc].background_normal = "../ART/TILE_HINT.png"
-        else:
-            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN_HINT.png"
-
+        self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_HINT.png"
         timer = Timer(2.0, self.reverse_hint)
         timer.start()
 
     def reverse_hint(self):
-        if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE_DOWN_HINT.png":
+        if self.gridlayout.children[self.hintloc].background_down == "../Art/TILE_DOWN.png":
             self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
-        elif self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE_HINT.png":
+        elif self.gridlayout.children[self.hintloc].background_down == "../Art/TILE.png":
             self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
 
     def set_mode(self):
@@ -361,6 +362,11 @@ class PlayScreen(Screen):
             self.rows = int(rows)
             self.cols = int(cols)
 
+    def set_level(self):
+        app = App.get_running_app()
+        level_number = app.STARTLEVEL
+        self.current_level[self.game_mode] = level_number
+    
     def start_timer(self):
         self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
         self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
