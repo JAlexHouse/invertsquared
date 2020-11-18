@@ -323,7 +323,7 @@ class PlayScreen(Screen):
     def open_won(self):
         if self.game_mode == "Expert":
             self.timer.cancel()
-        # self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
+        #self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
         popup.set_stars(self.level_stars)
         popup.open()
