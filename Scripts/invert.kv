@@ -270,6 +270,7 @@ ScreenManager:
             on_release:
                 app.root.ids.home.btn_press_audio()
                 app.root.current = "Settings"
+                app.root.ids.play.clear_game()
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "left"
@@ -299,6 +300,7 @@ ScreenManager:
             on_release:
                 app.root.ids.home.btn_press_audio()
                 app.root.current = "Level"
+                app.root.ids.play.clear_game()
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "center"
@@ -430,11 +432,10 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                gamewin.dismiss()
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()
-                gamewin.dismiss()
-
 
 <ExpertAnswer>
     id: expertanswer
