@@ -121,6 +121,7 @@ ScreenManager:
             background_down: "../Art/SECURITY_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_empty()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "center"
@@ -130,6 +131,7 @@ ScreenManager:
             background_down: "../Art/ADS_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_empty()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -139,7 +141,10 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 150, 100.7
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
+                
 
 <ShareScreen>:
     name: "Share"
@@ -154,6 +159,7 @@ ScreenManager:
             background_down: "../Art/IG_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_instagram()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
@@ -163,6 +169,7 @@ ScreenManager:
             background_down: "../Art/TWT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_twitter()
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "center"
@@ -172,6 +179,7 @@ ScreenManager:
             background_down: "../Art/FB_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_facebook()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "center"
@@ -181,6 +189,7 @@ ScreenManager:
             background_down: "../Art/LINK_DOWN.png"
             size: 175.2, 117.6
             size_hint: None, None
+            on_release: root.open_link()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -190,7 +199,9 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 150, 100.7
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
 
 <MoreScreen>:
     name: "More"
@@ -205,6 +216,7 @@ ScreenManager:
             background_down: "../Art/RATE_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_empty()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "center"
@@ -213,6 +225,7 @@ ScreenManager:
             background_down: "../Art/CONTACT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_empty()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -222,6 +235,7 @@ ScreenManager:
             background_down: "../Art/ABOUT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
+            on_release: root.open_empty()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -231,7 +245,9 @@ ScreenManager:
             background_down: "../Art/HOME_DOWN.png"
             size: 140, 94
             size_hint: None, None
-            on_release: app.root.current = "Home"
+            on_release: 
+                app.root.current = "Home"
+                app.root.ids.play.clear_game()
 
 <Pause>
     id: pop
@@ -381,6 +397,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.ids.play.clear_game()
                 app.root.current = "Home"
                 pop.dismiss()
     AnchorLayout:
@@ -419,6 +436,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.ids.play.clear_game()
                 app.root.current = "Home"
                 gamewin.dismiss()
     AnchorLayout:
@@ -432,9 +450,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
-                
                 gamewin.dismiss()
-
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()
@@ -464,7 +480,7 @@ ScreenManager:
 
 
 
-# could do dark tiles for levels not yet reached (or some color coding)
+# could do dark tiles for levels not yet (or some color coding)
 <LevelScreen>:
     name: "Level"
     id: level
@@ -570,3 +586,28 @@ ScreenManager:
             on_release:
                 app.STARTLEVEL = 9
                 app.root.current = "Play"
+
+
+<NoFunctionality>
+    id: nofunctionality
+    name: "NoFunctionality"
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/POPUP.png"
+    Label:
+        text: "There is currently no functionality here."
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 20, 25
+        Button:
+            #pos: 0, 540
+            size: 50, 50
+            size_hint: None, None
+            background_color: 0,0,0,0
+            text: "X"
+            on_release:
+                nofunctionality.dismiss()

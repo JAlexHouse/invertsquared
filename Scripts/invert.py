@@ -17,8 +17,9 @@ import os
 from kivy.uix.image import Image
 import time
 from functools import partial
-
+import webbrowser
 from threading import Timer
+
 
 Window.size = (540, 960)
 button_press_sound = SoundLoader.load('../Audio/BUTTON_PRESS.wav')
@@ -41,6 +42,32 @@ class GameWin(ModalView):
         game_win_sound = SoundLoader.load('../Audio/GAME_WIN.wav')
         game_win_sound.play()
 
+        star_layout = BoxLayout(orientation="horizontal")
+        star_layout.size_hint = [1, 0.33]
+        #Replace Tile image with Gray star img, and Tile_Down with yellow star img
+        for _ in range(3):
+            button = Button(background_normal="../Art/NOSTAR.png", background_down="../Art/NOSTAR.png")
+            star_layout.add_widget(button, len(star_layout.children))
+        star_layout.pos = (50, 50)
+        if self.level_stars == 1:
+            star_layout.children[2].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[2].background_down = "../Art/GOLDSTAR.png"
+        elif self.level_stars == 2:
+            star_layout.children[2].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[2].background_down = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_down = "../Art/GOLDSTAR.png"
+        elif self.level_stars == 3:
+            star_layout.children[2].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[2].background_down = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[1].background_down = "../Art/GOLDSTAR.png"
+            star_layout.children[0].background_normal = "../Art/GOLDSTAR.png"
+            star_layout.children[0].background_down = "../Art/GOLDSTAR.png"
+        self.add_widget(star_layout)
+
+    def set_stars(self, stars):
+        self.level_stars = stars
 
 class ExpertAnswer(ModalView):
     def init(self, board, time):
@@ -76,9 +103,24 @@ class SettingsScreen(Screen):
         else:
             background_music.stop()
 
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
+
 
 class ShareScreen(Screen):
-    pass
+
+    def open_twitter(self):
+        webbrowser.open("https://twitter.com/")
+
+    def open_facebook(self):
+        webbrowser.open("https://www.facebook.com/")
+
+    def open_link(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
+
+    def open_instagram(self):
+        webbrowser.open("https://www.instagram.com/")
 
 
 class LevelScreen(Screen):
@@ -86,7 +128,9 @@ class LevelScreen(Screen):
 
 
 class MoreScreen(Screen):
-    pass
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
 
 
 class PauseScreen(Screen):
@@ -94,6 +138,10 @@ class PauseScreen(Screen):
 
 
 class Pause(ModalView):
+    pass
+
+
+class NoFunctionality(ModalView):
     pass
 
 
@@ -115,6 +163,8 @@ class PlayScreen(Screen):
     game_tile_sound = None
     filename = ''
     level = None
+    level_stars = 0
+    stars = [0] * 20
 
     def on_enter(self):
         self.set_mode()
@@ -126,7 +176,7 @@ class PlayScreen(Screen):
             self.generate_answer()
             if self.game_mode != "Expert":
                 self.answerlayout.size_hint = [0.3, 0.17]
-                self.answerlayout.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
+                self.answerlayout.pos = (0.35*self.width, 0.695*self.height)
                 self.add_widget(self.answerlayout)
 
             # generate game board
@@ -159,7 +209,7 @@ class PlayScreen(Screen):
 
     def generate_answer(self):
         for _ in range(self.rows*self.cols):
-            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE.png")
             self.answerlayout.add_widget(button, len(self.answerlayout.children))
         
         # if random, generate new answer_key
@@ -172,6 +222,7 @@ class PlayScreen(Screen):
                 if "1" in self.answer_key:
                     break
 
+        self.minimum_moves = self.answer_key.count("1")
         for index in range(len(self.answerlayout.children)):
             if self.answer_key[index] == "1":
                 row, col = self.get_row_col_by_index(index)
@@ -231,6 +282,7 @@ class PlayScreen(Screen):
     def goal_reached(self):
         if self.user_key == self.answer_key:
             print("Yay, you won!")
+            self.number_stars()
             self.open_won()
             self.clear_game()
         else:
@@ -240,25 +292,41 @@ class PlayScreen(Screen):
                     print("Oops, you lost!")
                     self.open_lost()
                     self.clear_game()
+            else:
+                self.ids.moves.text = "Moves Made: " + str(self.moves_made)
+
+    def number_stars(self):
+        intervals = 5
+        if self.moves_made <= self.minimum_moves + intervals:
+            self.level_stars = 3
+        elif self.moves_made <= self.minimum_moves + intervals * 2:
+            self.level_stars = 2
+        else:
+            self.level_stars = 1
+        if self.game_mode == 'Classic':
+            if self.stars[self.current_level[self.game_mode] - 1] < self.level_stars:
+                self.stars[self.current_level[self.game_mode] - 1] = self.level_stars
+            print("Number of stars:", sum(self.stars))
 
     def reset_board(self):
         self.moves_made = 0
+        self.time_elapsed = 0
         self.user_key = "0" * self.rows * self.cols
         if self.game_mode == "Classic":
-            self.ids.moves.text = ""
+            self.ids.moves.text = "Moves Made: " + str(self.moves_made)
         else:
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
-
-        if self.game_mode == "Expert":
-            self.remove_widget(self.answer_button)
-        else:
-            self.remove_widget(self.hint_button)
 
         for tile in self.gridlayout.children:
             tile.background_normal = "../Art/TILE.png"
             tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
+        if self.game_mode == "Expert":
+            self.remove_widget(self.answer_button)
+        else:
+            self.remove_widget(self.hint_button)
+
         self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
         self.time_elapsed = 0
@@ -276,8 +344,9 @@ class PlayScreen(Screen):
     def open_won(self):
         if self.game_mode == "Expert":
             self.timer.cancel()
-        # self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
+        #self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
+        popup.set_stars(self.level_stars)
         popup.open()
         self.clear_game()
 
@@ -314,10 +383,11 @@ class PlayScreen(Screen):
         timer.start()
 
     def reverse_hint(self):
-        if self.gridlayout.children[self.hintloc].background_down == "../Art/TILE_DOWN.png":
-            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
-        elif self.gridlayout.children[self.hintloc].background_down == "../Art/TILE.png":
-            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
+        if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE_HINT.png":
+            if self.gridlayout.children[self.hintloc].background_down == "../Art/TILE_DOWN.png":
+                self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
+            elif self.gridlayout.children[self.hintloc].background_down == "../Art/TILE.png":
+                self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
 
     def set_mode(self):
         app = App.get_running_app()
@@ -356,11 +426,15 @@ class PlayScreen(Screen):
             elif self.game_mode == 'Expert':
                 # if expert, set time limit too
                 rows, cols, self.answer_key, time_limit = level_info
-                self.time_limit = float(time_limit)
+                self.time_limit = int(time_limit)
+
+                #start timer after any last changes from reading level text files
+                self.start_timer()
             else:
                 rows, cols, self.answer_key = level_info
             self.rows = int(rows)
             self.cols = int(cols)
+        
 
     def set_level(self):
         app = App.get_running_app()
@@ -368,8 +442,9 @@ class PlayScreen(Screen):
         self.current_level[self.game_mode] = level_number
     
     def start_timer(self):
-        self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
-        self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+        if self.game_mode == 'Expert':  #MUST have this if statement here
+            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+            self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
 
     #update the timer every sec
     def timer_tick(self, *largs):
