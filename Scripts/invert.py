@@ -188,7 +188,7 @@ class PlayScreen(Screen):
 
     def generate_answer(self):
         for _ in range(self.rows*self.cols):
-            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE_DOWN.png")
+            button = Button(background_normal="../Art/TILE.png", background_down="../Art/TILE.png")
             self.answerlayout.add_widget(button, len(self.answerlayout.children))
         
         # if random, generate new answer_key
