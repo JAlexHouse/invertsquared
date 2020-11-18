@@ -17,7 +17,7 @@ import os
 from kivy.uix.image import Image
 import time
 from functools import partial
-
+import webbrowser
 from threading import Timer
 
 
@@ -103,9 +103,24 @@ class SettingsScreen(Screen):
         else:
             background_music.stop()
 
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
+
 
 class ShareScreen(Screen):
-    pass
+
+    def open_twitter(self):
+        webbrowser.open("https://twitter.com/")
+
+    def open_facebook(self):
+        webbrowser.open("https://www.facebook.com/")
+
+    def open_link(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
+
+    def open_instagram(self):
+        webbrowser.open("https://www.instagram.com/")
 
 
 class LevelScreen(Screen):
@@ -113,7 +128,9 @@ class LevelScreen(Screen):
 
 
 class MoreScreen(Screen):
-    pass
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
 
 
 class PauseScreen(Screen):
@@ -121,6 +138,10 @@ class PauseScreen(Screen):
 
 
 class Pause(ModalView):
+    pass
+
+
+class NoFunctionality(ModalView):
     pass
 
 
@@ -296,16 +317,16 @@ class PlayScreen(Screen):
         else:
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
-        if self.game_mode == "Expert":
-            self.remove_widget(self.answer_button)
-        else:
-            self.remove_widget(self.hint_button)
-
         for tile in self.gridlayout.children:
             tile.background_normal = "../Art/TILE.png"
             tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
+        if self.game_mode == "Expert":
+            self.remove_widget(self.answer_button)
+        else:
+            self.remove_widget(self.hint_button)
+
         self.ids.extra_settings.text = ""     # to clear up numbers from timer
         self.moves_made = 0
         self.time_elapsed = 0
