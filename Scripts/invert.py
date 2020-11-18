@@ -383,10 +383,11 @@ class PlayScreen(Screen):
         timer.start()
 
     def reverse_hint(self):
-        if self.gridlayout.children[self.hintloc].background_down == "../Art/TILE_DOWN.png":
-            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
-        elif self.gridlayout.children[self.hintloc].background_down == "../Art/TILE.png":
-            self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
+        if self.gridlayout.children[self.hintloc].background_normal == "../Art/TILE_HINT.png":
+            if self.gridlayout.children[self.hintloc].background_down == "../Art/TILE_DOWN.png":
+                self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE_DOWN.png"
+            elif self.gridlayout.children[self.hintloc].background_down == "../Art/TILE.png":
+                self.gridlayout.children[self.hintloc].background_normal = "../Art/TILE.png"
 
     def set_mode(self):
         app = App.get_running_app()
