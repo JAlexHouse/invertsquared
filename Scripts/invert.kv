@@ -8,6 +8,7 @@ ScreenManager:
     MoreScreen:
     PlayScreen:
         id: play
+    LevelScreen:
 
 <HomeScreen>:
     name: "Home"
@@ -23,7 +24,7 @@ ScreenManager:
             background_down: "../Art/CLASSIC_DOWN.png"
             on_release:
                 home.btn_press_audio()
-                app.root.current = "Play"
+                app.root.current = "Level"
                 app.DIFFICULTY = "Classic"
     FloatLayout:
         Button:
@@ -34,7 +35,7 @@ ScreenManager:
             background_down: "../Art/CHALLENGE_DOWN.png"
             on_release:
                 home.btn_press_audio()
-                app.root.current = "Play"
+                app.root.current = "Level"
                 app.DIFFICULTY = "Challenge"
     FloatLayout:
         Button:
@@ -45,7 +46,7 @@ ScreenManager:
             background_down: "../Art/EXPERT_DOWN.png"
             on_release:
                 home.btn_press_audio()
-                app.root.current = "Play"
+                app.root.current = "Level"
                 app.DIFFICULTY = "Expert"
     AnchorLayout:
         anchor_x: "left"
@@ -276,6 +277,7 @@ ScreenManager:
             on_release:
                 app.root.ids.home.btn_press_audio()
                 app.root.current = "Settings"
+                app.root.ids.play.clear_game()
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "left"
@@ -301,9 +303,11 @@ ScreenManager:
             background_down: "../Art/MENU_DOWN.png"
             size: 150, 100.7
             size_hint: None, None
-            #on_release: app.root.current = ""
+            #on_release: app.root.current = "Level"
             on_release:
                 app.root.ids.home.btn_press_audio()
+                app.root.current = "Level"
+                app.root.ids.play.clear_game()
                 pop.dismiss()
     AnchorLayout:
         anchor_x: "center"
@@ -316,12 +320,10 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
-                app.root.ids.play.start_timer()
                 pop.dismiss()
 
 <PlayScreen>:
     name: "Play"
-    id: play
     Image:
         source: "../Art/PLAYSCR.png"
 
@@ -338,6 +340,7 @@ ScreenManager:
             on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_pause()
+
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -405,7 +408,7 @@ ScreenManager:
                 pop.dismiss()
 
 <GameWin>:
-    id: pop
+    id: gamewin
     name: "GameWin"
     size: 450, 450
     size_hint: None, None
@@ -414,31 +417,165 @@ ScreenManager:
     Image:
         source: "../Art/WIN.png"
     AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "top"
-        padding: 0, 115
+        anchor_x: "left"
+        anchor_y: "bottom"
+        padding: 60, 25
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 219, 147
+            size: 150, 100.65
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
                 app.root.ids.play.clear_game()
                 app.root.current = "Home"
-                pop.dismiss()
+                gamewin.dismiss()
     AnchorLayout:
-        anchor_x: "center"
+        anchor_x: "right"
         anchor_y: "bottom"
-        padding: 0, 25
+        padding: 50, 25
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 219, 147
+            size: 150, 100.65
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                
+                gamewin.dismiss()
+
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()
-                pop.dismiss()
+
+<ExpertAnswer>
+    id: expertanswer
+    name: "ExpertAnswer"
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/ANSWERSCR.png"
+    #need to add a new background for this
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 20, 25
+        Button:
+            #pos: 0, 540
+            size: 50, 50
+            size_hint: None, None
+            background_color: 0,0,0,0
+            text: "X"
+            on_release:
+                expertanswer.clean()
+
+
+
+# could do dark tiles for levels not yet reached (or some color coding)
+<LevelScreen>:
+    name: "Level"
+    id: level
+    # need to add graphics for levels screen
+    Image:
+        source: "../Art/LVLSCR.png"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "1"
+            pos_hint: {"x": 0.1, "y": 0.7}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 1
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "2"
+            pos_hint: {"x": 0.4, "y": 0.7}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 2
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "3"
+            pos_hint: {"x": 0.7, "y": 0.7}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 3
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE_DOWN.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "4"
+            pos_hint: {"x": 0.1, "y": 0.5}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 4
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE_DOWN.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "5"
+            pos_hint: {"x": 0.4, "y": 0.5}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 5
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE_DOWN.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "6"
+            pos_hint: {"x": 0.7, "y": 0.5}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 6
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "7"
+            pos_hint: {"x": 0.1, "y": 0.3}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 7
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "8"
+            pos_hint: {"x": 0.4, "y": 0.3}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 8
+                app.root.current = "Play"
+    FloatLayout:
+        Button:
+            background_normal: "../Art/TILE.png"
+            background_down: "../Art/TILE_DOWN.png"
+            text: "9"
+            pos_hint: {"x": 0.7, "y": 0.3}
+            size: 130, 130
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 9
+                app.root.current = "Play"
