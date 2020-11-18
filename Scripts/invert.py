@@ -142,6 +142,8 @@ class PlayScreen(Screen):
     game_tile_sound = None
     filename = ''
     level = None
+    level_stars = 0
+    stars = [0] * 20
 
     def on_enter(self):
         self.set_mode()
@@ -153,7 +155,7 @@ class PlayScreen(Screen):
             self.generate_answer()
             if self.game_mode != "Expert":
                 self.answerlayout.size_hint = [0.3, 0.17]
-                self.answerlayout.pos = (0.35*self.width, 0.695*self.height)  # Not sure where to place this
+                self.answerlayout.pos = (0.35*self.width, 0.695*self.height)
                 self.add_widget(self.answerlayout)
 
             # generate game board
@@ -199,6 +201,7 @@ class PlayScreen(Screen):
                 if "1" in self.answer_key:
                     break
 
+        self.minimum_moves = self.answer_key.count("1")
         for index in range(len(self.answerlayout.children)):
             if self.answer_key[index] == "1":
                 row, col = self.get_row_col_by_index(index)
@@ -258,6 +261,7 @@ class PlayScreen(Screen):
     def goal_reached(self):
         if self.user_key == self.answer_key:
             print("Yay, you won!")
+            self.number_stars()
             self.open_won()
             self.clear_game()
         else:
@@ -267,13 +271,28 @@ class PlayScreen(Screen):
                     print("Oops, you lost!")
                     self.open_lost()
                     self.clear_game()
+            else:
+                self.ids.moves.text = "Moves Made: " + str(self.moves_made)
+
+    def number_stars(self):
+        intervals = 5
+        if self.moves_made <= self.minimum_moves + intervals:
+            self.level_stars = 3
+        elif self.moves_made <= self.minimum_moves + intervals * 2:
+            self.level_stars = 2
+        else:
+            self.level_stars = 1
+        if self.game_mode == 'Classic':
+            if self.stars[self.current_level[self.game_mode] - 1] < self.level_stars:
+                self.stars[self.current_level[self.game_mode] - 1] = self.level_stars
+            print("Number of stars:", sum(self.stars))
 
     def reset_board(self):
         self.moves_made = 0
         self.time_elapsed = 0
         self.user_key = "0" * self.rows * self.cols
         if self.game_mode == "Classic":
-            self.ids.moves.text = ""
+            self.ids.moves.text = "Moves Made: " + str(self.moves_made)
         else:
             self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
 
@@ -306,6 +325,7 @@ class PlayScreen(Screen):
             self.timer.cancel()
         # self.current_level[self.game_mode] = self.current_level[self.game_mode] + 1
         popup = GameWin()
+        popup.set_stars(self.level_stars)
         popup.open()
         self.clear_game()
 
