@@ -17,7 +17,7 @@ import os
 from kivy.uix.image import Image
 import time
 from functools import partial
-
+import webbrowser
 from threading import Timer
 
 Window.size = (540, 960)
@@ -82,9 +82,18 @@ class SettingsScreen(Screen):
 
 
 class ShareScreen(Screen):
-    def open_empty(self):
-        nofunctionality = NoFunctionality()
-        nofunctionality.open()
+
+    def open_twitter(self):
+        webbrowser.open("https://twitter.com/")
+
+    def open_facebook(self):
+        webbrowser.open("https://www.facebook.com/")
+
+    def open_link(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
+
+    def open_instagram(self):
+        webbrowser.open("https://www.instagram.com/")
 
 
 class LevelScreen(Screen):
