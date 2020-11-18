@@ -76,9 +76,15 @@ class SettingsScreen(Screen):
         else:
             background_music.stop()
 
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
+
 
 class ShareScreen(Screen):
-    pass
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
 
 
 class LevelScreen(Screen):
@@ -86,7 +92,9 @@ class LevelScreen(Screen):
 
 
 class MoreScreen(Screen):
-    pass
+    def open_empty(self):
+        nofunctionality = NoFunctionality()
+        nofunctionality.open()
 
 
 class PauseScreen(Screen):
@@ -94,6 +102,10 @@ class PauseScreen(Screen):
 
 
 class Pause(ModalView):
+    pass
+
+
+class NoFunctionality(ModalView):
     pass
 
 
