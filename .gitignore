@@ -1,5 +1,7 @@
 build/
 kivy/
 dist/
+venv/
+.idea/
 
 Scripts/__pycache__/Invert.cpython-38.pyc
