@@ -85,6 +85,9 @@ class ExpertAnswer(ModalView):
     def clean(self, instance=0):
         self.remove_widget(self.board)
         self.dismiss()
+        app = App.get_running_app()
+        app.root.current = "Play"
+        app.root.ids.play.start_timer()
 
 class HomeScreen(Screen):
     def btn_press_audio(self):
@@ -328,6 +331,7 @@ class PlayScreen(Screen):
             self.remove_widget(self.hint_button)
 
         self.ids.extra_settings.text = ""     # to clear up numbers from timer
+        self.ids.moves.text = ""     # clear up move counters (slight glitch in which user can see 'Moves Made' changed to "Moves Left" after switching from Classic to Challenger/Expert)
         self.moves_made = 0
         self.time_elapsed = 0
         self.gridlayout.clear_widgets()
@@ -402,11 +406,13 @@ class PlayScreen(Screen):
         self.ids.moves.text = ""
         if self.game_mode == "Classic":
             self.filename = os.path.join(dirname, '../Levels/Classic.txt')
+            self.ids.moves.text = "Moves Made: " + str(self.moves_made)
         elif self.game_mode == "Challenge":
             self.filename = os.path.join(dirname, '../Levels/Challenge.txt')
+            self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
         elif self.game_mode == "Expert":
             self.filename = os.path.join(dirname, '../Levels/Expert.txt')
-            self.start_timer()
+            self.ids.moves.text = "Moves Left: " + str(self.max_moves - self.moves_made)
         else:
             self.random = True
 
@@ -427,9 +433,6 @@ class PlayScreen(Screen):
                 # if expert, set time limit too
                 rows, cols, self.answer_key, time_limit = level_info
                 self.time_limit = int(time_limit)
-
-                #start timer after any last changes from reading level text files
-                self.start_timer()
             else:
                 rows, cols, self.answer_key = level_info
             self.rows = int(rows)
@@ -443,8 +446,11 @@ class PlayScreen(Screen):
     
     def start_timer(self):
         if self.game_mode == 'Expert':  #MUST have this if statement here
+            if self.timer:    # make sure only one timer is running at a time
+                self.timer.cancel()
             self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
             self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
+                
 
     #update the timer every sec
     def timer_tick(self, *largs):
