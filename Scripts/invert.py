@@ -314,6 +314,9 @@ class PlayScreen(Screen):
     def reset_board(self):
         self.moves_made = 0
         self.time_elapsed = 0
+        if self.timer:
+            self.timer.cancel()
+            self.start_timer()
         self.user_key = "0" * self.rows * self.cols
         if self.game_mode == "Classic":
             self.ids.moves.text = "Moves Made: " + str(self.moves_made)
@@ -325,6 +328,8 @@ class PlayScreen(Screen):
             tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
+        if self.timer:
+            self.timer.cancel()
         if self.game_mode == "Expert":
             self.remove_widget(self.answer_button)
         else:
