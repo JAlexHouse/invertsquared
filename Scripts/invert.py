@@ -333,17 +333,17 @@ class PlayScreen(Screen):
             if self.timer:
                 self.timer.cancel()
                 self.remove_widget(self.answer_button)
-        else:
-            self.remove_widget(self.hint_button)
-
-        self.ids.extra_settings.text = ""     # to clear up numbers from timer
-        self.ids.moves.text = ""     # clear up move counters (slight glitch in which user can see 'Moves Made' changed to "Moves Left" after switching from Classic to Challenger/Expert)
-        self.moves_made = 0
-        self.time_elapsed = 0
-        self.gridlayout.clear_widgets()
-        self.answerlayout.clear_widgets()
-        self.clear_widgets([self.gridlayout, self.answerlayout])
-        self.resume = False
+        if self.resume:
+            if self.game_mode != "Expert":
+                self.remove_widget(self.hint_button)
+            self.ids.extra_settings.text = ""     # to clear up numbers from timer
+            self.ids.moves.text = ""     # clear up move counters (slight glitch in which user can see 'Moves Made' changed to "Moves Left" after switching from Classic to Challenger/Expert)
+            self.moves_made = 0
+            self.time_elapsed = 0
+            self.gridlayout.clear_widgets()
+            self.answerlayout.clear_widgets()
+            self.clear_widgets([self.gridlayout, self.answerlayout])
+            self.resume = False
 
     def open_pause(self):
         if self.game_mode == "Expert":
