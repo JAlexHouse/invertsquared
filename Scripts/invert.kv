@@ -225,7 +225,7 @@ ScreenManager:
             background_down: "../Art/CONTACT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_mail()
+            on_release: root.open_contact()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -248,6 +248,28 @@ ScreenManager:
             on_release: 
                 app.root.current = "Home"
                 app.root.ids.play.clear_game()
+
+<Feedback>
+    id: feedback
+    name: "Feedback"
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/POPUP.png"
+
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        Button:
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
+            size: 150, 100.7
+            size_hint: None, None
+            on_release:
+                feedback.dismiss()
+
 
 <Pause>
     id: pop

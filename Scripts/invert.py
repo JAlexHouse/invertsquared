@@ -19,6 +19,7 @@ import time
 from functools import partial
 import webbrowser
 from threading import Timer
+from kivy.uix.textinput import TextInput
 
 
 Window.size = (540, 960)
@@ -136,12 +137,19 @@ class MoreScreen(Screen):
         rate = Rate()
         rate.open()
 
-    def open_mail(self):
-        webbrowser.open("mailto:mchhu@ufl.edu")
+    def open_contact(self):
+        #webbrowser.open("mailto:mchhu@ufl.edu")
+        feedback = Feedback()
+        feedback.open()
 
     def open_info(self):
         webbrowser.open("https://github.com/JAlexHouse/invertsquared")
 
+
+class Feedback(ModalView):
+    def on_open(self):
+        textinput = TextInput(text="Give us some feedback!", size_hint=(.6,.6), pos_hint=(0.5,0.8))
+        self.add_widget(textinput)
 
 class Pause(ModalView):
     pass
