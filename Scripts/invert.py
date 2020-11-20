@@ -152,7 +152,7 @@ class Rate(ModalView):
 
     def on_open(self):
         self.rate_stars = BoxLayout(orientation="horizontal")
-        self.rate_stars.size_hint = [1, 0.25]
+        self.rate_stars.size_hint = [1, 0.22]
         # Replace Tile image with Gray star img, and Tile_Down with yellow star img
         for i in range(5):
             button = Button(background_normal="../Art/NOSTAR.png",background_down="../Art/GOLDSTAR.png")
@@ -161,6 +161,7 @@ class Rate(ModalView):
             self.rate_stars.add_widget(button, len(self.rate_stars.children))
         self.rate_stars.pos = (50, 50)
         self.add_widget(self.rate_stars)
+
 
     def stars(self, instance):
         rating = 6 - self.star_id[instance]
@@ -186,6 +187,11 @@ class Rate(ModalView):
             self.rate_stars.children[0].background_normal = "../Art/GOLDSTAR.png"
             self.rate_stars.children[0].background_down = "../Art/NOSTAR.png"
 
+    def clean(self):
+        self.rate_stars.clear_widgets()
+        self.remove_widget(self.rate_stars)
+        self.prev_rating = 0
+        self.dismiss()
 
 class NoFunctionality(ModalView):
     pass

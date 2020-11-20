@@ -342,7 +342,18 @@ ScreenManager:
     background_color: 0,0,0,0
     Image:
         source: "../Art/POPUP.png"
-
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 20, 25
+        Button:
+            #pos: 0, 540
+            size: 50, 50
+            size_hint: None, None
+            background_color: 0,0,0,0
+            text: "X"
+            on_release:
+                rate.clean()
 
 
 <PlayScreen>:
@@ -478,7 +489,6 @@ ScreenManager:
     background_color: 0,0,0,0
     Image:
         source: "../Art/ANSWERSCR.png"
-    #need to add a new background for this
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
