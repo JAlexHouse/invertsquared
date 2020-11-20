@@ -134,9 +134,13 @@ class MoreScreen(Screen):
     def open_empty(self):
         nofunctionality = NoFunctionality()
         nofunctionality.open()
+
     def open_rate(self):
         rate = Rate()
         rate.open()
+
+    def open_mail(self):
+        webbrowser.open("mailto:mchhu@ufl.edu")
 
 
 class Pause(ModalView):
@@ -161,7 +165,7 @@ class Rate(ModalView):
     def stars(self, instance):
         rating = 6 - self.star_id[instance]
 
-        if (rating > self.prev_rating):
+        if rating > self.prev_rating:
             for i in range(5):
                 self.rate_stars.children[i].background_normal = "../Art/NOSTAR.png"
                 self.rate_stars.children[i].background_down = "../Art/GOLDSTAR.png"
