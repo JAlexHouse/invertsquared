@@ -216,7 +216,7 @@ ScreenManager:
             background_down: "../Art/RATE_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_empty()
+            on_release: root.open_rate()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "center"
@@ -332,6 +332,18 @@ ScreenManager:
                 app.root.ids.home.btn_press_audio() 
                 app.root.ids.play.start_timer()
                 pop.dismiss()
+
+<Rate>
+    id: rate
+    name: "Rate"
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/POPUP.png"
+
+
 
 <PlayScreen>:
     name: "Play"
