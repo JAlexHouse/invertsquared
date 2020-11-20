@@ -131,9 +131,6 @@ class LevelScreen(Screen):
 
 
 class MoreScreen(Screen):
-    def open_empty(self):
-        nofunctionality = NoFunctionality()
-        nofunctionality.open()
 
     def open_rate(self):
         rate = Rate()
@@ -141,6 +138,9 @@ class MoreScreen(Screen):
 
     def open_mail(self):
         webbrowser.open("mailto:mchhu@ufl.edu")
+
+    def open_info(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
 
 
 class Pause(ModalView):
