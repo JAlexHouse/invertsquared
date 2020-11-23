@@ -454,13 +454,9 @@ class PlayScreen(Screen):
     
     def start_timer(self):
         if self.game_mode == 'Expert':  #MUST have this if statement here
-<<<<<<< Updated upstream
-            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
-=======
             if self.timer:    # make sure only one timer is running at a time
                 self.timer.cancel()
             self.ids.extra_settings.text = "Time Left: " + str(self.time_limit - self.time_elapsed)
->>>>>>> Stashed changes
             self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
 
     #update the timer every sec
