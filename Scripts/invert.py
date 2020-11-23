@@ -476,7 +476,7 @@ class PlayScreen(Screen):
     def timer_tick(self, *largs):
         if not self.is_paused:
             self.time_elapsed += 1
-            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+            self.ids.extra_settings.text = "Time Left: " + str(self.time_limit - self.time_elapsed)
             if self.time_limit - self.time_elapsed <= 0:
                 self.timer.cancel()
                 self.open_lost()
