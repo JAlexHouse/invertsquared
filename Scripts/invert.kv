@@ -631,6 +631,9 @@ ScreenManager:
             background_down: "../Art/RANDOM_DOWN.png"
             size: 247, 111
             size_hint: None, None 
+            on_release:
+                app.STARTLEVEL = 10
+                app.root.current = "Play"
 
 
 <NoFunctionality>
