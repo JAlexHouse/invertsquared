@@ -305,6 +305,7 @@ ScreenManager:
                 app.root.ids.home.btn_press_audio()
                 app.root.current = "Play"
                 app.root.ids.play.reset_board()
+                app.root.ids.play.start_timer()
                 # this clears only the player's actions, not the answer key
                 pop.dismiss()
     AnchorLayout:
@@ -332,7 +333,8 @@ ScreenManager:
             size: 247, 111
             size_hint: None, None
             on_release:
-                app.root.ids.home.btn_press_audio()
+                app.root.ids.home.btn_press_audio() 
+                app.root.ids.play.start_timer()
                 pop.dismiss()
 
 <PlayScreen>:
