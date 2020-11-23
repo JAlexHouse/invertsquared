@@ -330,6 +330,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio() 
+                app.root.ids.play.is_paused = False
                 app.root.ids.play.start_timer()
                 pop.dismiss()
 
