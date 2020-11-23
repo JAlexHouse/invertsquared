@@ -98,13 +98,24 @@ class HomeScreen(Screen):
 class SettingsScreen(Screen):
     def enable_or_disable_audio(self):
         global is_sound_enabled
-        is_sound_enabled = not is_sound_enabled
+        if is_sound_enabled is True:
+            is_sound_enabled = False
+            self.ids.soundbutt.background_normal = "../Art/SOUNDOFF.png"
+            self.ids.soundbutt.background_down = "../Art/SOUNDOFF_DOWN.png"
+        else:
+            is_sound_enabled = True
+            self.ids.soundbutt.background_normal = "../Art/SOUND.png"
+            self.ids.soundbutt.background_down = "../Art/SOUND_DOWN.png"
 
     def enable_or_disable_music(self):
         if background_music.state == "stop":
             background_music.play()
+            self.ids.musicbutt.background_normal = "../Art/MUSIC.png"
+            self.ids.musicbutt.background_down = "../Art/MUSIC_DOWN.png"
         else:
             background_music.stop()
+            self.ids.musicbutt.background_normal = "../Art/MUSICOFF.png"
+            self.ids.musicbutt.background_down = "../Art/MUSICOFF_DOWN.png"
 
     def open_empty(self):
         nofunctionality = NoFunctionality()
@@ -192,11 +203,11 @@ class PlayScreen(Screen):
             self.resume = True
         if self.game_mode == "Expert":
             self.open_answer("init")
-            self.answer_button = Button(background_normal="../Art/SHOWANS.png", background_down='../Art/SHOWANS_DOWN.png', size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
+            self.answer_button = Button(background_normal="../Art/SHOWANS.png", background_down='../Art/SHOWANS_DOWN.png', size=(99.8, 67), size_hint=(None, None), pos=(430, 843))
             self.answer_button.bind(on_release=self.open_answer)
             self.add_widget(self.answer_button)
         else:
-            self.hint_button = Button(background_normal="../Art/HINT.png", background_down='../Art/HINT_DOWN.png', size=(100, 67.1), size_hint=(None, None), pos=(420, 840))
+            self.hint_button = Button(background_normal="../Art/HINT.png", background_down='../Art/HINT_DOWN.png', size=(99.8, 67), size_hint=(None, None), pos=(430, 845))
             self.hint_button.bind(on_release=self.get_hint)
             self.add_widget(self.hint_button)
 
@@ -457,7 +468,7 @@ class PlayScreen(Screen):
         if self.game_mode == 'Expert':  #MUST have this if statement here
             if self.timer:    # make sure only one timer is running at a time
                 self.timer.cancel()
-            self.ids.extra_settings.text = str(self.time_limit - self.time_elapsed)
+            self.ids.extra_settings.text = "Time Left: " + str(self.time_limit - self.time_elapsed)
             self.timer = Clock.schedule_interval(partial(self.timer_tick), 1)
                 
 
@@ -469,6 +480,7 @@ class PlayScreen(Screen):
             if self.time_limit - self.time_elapsed <= 0:
                 self.timer.cancel()
                 self.open_lost()
+
 
 
 class ScreenManager(ScreenManager):
