@@ -180,6 +180,7 @@ class PlayScreen(Screen):
     level_stars = 0
     stars = [0] * 20
     is_paused = False
+    hint_count = 0;
     def on_enter(self):
         self.set_mode()
         self.set_level()
@@ -311,9 +312,11 @@ class PlayScreen(Screen):
 
     def number_stars(self):
         intervals = 5
-        if self.moves_made <= self.minimum_moves + intervals:
+        hint_weight = self.hint_count/self.minimum_moves*3*intervals
+        print("Hints:", self.hint_count)
+        if self.moves_made+hint_weight < self.minimum_moves + intervals:
             self.level_stars = 3
-        elif self.moves_made <= self.minimum_moves + intervals * 2:
+        elif self.moves_made+hint_weight <= self.minimum_moves + intervals * 2:
             self.level_stars = 2
         else:
             self.level_stars = 1
@@ -325,6 +328,7 @@ class PlayScreen(Screen):
     def reset_board(self):
         self.moves_made = 0
         self.time_elapsed = 0
+        self.hint_count = 0
         self.is_paused = False
         if self.game_mode == "Expert":
             if self.timer:
@@ -353,6 +357,7 @@ class PlayScreen(Screen):
             self.ids.moves.text = ""     # clear up move counters (slight glitch in which user can see 'Moves Made' changed to "Moves Left" after switching from Classic to Challenger/Expert)
             self.moves_made = 0
             self.time_elapsed = 0
+            self.hint_count = 0
             self.gridlayout.clear_widgets()
             self.answerlayout.clear_widgets()
             self.clear_widgets([self.gridlayout, self.answerlayout])
@@ -396,6 +401,7 @@ class PlayScreen(Screen):
             timer.start()
 
     def get_hint(self, instance=0):
+        self.hint_count += 1
         #compare the user and answer key and the first place with a difference changes color for 2 seconds
         for i in range(self.rows*self.cols):
             if self.user_key[i] != self.answer_key[i]:
