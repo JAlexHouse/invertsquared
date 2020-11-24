@@ -4,7 +4,9 @@ ScreenManager:
     HomeScreen:
         id: home
     SettingsScreen:
+        id: settings
     ShareScreen:
+        id: share
     MoreScreen:
     PlayScreen:
         id: play
@@ -91,47 +93,30 @@ ScreenManager:
     Image:
         source: "../Art/SETTINGSSCR.png"
     AnchorLayout:
-        anchor_x: "left"
+        anchor_x: "center"
         anchor_y: "top"
-        padding: 90, 290
+        padding: 0, 290
         Button:
+            id: soundbutt
             background_normal: "../Art/SOUND.png"
             background_down: "../Art/SOUND_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 settings.enable_or_disable_audio()
     AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "top"
-        padding: 90, 290
+        anchor_x: "center"
+        anchor_y: "center"
         Button:
+            id: musicbutt
             background_normal: "../Art/MUSIC.png"
             background_down: "../Art/MUSIC_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
             on_release:
+                app.root.ids.home.btn_press_audio()
                 settings.enable_or_disable_music()
-    AnchorLayout:
-        anchor_x: "left"
-        anchor_y: "center"
-        padding: 90, 0
-        Button:
-            background_normal: "../Art/SECURITY.png"
-            background_down: "../Art/SECURITY_DOWN.png"
-            size: 175, 117.5
-            size_hint: None, None
-            on_release: root.open_empty()
-    AnchorLayout:
-        anchor_x: "right"
-        anchor_y: "center"
-        padding: 90, 0
-        Button:
-            background_normal: "../Art/ADS.png"
-            background_down: "../Art/ADS_DOWN.png"
-            size: 175, 117.5
-            size_hint: None, None
-            on_release: root.open_empty()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -142,12 +127,14 @@ ScreenManager:
             size: 150, 100.7
             size_hint: None, None
             on_release: 
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 app.root.ids.play.clear_game()
                 
 
 <ShareScreen>:
     name: "Share"
+    id: share
     Image:
         source: "../Art/SHARESCR.png"
     AnchorLayout:
@@ -159,7 +146,9 @@ ScreenManager:
             background_down: "../Art/IG_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_instagram()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_instagram()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
@@ -169,7 +158,9 @@ ScreenManager:
             background_down: "../Art/TWT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_twitter()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_twitter()
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "center"
@@ -179,7 +170,9 @@ ScreenManager:
             background_down: "../Art/FB_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_facebook()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_facebook()
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "center"
@@ -189,7 +182,9 @@ ScreenManager:
             background_down: "../Art/LINK_DOWN.png"
             size: 175.2, 117.6
             size_hint: None, None
-            on_release: root.open_link()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_link()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -200,11 +195,13 @@ ScreenManager:
             size: 150, 100.7
             size_hint: None, None
             on_release: 
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 app.root.ids.play.clear_game()
 
 <MoreScreen>:
     name: "More"
+    id: more
     Image:
         source: "../Art/MORESCR.png"
     AnchorLayout:
@@ -216,7 +213,9 @@ ScreenManager:
             background_down: "../Art/RATE_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_rate()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_rate()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "center"
@@ -225,7 +224,9 @@ ScreenManager:
             background_down: "../Art/CONTACT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_contact()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_contact()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -235,7 +236,9 @@ ScreenManager:
             background_down: "../Art/ABOUT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: root.open_info()
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                root.open_info()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -246,30 +249,9 @@ ScreenManager:
             size: 140, 94
             size_hint: None, None
             on_release: 
+                app.root.ids.home.btn_press_audio()
                 app.root.current = "Home"
                 app.root.ids.play.clear_game()
-
-<Feedback>
-    id: feedback
-    name: "Feedback"
-    size: 450, 450
-    size_hint: None, None
-    auto_dismiss: False
-    background_color: 0,0,0,0
-    Image:
-        source: "../Art/POPUP.png"
-
-    AnchorLayout:
-        anchor_x: "center"
-        anchor_y: "bottom"
-        Button:
-            background_normal: "../Art/HOME.png"
-            background_down: "../Art/HOME_DOWN.png"
-            size: 150, 100.7
-            size_hint: None, None
-            on_release:
-                feedback.dismiss()
-
 
 <Pause>
     id: pop
@@ -352,6 +334,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio() 
+                app.root.ids.play.is_paused = False
                 app.root.ids.play.start_timer()
                 pop.dismiss()
 
@@ -386,19 +369,19 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "top"
-        padding: 10, 60
+        padding: 5, 50
         Button:
             background_normal: "../Art/PAUSE.png"
             background_down: "../Art/PAUSE_DOWN.png"
             #pos: 0, 540
-            size: 100, 67.1
+            size: 99.8, 67
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_pause()
-
     BoxLayout:
         orientation: 'vertical'
+        spacing: -100
         Label:
             text: ""
         Label:
@@ -407,12 +390,6 @@ ScreenManager:
             text: ""
         Label:
             text: ""
-        Label:
-            id: extra_settings
-            text: ''
-            size_hint_x: None
-            size: self.texture_size
-            pos_hint: {'right': 1}
         Label:
             id: Instructions
             text: "Hint: Click a tile and see it and the surrounding tiles change colors!\nTry to match the picture at the top to win, good luck!"
@@ -421,8 +398,11 @@ ScreenManager:
         Label:
             id: moves
             font_name: "../Art/Montserrat-Light.otf"
-            valign: "bottom"
-
+            size_hint_y: 0.25
+        Label:
+            id: extra_settings
+            font_name: "../Art/Montserrat-Light.otf"
+            size_hint_y: 0.75
 
 <GameLose>:
     id: pop
@@ -514,13 +494,14 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
-        padding: 20, 25
+        padding: 0, 0
         Button:
-            #pos: 0, 540
+            # pos: 0, 540
             size: 50, 50
             size_hint: None, None
             background_color: 0,0,0,0
             text: "X"
+            font_name: "../Art/Montserrat-Light.otf"
             on_release:
                 expertanswer.clean()
 
@@ -533,12 +514,27 @@ ScreenManager:
     # need to add graphics for levels screen
     Image:
         source: "../Art/LVLSCR.png"
+    AnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+        padding: 5, 130
+        Button:
+            background_normal: "../Art/BACK.png"
+            background_down: "../Art/BACK_DOWN.png"
+            #pos: 0, 540
+            size: 99.8, 67
+            size_hint: None, None
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.root.current = "Home"
     FloatLayout:
         Button:
             background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "1"
-            pos_hint: {"x": 0.1, "y": 0.7}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.075, "y": 0.6}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -549,7 +545,9 @@ ScreenManager:
             background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "2"
-            pos_hint: {"x": 0.4, "y": 0.7}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.375, "y": 0.6}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -560,7 +558,9 @@ ScreenManager:
             background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "3"
-            pos_hint: {"x": 0.7, "y": 0.7}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.675, "y": 0.6}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -568,10 +568,12 @@ ScreenManager:
                 app.root.current = "Play"
     FloatLayout:
         Button:
-            background_normal: "../Art/TILE_DOWN.png"
+            background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "4"
-            pos_hint: {"x": 0.1, "y": 0.5}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.075, "y": 0.425}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -579,10 +581,12 @@ ScreenManager:
                 app.root.current = "Play"
     FloatLayout:
         Button:
-            background_normal: "../Art/TILE_DOWN.png"
+            background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "5"
-            pos_hint: {"x": 0.4, "y": 0.5}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.375, "y": 0.425}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -590,10 +594,12 @@ ScreenManager:
                 app.root.current = "Play"
     FloatLayout:
         Button:
-            background_normal: "../Art/TILE_DOWN.png"
+            background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "6"
-            pos_hint: {"x": 0.7, "y": 0.5}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.675, "y": 0.425}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -604,7 +610,9 @@ ScreenManager:
             background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "7"
-            pos_hint: {"x": 0.1, "y": 0.3}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.075, "y": 0.25}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -615,7 +623,9 @@ ScreenManager:
             background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "8"
-            pos_hint: {"x": 0.4, "y": 0.3}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.375, "y": 0.25}
             size: 130, 130
             size_hint: None, None
             on_release:
@@ -626,11 +636,25 @@ ScreenManager:
             background_normal: "../Art/TILE.png"
             background_down: "../Art/TILE_DOWN.png"
             text: "9"
-            pos_hint: {"x": 0.7, "y": 0.3}
+            font_name: "../Art/Montserrat-Light.otf"
+            font_size: 25
+            pos_hint: {"x": 0.675, "y": 0.25}
             size: 130, 130
             size_hint: None, None
             on_release:
                 app.STARTLEVEL = 9
+                app.root.current = "Play"
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 100
+        Button:
+            background_normal: "../Art/RANDOM.png"
+            background_down: "../Art/RANDOM_DOWN.png"
+            size: 247, 111
+            size_hint: None, None
+            on_release:
+                app.STARTLEVEL = 10
                 app.root.current = "Play"
 
 
