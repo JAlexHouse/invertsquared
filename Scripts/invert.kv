@@ -146,7 +146,7 @@ ScreenManager:
             background_down: "../Art/IG_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_instagram()
     AnchorLayout:
@@ -170,7 +170,7 @@ ScreenManager:
             background_down: "../Art/FB_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_facebook()
     AnchorLayout:
@@ -182,7 +182,7 @@ ScreenManager:
             background_down: "../Art/LINK_DOWN.png"
             size: 175.2, 117.6
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
                 root.open_link()
     AnchorLayout:
@@ -213,9 +213,9 @@ ScreenManager:
             background_down: "../Art/RATE_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
-                root.open_empty()
+                root.open_rate()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "center"
@@ -224,9 +224,9 @@ ScreenManager:
             background_down: "../Art/CONTACT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
-                root.open_empty()
+                root.open_contact()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -236,9 +236,9 @@ ScreenManager:
             background_down: "../Art/ABOUT_DOWN.png"
             size: 175, 117.5
             size_hint: None, None
-            on_release: 
+            on_release:
                 app.root.ids.home.btn_press_audio()
-                root.open_empty()
+                root.open_info()
     AnchorLayout:
         anchor_x: "center"
         anchor_y: "bottom"
@@ -338,6 +338,29 @@ ScreenManager:
                 app.root.ids.play.start_timer()
                 pop.dismiss()
 
+<Rate>
+    id: rate
+    name: "Rate"
+    size: 450, 450
+    size_hint: None, None
+    auto_dismiss: False
+    background_color: 0,0,0,0
+    Image:
+        source: "../Art/POPUP.png"
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "top"
+        padding: 20, 25
+        Button:
+            #pos: 0, 540
+            size: 50, 50
+            size_hint: None, None
+            background_color: 0,0,0,0
+            text: "X"
+            on_release:
+                rate.clean()
+
+
 <PlayScreen>:
     name: "Play"
     Image:
@@ -432,11 +455,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
-        padding: 60, 25
+        padding: 13, 25
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 150, 100.65
+            size: 134.13, 90
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -444,13 +467,13 @@ ScreenManager:
                 app.root.current = "Home"
                 gamewin.dismiss()
     AnchorLayout:
-        anchor_x: "right"
+        anchor_x: "center"
         anchor_y: "bottom"
-        padding: 50, 25
+        padding: 0, 25
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 150, 100.65
+            size: 134.13, 90
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -458,6 +481,23 @@ ScreenManager:
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
                 app.root.ids.play.on_enter()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 15, 25
+        Button:
+            background_normal: "../Art/NEXT.png"
+            background_down: "../Art/NEXT_DOWN.png"
+            size: 134.13, 90
+            size_hint: None, None 
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.STARTLEVEL = app.STARTLEVEL + 1
+                gamewin.dismiss()
+                app.root.current = "Play"
+                app.root.ids.play.clear_game()
+                app.root.ids.play.on_enter()
+
 
 <ExpertAnswer>
     id: expertanswer
@@ -468,7 +508,6 @@ ScreenManager:
     background_color: 0,0,0,0
     Image:
         source: "../Art/ANSWERSCR.png"
-    #need to add a new background for this
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
@@ -493,14 +532,14 @@ ScreenManager:
     Image:
         source: "../Art/LVLSCR.png"
     AnchorLayout:
-        anchor_x: "left"
+        anchor_x: "center"
         anchor_y: "top"
-        padding: 5, 130
+        padding: 0, 135
         Button:
-            background_normal: "../Art/BACK.png"
-            background_down: "../Art/BACK_DOWN.png"
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
             #pos: 0, 540
-            size: 99.8, 67
+            size: 111.7, 75
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -630,7 +669,7 @@ ScreenManager:
             background_normal: "../Art/RANDOM.png"
             background_down: "../Art/RANDOM_DOWN.png"
             size: 247, 111
-            size_hint: None, None 
+            size_hint: None, None
             on_release:
                 app.STARTLEVEL = 10
                 app.root.current = "Play"

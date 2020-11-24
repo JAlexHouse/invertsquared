@@ -19,6 +19,7 @@ import time
 from functools import partial
 import webbrowser
 from threading import Timer
+from kivy.uix.textinput import TextInput
 
 
 Window.size = (540, 960)
@@ -123,7 +124,6 @@ class SettingsScreen(Screen):
 
 
 class ShareScreen(Screen):
-
     def open_twitter(self):
         webbrowser.open("https://twitter.com/")
 
@@ -142,18 +142,74 @@ class LevelScreen(Screen):
 
 
 class MoreScreen(Screen):
-    def open_empty(self):
-        nofunctionality = NoFunctionality()
-        nofunctionality.open()
+
+    def open_rate(self):
+        rate = Rate()
+        rate.open()
+
+    def open_contact(self):
+        #webbrowser.open("mailto:mchhu@ufl.edu")
+        feedback = Feedback()
+        feedback.open()
+
+    def open_info(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
 
 
-class PauseScreen(Screen):
-    pass
-
+class Feedback(ModalView):
+    def on_open(self):
+        textinput = TextInput(text="Give us some feedback!", size_hint=(.6,.6), pos_hint=(0.5,0.8))
+        self.add_widget(textinput)
 
 class Pause(ModalView):
     pass
 
+class Rate(ModalView):
+    prev_rating = 0
+    star_id = {}
+
+    def on_open(self):
+        self.rate_stars = BoxLayout(orientation="horizontal")
+        self.rate_stars.size_hint = [1, 0.22]
+        # Replace Tile image with Gray star img, and Tile_Down with yellow star img
+        for i in range(5):
+            button = Button(background_normal="../Art/NOSTAR.png",background_down="../Art/GOLDSTAR.png")
+            self.star_id[button] = (i+1)
+            button.bind(on_release=self.stars)
+            self.rate_stars.add_widget(button, len(self.rate_stars.children))
+        self.rate_stars.pos = (50, 50)
+        self.add_widget(self.rate_stars)
+
+
+    def stars(self, instance):
+        rating = 6 - self.star_id[instance]
+
+        if rating > self.prev_rating:
+            for i in range(5):
+                self.rate_stars.children[i].background_normal = "../Art/NOSTAR.png"
+                self.rate_stars.children[i].background_down = "../Art/GOLDSTAR.png"
+
+        if rating > 0:
+            self.rate_stars.children[4].background_normal = "../Art/GOLDSTAR.png"
+            self.rate_stars.children[4].background_down = "../Art/NOSTAR.png"
+        if rating > 1:
+            self.rate_stars.children[3].background_normal = "../Art/GOLDSTAR.png"
+            self.rate_stars.children[3].background_down = "../Art/NOSTAR.png"
+        if rating > 2:
+            self.rate_stars.children[2].background_normal = "../Art/GOLDSTAR.png"
+            self.rate_stars.children[2].background_down = "../Art/NOSTAR.png"
+        if rating > 3:
+            self.rate_stars.children[1].background_normal = "../Art/GOLDSTAR.png"
+            self.rate_stars.children[1].background_down = "../Art/NOSTAR.png"
+        if rating > 4:
+            self.rate_stars.children[0].background_normal = "../Art/GOLDSTAR.png"
+            self.rate_stars.children[0].background_down = "../Art/NOSTAR.png"
+
+    def clean(self):
+        self.rate_stars.clear_widgets()
+        self.remove_widget(self.rate_stars)
+        self.prev_rating = 0
+        self.dismiss()
 
 class NoFunctionality(ModalView):
     pass
@@ -346,6 +402,8 @@ class PlayScreen(Screen):
             if self.timer:
                 self.timer.cancel()
                 self.remove_widget(self.answer_button)
+            if self.answertimer:
+                self.answertimer.cancel()
         if self.resume:
             if self.game_mode != "Expert":
                 self.remove_widget(self.hint_button)
@@ -392,8 +450,8 @@ class PlayScreen(Screen):
         self.answer.open()
 
         if instance == "init":
-            timer = Timer(5.0, self.answer.clean)
-            timer.start()
+            self.answertimer = Timer(5.0, self.answer.clean)
+            self.answertimer.start()
 
     def get_hint(self, instance=0):
         #compare the user and answer key and the first place with a difference changes color for 2 seconds
