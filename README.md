@@ -13,23 +13,27 @@ Muted colors, flat design; minimalist
 ![Art Inspiration (Not Invert Squared)_](https://user-images.githubusercontent.com/55326415/94352158-8c2aa500-002f-11eb-957b-bd67b099dbf2.png)
 
 - Image to be replicated in top right corner; rounded edges for softer, embedded look
-- Game grid will be variants of an N x N grid of tiles, such as 3x3, 5x5, etc.
+- Game grid will be a 3x3 grid of tiles.
 
 SCREENS:
 - Home screen: logo in the center (letters are colored, bg is grey); beneath logo: settings/menu, play, share icons;
 - Settings screen: game mode (dark/light) (maybe?? or we just stick with the dark theme); audio/vibration settings (if applicable); credits
 - Pause screen: home button; settings button; restart level button; select level button;
 - Share screen: copy app link for play store; share to Twitter, FB, etc.;
-- Level selection screen: 1. choose between Classic, Challenge, Expert (horizontal bars, rounded edges in the center of screen); 2. Select level (level mode will be at top centered; levels will be sorted by difficult ie. lvl 1 is easiest, 20 is hardest; levels display will show the image to replicate); back button in upper left corner;
+- More screen: 1. Rate the app; 2. Mail feedback; 3. About the project (a link to the git repository)
+- Level selection screen: 1. choose between Classic, Challenge, Expert (horizontal bars, rounded edges in the center of screen); 2. Select level (level mode will be at top centered; levels will be sorted by difficult ie. lvl 1 is easiest, 9 is hardest; random level buttton also available); home button in upper portion of level select screen;
+- Win screen: 1. Restart the level to try for a higher score; 2. Return to the Home screen; 3. Go on to the next level
+- Lose screen: 1. Restart the level; 2. Return to the Home screen
 
 GAMEPLAY:
-- 10/20 levels each mode (maybe 20 for Classic/Challenge, 10 for Expert)
+- 9 levels each mode; plus infinite number of randomly generated levels (which are all guaranteed to be solvable) 
   - 3 Difficulty Modes: Classic, Challenge, Expert
-- Classic Mode: image to be replicated in upper right corner; playing with no time limits or move limits; STRATEGY-BASED gameplay
-  - NOTE: for the design prototype, Classic Mode will be a preset, non-random demo level to showcase the game
-  - The answer for the demo level is click the following tiles: top-middle, middle-middle, bottom-right, and bottom-middle
-- Challenge Mode: image to be replicated in upper right corner; playing within a given amount of moves; STRATEGY-BASED gameplay
+- Classic Mode: image to be replicated in upper portion of screen; playing with no time limits or move limits; STRATEGY-BASED gameplay
+- Challenge Mode: image to be replicated in upper portion of screen; playing within a given amount of moves; STRATEGY-BASED gameplay
 - Expert Mode: image will be shown before you begin the level, but will not remain on screen; MEMORY-BASED gameplay; NO HINTS ALLOWED
+  - play within a given amount of moves AND given amount of time
+- Hints: When stuck, hints are provided by the lightbulb button in the top-right corner in Classic and Challenge mode, BUT will lower your star score
+- Stars: based on the amount of moves that you make (and the amount of hints you use), you will be given a star score on completion of each level
 
 
 **Run the following commands in the project directory:**
