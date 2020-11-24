@@ -145,6 +145,18 @@ class MoreScreen(Screen):
         nofunctionality = NoFunctionality()
         nofunctionality.open()
 
+    def open_rate(self):
+        rate = Rate()
+        rate.open()
+
+    def open_contact(self):
+        webbrowser.open("mailto:mchhu@ufl.edu")
+        #feedback = Feedback()
+        #feedback.open()
+
+    def open_info(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
+        
 
 class PauseScreen(Screen):
     pass
