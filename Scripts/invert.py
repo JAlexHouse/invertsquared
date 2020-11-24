@@ -155,14 +155,6 @@ class MoreScreen(Screen):
     def open_info(self):
         webbrowser.open("https://github.com/JAlexHouse/invertsquared")
 
-    def open_contact(self):
-        #webbrowser.open("mailto:mchhu@ufl.edu")
-        feedback = Feedback()
-        feedback.open()
-
-    def open_info(self):
-        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
-
 
 class Feedback(ModalView):
     def on_open(self):
@@ -178,14 +170,15 @@ class Rate(ModalView):
 
     def on_open(self):
         self.rate_stars = BoxLayout(orientation="horizontal")
-        self.rate_stars.size_hint = [1, 0.22]
+        self.rate_stars.size_hint = [1, 0.075]
+        self.rate_stars.padding = (0, -30)
         # Replace Tile image with Gray star img, and Tile_Down with yellow star img
         for i in range(5):
-            button = Button(background_normal="../Art/NOSTAR.png",background_down="../Art/GOLDSTAR.png")
+            button = Button(background_normal="../Art/NOSTAR.png", background_down="../Art/GOLDSTAR.png")
             self.star_id[button] = (i+1)
             button.bind(on_release=self.stars)
             self.rate_stars.add_widget(button, len(self.rate_stars.children))
-        self.rate_stars.pos = (50, 50)
+        #self.rate_stars.pos = (50, 50)
         self.add_widget(self.rate_stars)
 
 
