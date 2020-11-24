@@ -148,6 +148,14 @@ class MoreScreen(Screen):
         rate.open()
 
     def open_contact(self):
+        webbrowser.open("mailto:mchhu@ufl.edu")
+        #feedback = Feedback()
+        #feedback.open()
+
+    def open_info(self):
+        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
+
+    def open_contact(self):
         #webbrowser.open("mailto:mchhu@ufl.edu")
         feedback = Feedback()
         feedback.open()
