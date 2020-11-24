@@ -346,19 +346,32 @@ ScreenManager:
     auto_dismiss: False
     background_color: 0,0,0,0
     Image:
-        source: "../Art/POPUP.png"
+        source: "../Art/RATESCR.png"
     AnchorLayout:
         anchor_x: "right"
         anchor_y: "top"
-        padding: 20, 25
+        padding: 0, 0
         Button:
             #pos: 0, 540
             size: 50, 50
             size_hint: None, None
             background_color: 0,0,0,0
             text: "X"
+            font_name: "../Art/Montserrat-Light.otf"
             on_release:
                 rate.clean()
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "bottom"
+        padding: 0, 25
+        Button:
+            background_normal: "../Art/SUBMIT.png"
+            background_down: "../Art/SUBMIT_DOWN.png"
+            size: 222.5, 100
+            size_hint: None, None 
+            on_release:
+                rate.dismiss()
+
 
 
 <PlayScreen>:
