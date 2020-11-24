@@ -155,14 +155,6 @@ class MoreScreen(Screen):
     def open_info(self):
         webbrowser.open("https://github.com/JAlexHouse/invertsquared")
 
-    def open_contact(self):
-        #webbrowser.open("mailto:mchhu@ufl.edu")
-        feedback = Feedback()
-        feedback.open()
-
-    def open_info(self):
-        webbrowser.open("https://github.com/JAlexHouse/invertsquared")
-
 
 class Feedback(ModalView):
     def on_open(self):
@@ -178,14 +170,15 @@ class Rate(ModalView):
 
     def on_open(self):
         self.rate_stars = BoxLayout(orientation="horizontal")
-        self.rate_stars.size_hint = [1, 0.22]
+        self.rate_stars.size_hint = [1, 0.075]
+        self.rate_stars.padding = (0, -30)
         # Replace Tile image with Gray star img, and Tile_Down with yellow star img
         for i in range(5):
-            button = Button(background_normal="../Art/NOSTAR.png",background_down="../Art/GOLDSTAR.png")
+            button = Button(background_normal="../Art/NOSTAR.png", background_down="../Art/GOLDSTAR.png")
             self.star_id[button] = (i+1)
             button.bind(on_release=self.stars)
             self.rate_stars.add_widget(button, len(self.rate_stars.children))
-        self.rate_stars.pos = (50, 50)
+        #self.rate_stars.pos = (50, 50)
         self.add_widget(self.rate_stars)
 
 
@@ -244,6 +237,7 @@ class PlayScreen(Screen):
     level_stars = 0
     stars = [0] * 20
     is_paused = False
+    hint_count = 0;
     def on_enter(self):
         self.set_mode()
         self.set_level()
@@ -375,9 +369,11 @@ class PlayScreen(Screen):
 
     def number_stars(self):
         intervals = 5
-        if self.moves_made <= self.minimum_moves + intervals:
+        hint_weight = self.hint_count/self.minimum_moves*3*intervals
+        print("Hints:", self.hint_count)
+        if self.moves_made+hint_weight < self.minimum_moves + intervals:
             self.level_stars = 3
-        elif self.moves_made <= self.minimum_moves + intervals * 2:
+        elif self.moves_made+hint_weight <= self.minimum_moves + intervals * 2:
             self.level_stars = 2
         else:
             self.level_stars = 1
@@ -389,6 +385,7 @@ class PlayScreen(Screen):
     def reset_board(self):
         self.moves_made = 0
         self.time_elapsed = 0
+        self.hint_count = 0
         self.is_paused = False
         if self.game_mode == "Expert":
             if self.timer:
@@ -419,6 +416,7 @@ class PlayScreen(Screen):
             self.ids.moves.text = ""     # clear up move counters (slight glitch in which user can see 'Moves Made' changed to "Moves Left" after switching from Classic to Challenger/Expert)
             self.moves_made = 0
             self.time_elapsed = 0
+            self.hint_count = 0
             self.gridlayout.clear_widgets()
             self.answerlayout.clear_widgets()
             self.clear_widgets([self.gridlayout, self.answerlayout])
@@ -462,6 +460,7 @@ class PlayScreen(Screen):
             self.answertimer.start()
 
     def get_hint(self, instance=0):
+        self.hint_count += 1
         #compare the user and answer key and the first place with a difference changes color for 2 seconds
         for i in range(self.rows*self.cols):
             if self.user_key[i] != self.answer_key[i]:
