@@ -334,6 +334,7 @@ ScreenManager:
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio() 
+                app.root.ids.play.is_paused = False
                 app.root.ids.play.start_timer()
                 pop.dismiss()
 
@@ -646,6 +647,9 @@ ScreenManager:
             background_down: "../Art/RANDOM_DOWN.png"
             size: 247, 111
             size_hint: None, None 
+            on_release:
+                app.STARTLEVEL = 10
+                app.root.current = "Play"
 
 
 <NoFunctionality>

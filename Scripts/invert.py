@@ -178,7 +178,7 @@ class PlayScreen(Screen):
     level = None
     level_stars = 0
     stars = [0] * 20
-
+    is_paused = False
     def on_enter(self):
         self.set_mode()
         self.set_level()
@@ -324,6 +324,7 @@ class PlayScreen(Screen):
     def reset_board(self):
         self.moves_made = 0
         self.time_elapsed = 0
+        self.is_paused = False
         if self.game_mode == "Expert":
             if self.timer:
                 self.timer.cancel()
@@ -339,6 +340,7 @@ class PlayScreen(Screen):
             tile.background_down = "../Art/TILE_DOWN.png"
 
     def clear_game(self):
+        self.is_paused = False
         if self.game_mode == "Expert":
             if self.timer:
                 self.timer.cancel()
@@ -356,6 +358,7 @@ class PlayScreen(Screen):
             self.resume = False
 
     def open_pause(self):
+        self.is_paused = True
         if self.game_mode == "Expert":
             self.timer.cancel()
         popup = Pause()
@@ -470,11 +473,13 @@ class PlayScreen(Screen):
 
     #update the timer every sec
     def timer_tick(self, *largs):
-        self.time_elapsed += 1
-        self.ids.extra_settings.text = "Time Left: " + str(self.time_limit - self.time_elapsed)
-        if self.time_limit - self.time_elapsed <= 0:
-            self.timer.cancel()
-            self.open_lost()
+        if not self.is_paused:
+            self.time_elapsed += 1
+            self.ids.extra_settings.text = "Time Left: " + str(self.time_limit - self.time_elapsed)
+            if self.time_limit - self.time_elapsed <= 0:
+                self.timer.cancel()
+                self.open_lost()
+
 
 
 class ScreenManager(ScreenManager):
