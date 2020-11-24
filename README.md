@@ -9,8 +9,7 @@ An up and coming puzzle game that is simple and concept but difficult to solve! 
 AESTHETICS:
 Color scheme and gameplay layout:
 Muted colors, flat design; minimalist
-
-![Art Inspiration (Not Invert Squared)_](https://user-images.githubusercontent.com/55326415/94352158-8c2aa500-002f-11eb-957b-bd67b099dbf2.png)
+![Game Screen Example](./Art/GameScreenExample.jpg)
 
 - Image to be replicated in top right corner; rounded edges for softer, embedded look
 - Game grid will be a 3x3 grid of tiles.
