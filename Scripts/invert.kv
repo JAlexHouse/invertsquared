@@ -431,11 +431,11 @@ ScreenManager:
     AnchorLayout:
         anchor_x: "left"
         anchor_y: "bottom"
-        padding: 60, 25
+        padding: 13, 25
         Button:
             background_normal: "../Art/HOME.png"
             background_down: "../Art/HOME_DOWN.png"
-            size: 150, 100.65
+            size: 134.13, 90
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
@@ -443,16 +443,32 @@ ScreenManager:
                 app.root.current = "Home"
                 gamewin.dismiss()
     AnchorLayout:
-        anchor_x: "right"
+        anchor_x: "center"
         anchor_y: "bottom"
-        padding: 50, 25
+        padding: 0, 25
         Button:
             background_normal: "../Art/RESET.png"
             background_down: "../Art/RESET_DOWN.png"
-            size: 150, 100.65
+            size: 134.13, 90
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()
+                gamewin.dismiss()
+                app.root.current = "Play"
+                app.root.ids.play.clear_game()
+                app.root.ids.play.on_enter()
+    AnchorLayout:
+        anchor_x: "right"
+        anchor_y: "bottom"
+        padding: 15, 25
+        Button:
+            background_normal: "../Art/NEXT.png"
+            background_down: "../Art/NEXT_DOWN.png"
+            size: 134.13, 90
+            size_hint: None, None 
+            on_release:
+                app.root.ids.home.btn_press_audio()
+                app.STARTLEVEL = app.STARTLEVEL + 1
                 gamewin.dismiss()
                 app.root.current = "Play"
                 app.root.ids.play.clear_game()
@@ -492,14 +508,14 @@ ScreenManager:
     Image:
         source: "../Art/LVLSCR.png"
     AnchorLayout:
-        anchor_x: "left"
+        anchor_x: "center"
         anchor_y: "top"
-        padding: 5, 130
+        padding: 0, 135
         Button:
-            background_normal: "../Art/BACK.png"
-            background_down: "../Art/BACK_DOWN.png"
+            background_normal: "../Art/HOME.png"
+            background_down: "../Art/HOME_DOWN.png"
             #pos: 0, 540
-            size: 99.8, 67
+            size: 111.7, 75
             size_hint: None, None
             on_release:
                 app.root.ids.home.btn_press_audio()

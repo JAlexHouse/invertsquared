@@ -123,7 +123,6 @@ class SettingsScreen(Screen):
 
 
 class ShareScreen(Screen):
-
     def open_twitter(self):
         webbrowser.open("https://twitter.com/")
 
